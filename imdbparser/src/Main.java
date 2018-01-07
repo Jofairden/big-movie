@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.io.*;
 
 public class Main {
 	
@@ -21,7 +22,9 @@ public class Main {
 
             //parseMovies();
             //parseRunningtimes();
-            parseActors();
+            //parseActors();
+            //parseSoundtracks();
+            parseCountries();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -95,6 +98,96 @@ public class Main {
             } else
                 header.incrementAndGet();
         })));
+    }
+
+    private static void parseSoundtracks() throws java.io.IOException {
+        PrintWriter pw = new PrintWriter(new File("soundtracks.csv"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("movie");
+        sb.append(';');
+        sb.append("soundtrack");
+        sb.append('\n');
+        pw.write(sb.toString());
+        sb = new StringBuilder();
+
+
+        String thisLine = null;
+        String movie = null;
+        //String year = "2020";
+
+        try {
+
+            // open input stream test.txt for reading purpose.
+            BufferedReader br = new BufferedReader(new FileReader(new File("soundtracks.list")));
+
+            while ((thisLine = br.readLine()) != null) {
+                if (thisLine.length() > 2 && thisLine.charAt(0) ==  '#') {
+
+                    if (thisLine.indexOf('"') == -1) continue;
+
+                    movie = thisLine.substring(3, thisLine.lastIndexOf('"'));
+                    //year = thisLine.substring(thisLine.indexOf('(' + 1 ), 4);
+                }
+                else if (movie != null) {
+                    if (thisLine.length() > 0 && thisLine.charAt(0) == '-') {
+                        String soundTrack = thisLine.substring(2) + br.readLine();
+                        sb.append(movie);
+                        sb.append(';');
+                        sb.append(soundTrack);
+                        sb.append('\n');
+                        pw.write(sb.toString());
+                        sb = new StringBuilder();
+                    }
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+        pw.write(sb.toString());
+        pw.close();
+        System.out.println("done!");
+    }
+
+    private static void parseCountries() throws java.io.IOException{
+        PrintWriter pw = new PrintWriter(new File("countries.csv"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("movie");
+        sb.append(';');
+        sb.append("country");
+        sb.append('\n');
+        pw.write(sb.toString());
+        sb = new StringBuilder();
+
+
+        String thisLine = null;
+
+        try {
+
+            // open input stream test.txt for reading purpose.
+            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\Desktop\\Big data\\imdbparser\\countries.list")));
+
+            while ((thisLine = br.readLine()) != null) {
+
+                if (thisLine.indexOf('(') == -1 || thisLine.indexOf('\t') == -1) continue;
+                String movie = thisLine.substring(0,thisLine.lastIndexOf(')') -1);
+                String country = thisLine.substring(thisLine.lastIndexOf('\t')+1);
+                sb.append(movie);
+                sb.append(';');
+                sb.append(country);
+                sb.append('\n');
+                pw.write(sb.toString());
+                sb = new StringBuilder();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+        pw.write(sb.toString());
+        pw.close();
+        System.out.println("done!");
     }
 
 }
