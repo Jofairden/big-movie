@@ -192,7 +192,8 @@ public class Main {
 
         })));
     }
-    private static void parseGenresParser() throws java.io.IOException{
+
+    private static void parseGenresParser() throws java.io.IOException {
         header.set(1);
         AtomicReference<String> lastKnownName = new AtomicReference<>("");
         AtomicInteger count = new AtomicInteger(1);
@@ -202,7 +203,7 @@ public class Main {
                 try {
                     if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
 
-                        String movie = line.substring(0,line.lastIndexOf(')'));
+                        String movie = line.substring(0, line.lastIndexOf(')'));
                         String genre = line.substring(line.lastIndexOf('\t') + 1);
                         sb.append(movie);
                         sb.append(';');
@@ -214,11 +215,8 @@ public class Main {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-        }
-        else{
-            header.incrementAndGet();
-
-        }})));
+            }
+        })));
     }
 
     private static void parseLocationsParser() throws java.io.IOException{
