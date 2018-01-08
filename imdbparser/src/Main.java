@@ -23,9 +23,8 @@ public class Main {
             //parseMovies();
             //parseRunningtimes();
             //parseActors();
-            parseSoundTracksParser();
-            //parseCountriesParser();
-            //parseCountries();
+            //parseSoundTracksParser();
+            parseCountriesParser();
             //parseGenresParser();
            // parseRatings();
            // parseLocationsParser();
@@ -181,9 +180,12 @@ public class Main {
 
                     String movie = line.substring(0,line.lastIndexOf(')') -1);
                     String country = line.substring(line.lastIndexOf('\t')+1);
+                    String year = getYear(line);
                     sb.append(movie);
                     sb.append(';');
                     sb.append(country);
+                    sb.append(';');
+                    sb.append(year);
                     sb.append('\n');
                     writer.write(sb.toString());
                     sb = new StringBuilder();
@@ -284,6 +286,10 @@ public class Main {
 	            return line.substring(index + 1, index + 5);
             }
             else{
+	            if (index -1 == -1){
+	                index = -1;
+	                continue;
+                }
 	            index = line.substring(0,index -1).lastIndexOf('(');
             }
         }
