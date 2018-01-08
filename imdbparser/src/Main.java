@@ -1,11 +1,11 @@
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.io.*;
 
 public class Main {
 	
@@ -20,11 +20,11 @@ public class Main {
 
 		try {
 
-            //parseMovies();
+            parseMovies();
             //parseRunningtimes();
             //parseActors();
             //parseSoundtracks();
-            parseCountries();
+            //parseCountries();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,13 +39,28 @@ public class Main {
         Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
         Pattern moviesPatternMovies = Pattern.compile("(.+?)(?=\\s\\().*(?=[\\d|?]{4})(.*)");
 
+        AtomicReference<String> lastKnownName = new AtomicReference<>("");
+        AtomicInteger count = new AtomicInteger(1);
+
         System.out.println(String.format("Parsed movies.list in %s seconds", parser.streamFile("movies.list", (line, writer) -> {
             if (header.get() > 15) {
                 Matcher seriesMatcher = seriesPatternMovies.matcher(line);
                 Matcher moviesMatcher = moviesPatternMovies.matcher(line);
                 if (!seriesMatcher.matches() && moviesMatcher.matches()) {
                     try {
-                        writer.write(moviesMatcher.replaceAll("$1 - $2\n"));
+                        String title = moviesMatcher.replaceAll("$1");
+                        String year = moviesMatcher.replaceAll("$2");
+
+                        if (title.equalsIgnoreCase(lastKnownName.get()))
+                        {
+                            count.incrementAndGet();
+                        }
+                        else {
+                            count.set(1);
+                            lastKnownName.set(title);
+                        }
+
+                        writer.write(String.format("%s,%s,%s\n",title,year,count));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -61,13 +76,29 @@ public class Main {
         Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
         Pattern moviesPatternRunningTimes = Pattern.compile("(.+?)(?=\\s\\(\\d{4,})(.+?)(?=\\t)(.+?)([0-9]+).*");
 
+        AtomicReference<String> lastKnownName = new AtomicReference<>("");
+        AtomicInteger count = new AtomicInteger(1);
+
         System.out.println(String.format("Parsed running-times.list in %s seconds", parser.streamFile("running-times.list", (line, writer) -> {
             if (header.get() > 14) {
                 Matcher seriesMatcher = seriesPatternMovies.matcher(line);
                 Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
+
                 if (!seriesMatcher.matches() && moviesMatcher.matches()) {
                     try {
-                        writer.write(moviesMatcher.replaceAll("$1 - $4 min.\n"));
+                        String title = moviesMatcher.replaceAll("$1");
+                        String year = moviesMatcher.replaceAll("$2");
+
+                        if (title.equalsIgnoreCase(lastKnownName.get()))
+                        {
+                            count.incrementAndGet();
+                        }
+                        else {
+                            count.set(1);
+                            lastKnownName.set(title);
+                        }
+
+                        writer.write(String.format("%s,%s,%s\n",title,year,count));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
