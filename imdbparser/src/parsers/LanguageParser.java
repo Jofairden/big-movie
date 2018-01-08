@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 	Authors: Fadi
 	@todo: parsed year still needs separation between year and roman numerals, roman numeral = movie with the same name released in the same year
  */
+// Will parse to the following: title;year;language;occurrence
 public final class LanguageParser extends Parser {
 
 	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");

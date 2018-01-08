@@ -8,6 +8,9 @@ import java.util.Map;
 
 public final class ImdbUtils {
 	
+	/*
+		Will convert any given roman string to a decimal output
+	 */
 	public static int romanToDecimal(java.lang.String romanNumber) {
 		int decimal = 0;
 		int lastNumber = 0;
@@ -57,6 +60,7 @@ public final class ImdbUtils {
 		return decimal;
 	}
 	
+	// If nested functions were a thing, this would be part of the above
 	private static int processDecimal(int decimal, int lastNumber, int lastDecimal) {
 		if (lastNumber > decimal) {
 			return lastDecimal - decimal;
@@ -66,6 +70,9 @@ public final class ImdbUtils {
 	}
 	
 	
+	/*
+		Author: Jildert
+	 */
 	public static String getYear(String line) {
 		int index = line.lastIndexOf('(');
 		while (index != -1) {
@@ -83,6 +90,10 @@ public final class ImdbUtils {
 		return "????";
 	}
 	
+	/*
+		Authors: Daniël, Jeroen
+	 */
+	// Will flush the actors hashmap, and write whichever were remaining
 	public static void cleanActorsMap(Map<Integer,ActorModel> actors, Box<Integer> count, Writer writer, int number) {
 		if (count.value >= number) {
 			actors.forEach((x, y) -> {

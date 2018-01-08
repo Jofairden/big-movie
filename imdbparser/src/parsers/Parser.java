@@ -7,10 +7,14 @@ import java.io.Writer;
 /*
 	Authors: Daniël Zondervan
  */
+// The abstract Parser class defines how a parser exists,
+// but how it exactly behaves is defined by the deriving party iself
 public abstract class Parser {
 	
+	// an attached writer
 	protected Writer writer;
 	
+	// attach a writer, it's attached by the global handler
 	public void attachWriter(Writer writer) {
 		this.writer = writer;
 	}
@@ -48,14 +52,15 @@ public abstract class Parser {
 		return writeLine != null && !writeLine.isEmpty();
 	}
 	
-	// Clear the parser, in this case simply reset the line to be written
+	// Clear the parser,
+	// in this case simply reset the line to be written and clear any attached writer
 	public void clear() {
 		writeLine = "";
 		writer = null;
 	}
 	
-	// Write the line
-	public void write(Writer writer) {
+	// Write the line, implying a writer is attached
+	public void write() {
 		try {
 			writer.write(writeLine);
 		} catch (IOException e) {

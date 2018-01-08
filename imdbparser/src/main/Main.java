@@ -12,6 +12,17 @@ import java.util.Map;
 	Movies/Series pattern base by Daniël
 	
 	© 2018
+	
+	Individual parsers are located in the parser package
+	Base abstract class is the Parser class
+	Individual models are located in the model package
+	
+	Main ties everything together, but with smart code remains small
+	The data source names are 'connected' to their respective parser,
+	after which they can be handled through the global parser handler.
+	
+	The handler will make use of input sources found in data\raw
+	and will write any output to data\parsed
  */
 public class Main {
 	

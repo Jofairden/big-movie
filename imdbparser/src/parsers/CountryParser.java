@@ -1,10 +1,12 @@
 package parsers;
 
-/* Authors: Jildert
+/*
+	Authors: Jildert
  */
 
 import main.ImdbUtils;
 
+// Will parse to the following: title;country;year;occurrence
 public final class CountryParser extends Parser {
 	
 	private String lastKnownName;
@@ -33,7 +35,6 @@ public final class CountryParser extends Parser {
 		} else {
 			count = 0;
 		}
-		
 		
 		super.writeLine = String.format("%s;%s;%s;%s\n", movie.trim(), country, year, count);
 		lastKnownName = movieYear;

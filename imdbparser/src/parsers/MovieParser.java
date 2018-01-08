@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 /*
 	Authors: Daniël Zondervan
  */
+// Will parse to the following: title;year;occurrence
 public final class MovieParser extends Parser {
 	
 	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");

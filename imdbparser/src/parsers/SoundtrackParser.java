@@ -6,6 +6,7 @@ import main.ImdbUtils;
 	Authors: Jildert
 	@todo: wrong parsing for name: sometimes skips first letter, titles end on " with whitespace, but don't start with "
  */
+// Will parse to the following: movie;track;year;occurrence
 public final class SoundtrackParser extends Parser {
 	
 	private String movie;
@@ -36,7 +37,7 @@ public final class SoundtrackParser extends Parser {
 			if (movieYear.equals(lastKnownName)) {
 				++count;
 			} else {
-				count = 1;
+				count = 0;
 			}
 			lastKnownName = movieYear;
 			
