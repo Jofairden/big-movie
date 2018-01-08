@@ -30,13 +30,16 @@ public final class SoundtrackParser extends Parser {
 	public void parseLine(String line) {
 		if (line.length() > 2 && line.charAt(0) == '#' && line.indexOf('"') != -1) {
 			movie = line.substring(3, line.lastIndexOf(ImdbUtils.getYear(line)) - 1);
-			if (movie.equals(lastKnownName)) {
+			year = ImdbUtils.getYear(line);
+			String movieYear = String.format("%s%s", movie, year);
+			
+			if (movieYear.equals(lastKnownName)) {
 				++count;
 			} else {
 				count = 1;
 			}
-			lastKnownName = movie;
-			year = ImdbUtils.getYear(line);
+			lastKnownName = movieYear;
+			
 		} else if (!movie.isEmpty()) {
 			if (line.length() > 0 && line.charAt(0) == '-') {
 				String soundTrack = line.substring(2);

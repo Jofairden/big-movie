@@ -24,17 +24,18 @@ public final class CountryParser extends Parser {
 	@Override
 	public void parseLine(String line) {
 		String movie = line.substring(0, line.lastIndexOf(ImdbUtils.getYear(line)) - 1);
+		String country = line.substring(line.lastIndexOf('\t') + 1);
+		String year = ImdbUtils.getYear(line);
+		String movieYear = String.format("%s%s", movie, year);
 		
-		if (movie.equals(lastKnownName)) {
+		if (movieYear.equals(lastKnownName)) {
 			++count;
 		} else {
 			count = 0;
 		}
 		
-		String country = line.substring(line.lastIndexOf('\t') + 1);
-		String year = ImdbUtils.getYear(line);
 		
 		super.writeLine = String.format("%s,%s,%s,%s\n", movie.trim(), country, year, count);
-		lastKnownName = movie;
+		lastKnownName = movieYear;
 	}
 }

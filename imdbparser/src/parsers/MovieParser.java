@@ -37,8 +37,9 @@ public final class MovieParser extends Parser {
 			
 			final String title = moviesMatcher.replaceAll("$1");
 			final String year = moviesMatcher.replaceAll("$2");
+			String movieYear = String.format("%s%s", title, year);
 			
-			if (title.equalsIgnoreCase(lastKnownName)) {
+			if (movieYear.equalsIgnoreCase(lastKnownName)) {
 				++count;
 			} else {
 				count = 0;
@@ -46,6 +47,7 @@ public final class MovieParser extends Parser {
 			}
 			
 			super.writeLine = String.format("%s,%s,%s\n", title, year, count);
+			lastKnownName = movieYear;
 		}
 	}
 }
