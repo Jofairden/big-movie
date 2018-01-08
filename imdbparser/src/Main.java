@@ -24,11 +24,11 @@ public class Main {
             //parseRunningtimes();
             //parseActors();
             //parseSoundTracksParser();
-            parseCountriesParser();
+            //parseCountriesParser();
             //parseCountries();
-            //parseGenres();
+            //parseGenresParser();
 
-            //parseLocations();
+            parseLocationsParser();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -192,139 +192,67 @@ public class Main {
 
         })));
     }
+    private static void parseGenresParser() throws java.io.IOException{
+        header.set(1);
+        AtomicReference<String> lastKnownName = new AtomicReference<>("");
+        AtomicInteger count = new AtomicInteger(1);
+        System.out.println(String.format("Parsed genres.list in %s seconds", parser.streamFile("genres.list", (line, writer) -> {
+            StringBuilder sb = new StringBuilder();
+            if (header.get() > 385) {
+                try {
+                    if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
 
-
-    private static void parseCountries() throws java.io.IOException{
-        PrintWriter pw = new PrintWriter(new File("countries.csv"));
-        StringBuilder sb = new StringBuilder();
-        sb.append("movie");
-        sb.append(';');
-        sb.append("country");
-        sb.append('\n');
-        pw.write(sb.toString());
-        sb = new StringBuilder();
-
-
-        String thisLine = null;
-
-        try {
-
-            // open input stream test.txt for reading purpose.
-            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\temporaryaccess\\countries.list")));
-
-            while ((thisLine = br.readLine()) != null) {
-
-                if (thisLine.indexOf('(') == -1 || thisLine.indexOf('\t') == -1) continue;
-                String movie = thisLine.substring(0,thisLine.lastIndexOf(')') -1);
-                String country = thisLine.substring(thisLine.lastIndexOf('\t')+1);
-                sb.append(movie);
-                sb.append(';');
-                sb.append(country);
-                sb.append('\n');
-                pw.write(sb.toString());
-                sb = new StringBuilder();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
+                        String movie = line.substring(0,line.lastIndexOf(')'));
+                        String genre = line.substring(line.lastIndexOf('\t') + 1);
+                        sb.append(movie);
+                        sb.append(';');
+                        sb.append(genre);
+                        sb.append('\n');
+                        writer.write(sb.toString());
+                        sb = new StringBuilder();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
+        else{
+            header.incrementAndGet();
 
-
-        pw.write(sb.toString());
-        pw.close();
-        System.out.println("done!");
+        }})));
     }
 
-    private static  void parseGenres() throws java.io.IOException{
-        PrintWriter pw = new PrintWriter(new File("genres.csv"));
-        StringBuilder sb = new StringBuilder();
-        sb.append("movie");
-        sb.append(';');
-        sb.append("genre");
-        sb.append('\n');
-        pw.write(sb.toString());
-        sb = new StringBuilder();
+    private static void parseLocationsParser() throws java.io.IOException{
+        header.set(1);
+        AtomicReference<String> lastKnownName = new AtomicReference<>("");
+        AtomicInteger count = new AtomicInteger(1);
+        System.out.println(String.format("Parsed locations.list in %s seconds", parser.streamFile("locations.list", (line, writer) -> {
+            StringBuilder sb = new StringBuilder();
+            if (header.get() > 14) {
+                try {
+                    if (line.lastIndexOf(')') != -1) {
 
 
-        String thisLine = null;
+                        String movie = line.substring(0, line.lastIndexOf(')'));
+                        String locations = line.substring(line.lastIndexOf('\t') + 1);
+                        String[] locationArray = locations.split(",");
 
-        try {
-
-            // open input stream test.txt for reading purpose.
-            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\temporaryaccess\\genres.list")));
-
-            for (int i = 1 ; i < 385; i ++){
-                br.readLine();
-            }
-
-            while ((thisLine = br.readLine()) != null) {
-                String movie = thisLine.substring(0,thisLine.lastIndexOf(')'));
-                String genre = thisLine.substring(thisLine.lastIndexOf('\t') + 1);
-                sb.append(movie);
-                sb.append(';');
-                sb.append(genre);
-                sb.append('\n');
-                pw.write(sb.toString());
-                sb = new StringBuilder();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-
-        pw.write(sb.toString());
-        pw.close();
-        System.out.println("done!");
-    }
-
-
-    private static  void parseLocations() throws java.io.IOException{
-        PrintWriter pw = new PrintWriter(new File("locations.csv"));
-        StringBuilder sb = new StringBuilder();
-        sb.append("movie");
-        sb.append(';');
-        sb.append("location");
-        sb.append('\n');
-        pw.write(sb.toString());
-        sb = new StringBuilder();
-
-
-        String thisLine = null;
-        String movie = null;
-        String locations = null;
-
-
-        try {
-
-            // open input stream test.txt for reading purpose.
-            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\temporaryaccess\\locations.list")));
-
-            for (int i = 1 ; i < 14; i ++){
-                br.readLine();
-            }
-
-            while ((thisLine = br.readLine()) != null) {
-
-                if (thisLine.lastIndexOf(')') == -1) continue;
-
-                movie = thisLine.substring(0, thisLine.lastIndexOf(')'));
-                locations = thisLine.substring(thisLine.lastIndexOf('\t') + 1);
-                String[] locationArray = locations.split(",");
-                for(int i = 0 ; i < locationArray.length ; i++){
-                    sb.append(movie);
-                    sb.append(';');
-                    sb.append(locationArray[i].replaceAll("\\s+",""));
-                    sb.append('\n');
-                    pw.write(sb.toString());
-                    sb = new StringBuilder();
+                        for(int i = 0 ; i < locationArray.length ; i++){
+                            sb.append(movie);
+                            sb.append(';');
+                            sb.append(locationArray[i].replaceAll("\\s+",""));
+                            sb.append('\n');
+                            writer.write(sb.toString());
+                            sb = new StringBuilder();
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+            else{
+                header.incrementAndGet();
 
-
-        pw.write(sb.toString());
-        pw.close();
-        System.out.println("done!");
+            }})));
     }
+
 }
