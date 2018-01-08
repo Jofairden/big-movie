@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public final class GenreParser extends Parser {
 
 	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-	private final Pattern moviesPatternGenre = Pattern.compile("(.*)(\\()(\\d{4}|\\?{4})()(\\/?\\w*|)(\\))(.*)([A-Z][a-z]*)");
+	private final Pattern moviesPatternGenre = Pattern.compile("(.*)(\\()(\\d{4}|\\?{1,})()(\\/?\\w*|)(\\))(.*)([A-Z][a-z]*)");
 
 	private int header;
 
@@ -20,7 +20,7 @@ public final class GenreParser extends Parser {
 
 	@Override
 	public boolean canParse(String line) {
-		return ++header > 28;
+		return ++header > 455;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public final class RunningTimeParser extends Parser {
 	
 	private int header;
 	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-	private final Pattern moviesPatternRunningTimes = Pattern.compile("(.+)\\((\\d{4}|\\?{4})(\\/?\\w*|)(\\))(.+?)([0-9]+)");
+	private final Pattern moviesPatternRunningTimes = Pattern.compile("(.+)\\((\\d{4}|\\?{1,})(\\/?\\w*|)(\\))(.+?)([0-9]+)");
 	
 	public RunningTimeParser(String inputFile) {
 		super(inputFile);

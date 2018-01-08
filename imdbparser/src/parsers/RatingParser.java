@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public final class RatingParser extends Parser {
 	
 	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-	private final Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\()(\\d{4}|\\?{4})(\\/?\\w*|)\\)");
+	private final Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\()(\\d{4}|\\?{1,})(\\/?\\w*|)\\)");
 	
 	private int header;
 	

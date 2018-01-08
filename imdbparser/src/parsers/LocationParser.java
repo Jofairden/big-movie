@@ -1,40 +1,35 @@
 package parsers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /*
 	Authors:
 	@todo: wrong parsing for name, example: "#1 Single" (2006,USA,
  */
 public final class LocationParser extends Parser {
-	
+
+	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
+	private final Pattern moviesPatternLocation = Pattern.compile("(.*)\\((\\d{4}|\\?{1,})(\\/\\w*)?\\)?(\\s\\(.{1,2}\\))?\\s*(.*)");
+
 	private int header;
-	private String lastKnownName;
-	private int count;
-	
+
 	public LocationParser(String inputFile) {
 		super(inputFile);
 	}
-	
+
 	@Override
 	public boolean canParse(String line) {
-		return ++header > 14 && line.lastIndexOf(')') != -1;
+		return ++header > 17;
 	}
-	
+
 	@Override
 	public void parseLine(String line) {
-		String movie = line.substring(0, line.lastIndexOf(')'));
-		if (movie.equals(lastKnownName)) {
-			++count;
-		} else {
-			count = 1;
-		}
-		
-		String locations = line.substring(line.lastIndexOf('\t') + 1);
-		String[] locationArray = locations.split(",");
-		
-		for (String aLocationArray : locationArray) {
-			lastKnownName = movie;
-			super.writeLine = String.format("%s,%s,\n", movie, aLocationArray.replaceAll("\\s+", ""));
-			
+		Matcher seriesMatcher = seriesPatternMovies.matcher(line);
+		Matcher moviesMatcher = moviesPatternLocation.matcher(line);
+
+		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
+			super.writeLine = moviesMatcher.replaceAll("$1;$2$3;$5 \n");
 		}
 	}
 }
