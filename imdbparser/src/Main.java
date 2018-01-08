@@ -23,12 +23,12 @@ public class Main {
             //parseMovies();
             //parseRunningtimes();
             //parseActors();
-            //parseSoundTracksParser();
+            parseSoundTracksParser();
             //parseCountriesParser();
             //parseCountries();
             //parseGenresParser();
-            parseRatings();
-            parseLocationsParser();
+           // parseRatings();
+           // parseLocationsParser();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -140,6 +140,7 @@ public class Main {
         AtomicReference<String> lastKnownName = new AtomicReference<>("");
         AtomicInteger count = new AtomicInteger(1);
         AtomicReference<String> movie  = new AtomicReference<>("");
+        AtomicReference<String> year  = new AtomicReference<>("");
         System.out.println(String.format("Parsed soundtracks.list in %s seconds", parser.streamFile("soundtracks.list", (line, writer) -> {
             StringBuilder sb = new StringBuilder();
 
@@ -147,13 +148,15 @@ public class Main {
                     if (line.length() > 2 && line.charAt(0) == '#' && line.indexOf('"') != -1) {
 
                         movie.set(line.substring(3, line.lastIndexOf('"')));
-                        //year = thisLine.substring(thisLine.indexOf('(' + 1 ), 4);
+                        year.set(getYear(line));
                     } else if (movie.get() != "") {
                         if (line.length() > 0 && line.charAt(0) == '-') {
                             String soundTrack = line.substring(2);
                             sb.append(movie.get());
                             sb.append(';');
                             sb.append(soundTrack);
+                            sb.append(';');
+                            sb.append(year);
                             sb.append('\n');
                             writer.write((sb.toString()));
                         }
@@ -273,5 +276,18 @@ public class Main {
             } else
                 header.incrementAndGet();
         })));
+    }
+    private static String getYear(String line){
+	    int index = line.lastIndexOf('(');
+	    while (index != -1){
+	        if (Character.isDigit(line.charAt(index + 1)) && line.length() > index + 5){
+	            return line.substring(index + 1, index + 5);
+            }
+            else{
+	            index = line.substring(0,index -1).lastIndexOf('(');
+            }
+        }
+
+        return "????";
     }
 }
