@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public final class RatingParser extends Parser {
 	
 	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-	private final Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\()(\\d{4}\\/?(I+|V|))\\)");
+	private final Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\()(\\d{4}|\\?{4})(\\/?\\w*|)\\)");
 	
 	private int header;
 	
@@ -29,7 +29,7 @@ public final class RatingParser extends Parser {
 		Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
 		
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = moviesMatcher.replaceAll("$2,$3,$4,$6$7 \n");
+			super.writeLine = moviesMatcher.replaceAll("$2;$3;$4;$6$7 \n");
 		}
 	}
 }
