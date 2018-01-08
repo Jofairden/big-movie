@@ -25,7 +25,9 @@ public class Main {
             //parseActors();
             //parseSoundtracks();
             //parseCountries();
-            parseGenres();
+            //parseGenres();
+
+            parseLocations();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -222,6 +224,58 @@ public class Main {
                 sb.append('\n');
                 pw.write(sb.toString());
                 sb = new StringBuilder();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+        pw.write(sb.toString());
+        pw.close();
+        System.out.println("done!");
+    }
+
+
+    private static  void parseLocations() throws java.io.IOException{
+        PrintWriter pw = new PrintWriter(new File("locations.csv"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("movie");
+        sb.append(';');
+        sb.append("location");
+        sb.append('\n');
+        pw.write(sb.toString());
+        sb = new StringBuilder();
+
+
+        String thisLine = null;
+        String movie = null;
+        String locations = null;
+
+
+        try {
+
+            // open input stream test.txt for reading purpose.
+            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\temporaryaccess\\locations.list")));
+
+            for (int i = 1 ; i < 14; i ++){
+                br.readLine();
+            }
+
+            while ((thisLine = br.readLine()) != null) {
+
+                if (thisLine.lastIndexOf(')') == -1) continue;
+
+                movie = thisLine.substring(0, thisLine.lastIndexOf(')'));
+                locations = thisLine.substring(thisLine.lastIndexOf('\t') + 1);
+                String[] locationArray = locations.split(",");
+                for(int i = 0 ; i < locationArray.length ; i++){
+                    sb.append(movie);
+                    sb.append(';');
+                    sb.append(locationArray[i].replaceAll("\\s+",""));
+                    sb.append('\n');
+                    pw.write(sb.toString());
+                    sb = new StringBuilder();
+                }
             }
         } catch(Exception e) {
             e.printStackTrace();
