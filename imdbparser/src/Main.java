@@ -192,48 +192,7 @@ public class Main {
 
         })));
     }
-
-
-    private static void parseCountries() throws java.io.IOException{
-        PrintWriter pw = new PrintWriter(new File("countries.csv"));
-        StringBuilder sb = new StringBuilder();
-        sb.append("movie");
-        sb.append(';');
-        sb.append("country");
-        sb.append('\n');
-        pw.write(sb.toString());
-        sb = new StringBuilder();
-
-
-        String thisLine = null;
-
-        try {
-
-            // open input stream test.txt for reading purpose.
-            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\temporaryaccess\\countries.list")));
-
-            while ((thisLine = br.readLine()) != null) {
-
-                if (thisLine.indexOf('(') == -1 || thisLine.indexOf('\t') == -1) continue;
-                String movie = thisLine.substring(0,thisLine.lastIndexOf(')') -1);
-                String country = thisLine.substring(thisLine.lastIndexOf('\t')+1);
-                sb.append(movie);
-                sb.append(';');
-                sb.append(country);
-                sb.append('\n');
-                pw.write(sb.toString());
-                sb = new StringBuilder();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-
-        pw.write(sb.toString());
-        pw.close();
-        System.out.println("done!");
-    }
-
+    
     private static  void parseGenres() throws java.io.IOException{
         PrintWriter pw = new PrintWriter(new File("genres.csv"));
         StringBuilder sb = new StringBuilder();
