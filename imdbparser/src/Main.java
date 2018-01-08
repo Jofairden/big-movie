@@ -25,6 +25,7 @@ public class Main {
             //parseActors();
             //parseSoundtracks();
             //parseCountries();
+            parseGenres();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -197,7 +198,7 @@ public class Main {
         try {
 
             // open input stream test.txt for reading purpose.
-            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\Desktop\\Big data\\imdbparser\\countries.list")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\temporaryaccess\\countries.list")));
 
             while ((thisLine = br.readLine()) != null) {
 
@@ -221,4 +222,45 @@ public class Main {
         System.out.println("done!");
     }
 
+    private static  void parseGenres() throws java.io.IOException{
+        PrintWriter pw = new PrintWriter(new File("genres.csv"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("movie");
+        sb.append(';');
+        sb.append("genre");
+        sb.append('\n');
+        pw.write(sb.toString());
+        sb = new StringBuilder();
+
+
+        String thisLine = null;
+
+        try {
+
+            // open input stream test.txt for reading purpose.
+            BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\Jildert\\temporaryaccess\\genres.list")));
+
+            for (int i = 1 ; i < 385; i ++){
+                br.readLine();
+            }
+
+            while ((thisLine = br.readLine()) != null) {
+                String movie = thisLine.substring(0,thisLine.lastIndexOf(')'));
+                String genre = thisLine.substring(thisLine.lastIndexOf('\t') + 1);
+                sb.append(movie);
+                sb.append(';');
+                sb.append(genre);
+                sb.append('\n');
+                pw.write(sb.toString());
+                sb = new StringBuilder();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+        pw.write(sb.toString());
+        pw.close();
+        System.out.println("done!");
+    }
 }
