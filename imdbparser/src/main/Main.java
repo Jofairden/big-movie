@@ -35,6 +35,7 @@ public class Main {
 			put("running-times", RunningTimeParser.class);
 			put("language", LanguageParser.class);
 			put("actors", ActorParser.class);
+			put("actresses", ActorParser.class);
 		}};
 		
 		// loop every parser map
