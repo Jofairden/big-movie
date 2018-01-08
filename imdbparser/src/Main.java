@@ -27,13 +27,15 @@ public class Main {
             //parseMovies();
             //parseRunningtimes();
             parseActors();
+            parseRunningtimes();
+            //parseActors();
             //parseSoundTracksParser();
             //parseCountriesParser();
-            //parseCountries();
             //parseGenresParser();
-
             //parseLocationsParser();
-
+           // parseRatings();
+           // parseLocationsParser();
+            LanguageParser();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -78,43 +80,6 @@ public class Main {
         })));
     }
 
-    private static void parseRunningtimes() throws IOException {
-        header.set(1);
-
-        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-        Pattern moviesPatternRunningTimes = Pattern.compile("(.+?)(?=\\s\\(\\d{4,})(.+?)(?=\\t)(.+?)([0-9]+).*");
-
-        AtomicReference<String> lastKnownName = new AtomicReference<>("");
-        AtomicInteger count = new AtomicInteger(1);
-
-        System.out.println(String.format("Parsed running-times.list in %s seconds", parser.streamFile("running-times.list", (line, writer) -> {
-            if (header.get() > 14) {
-                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
-                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
-
-                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-                    try {
-                        String title = moviesMatcher.replaceAll("$1");
-                        String year = moviesMatcher.replaceAll("$2");
-
-                        if (title.equalsIgnoreCase(lastKnownName.get()))
-                        {
-                            count.incrementAndGet();
-                        }
-                        else {
-                            count.set(1);
-                            lastKnownName.set(title);
-                        }
-
-                        writer.write(String.format("%s,%s,%s\n",title,year,count));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else
-                header.incrementAndGet();
-        })));
-    }
 
     private static void parseActors() throws IOException {
         header.set(1);
@@ -227,20 +192,32 @@ public class Main {
         AtomicReference<String> lastKnownName = new AtomicReference<>("");
         AtomicInteger count = new AtomicInteger(1);
         AtomicReference<String> movie  = new AtomicReference<>("");
+        AtomicReference<String> year  = new AtomicReference<>("");
         System.out.println(String.format("Parsed soundtracks.list in %s seconds", parser.streamFile("soundtracks.list", (line, writer) -> {
             StringBuilder sb = new StringBuilder();
 
                 try {
                     if (line.length() > 2 && line.charAt(0) == '#' && line.indexOf('"') != -1) {
 
-                        movie.set(line.substring(3, line.lastIndexOf('"')));
-                        //year = thisLine.substring(thisLine.indexOf('(' + 1 ), 4);
+                        movie.set(line.substring(3, line.lastIndexOf(getYear(line)) -1 ));
+                        if (movie.get().equals(lastKnownName.get())){
+                            count.incrementAndGet();
+                        }
+                        else{
+                            count.set(1);
+                        }
+                        lastKnownName.set(movie.get());
+                        year.set(getYear(line));
                     } else if (movie.get() != "") {
                         if (line.length() > 0 && line.charAt(0) == '-') {
                             String soundTrack = line.substring(2);
                             sb.append(movie.get());
                             sb.append(';');
                             sb.append(soundTrack);
+                            sb.append(';');
+                            sb.append(year);
+                            sb.append(';');
+                            sb.append(count.get());
                             sb.append('\n');
                             writer.write((sb.toString()));
                         }
@@ -263,14 +240,29 @@ public class Main {
             try {
                 if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
 
-                    String movie = line.substring(0,line.lastIndexOf(')') -1);
+
+                    String movie = line.substring(0, line.lastIndexOf(getYear(line)) -1 );
+
+                    if (movie.equals(lastKnownName.get())){
+                        count.incrementAndGet();
+                    }
+                    else{
+                        count.set(1);
+                    }
+
                     String country = line.substring(line.lastIndexOf('\t')+1);
+                    String year = getYear(line);
                     sb.append(movie);
                     sb.append(';');
                     sb.append(country);
+                    sb.append(';');
+                    sb.append(year);
+                    sb.append(';');
+                    sb.append(count.get());
                     sb.append('\n');
                     writer.write(sb.toString());
                     sb = new StringBuilder();
+                    lastKnownName.set(movie);
                 }
             }
             catch(IOException e){
@@ -290,18 +282,34 @@ public class Main {
                 try {
                     if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
 
-                        String movie = line.substring(0, line.lastIndexOf(')'));
+                        String year = getYear(line);
+                        String movie = line.substring(0, line.lastIndexOf(getYear(line)) -1 );
+                        if (movie.equals(lastKnownName.get())){
+                            count.incrementAndGet();
+                        }
+                        else{
+                            count.set(1);
+                        }
+
                         String genre = line.substring(line.lastIndexOf('\t') + 1);
                         sb.append(movie);
                         sb.append(';');
                         sb.append(genre);
+                        sb.append(';');
+                        sb.append(year);
+                        sb.append(';');
+                        sb.append(count.get());
                         sb.append('\n');
                         writer.write(sb.toString());
                         sb = new StringBuilder();
+                        lastKnownName.set(movie);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+            else{
+                header.incrementAndGet();
             }
         })));
     }
@@ -318,6 +326,13 @@ public class Main {
 
 
                         String movie = line.substring(0, line.lastIndexOf(')'));
+                        if (movie.equals(lastKnownName.get())){
+                            count.incrementAndGet();
+                        }
+                        else{
+                            count.set(1);
+                        }
+
                         String locations = line.substring(line.lastIndexOf('\t') + 1);
                         String[] locationArray = locations.split(",");
 
@@ -328,6 +343,7 @@ public class Main {
                             sb.append('\n');
                             writer.write(sb.toString());
                             sb = new StringBuilder();
+                            lastKnownName.set(movie);
                         }
                     }
                 } catch (IOException e) {
@@ -339,7 +355,7 @@ public class Main {
 
             }})));
     }
-
+    
     public static int romanToDecimal(java.lang.String romanNumber) {
         int decimal = 0;
         int lastNumber = 0;
@@ -397,4 +413,86 @@ public class Main {
         }
     }
 
+    private static void parseRatings() throws IOException {
+        header.set(1);
+
+        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\(.+?\\))");
+
+        System.out.println(String.format("Parsed Movie Ratings", parser.streamFile("ratings.list", (line, writer) -> {
+            if (header.get() > 28) {
+                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
+                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
+                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
+                    try {
+                        writer.write(moviesMatcher.replaceAll("$2 - $3 - $4 \n"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else
+                header.incrementAndGet();
+        })));
+    }
+    private static String getYear(String line){
+	    int index = line.lastIndexOf('(');
+	    while (index != -1){
+	        if (Character.isDigit(line.charAt(index + 1)) && line.length() > index + 5){
+	            return line.substring(index + 1, index + 5);
+            }
+            else{
+	            if (index -1 == -1){
+	                index = -1;
+	                continue;
+                }
+	            index = line.substring(0,index -1).lastIndexOf('(');
+            }
+        }
+
+        return "????";
+    }
+
+    private static void LanguageParser() throws IOException {
+        header.set(1);
+        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("(.*)(\\([0-9]{4})(.*)(\\t)([A-Z].+)");
+        System.out.println(String.format("Parsed Movie Language", parser.streamFile("language.list", (line, writer) -> {
+            if (header.get() > 14) {
+                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
+                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
+                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
+                    try {
+                        writer.write(moviesMatcher.replaceAll("$1 ; $5 \n"));
+                    } catch (IOException var7) {
+                        var7.printStackTrace();
+                    }
+                }
+            } else {
+                header.incrementAndGet();
+            }
+
+        })));
+    }
+
+    private static void parseRunningtimes() throws IOException {
+        header.set(1);
+        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("(.+) \\((\\d{4})(.+?)([0-9]+)");
+        System.out.println(String.format("Parsed Movie running-times", parser.streamFile("running-times.list", (line, writer) -> {
+            if (header.get() > 17) {
+                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
+                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
+                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
+                    try {
+                        writer.write(moviesMatcher.replaceAll("$1 ; $4 minuten \n"));
+                    } catch (IOException var7) {
+                        var7.printStackTrace();
+                    }
+                }
+            } else {
+                header.incrementAndGet();
+            }
+
+        })));
+    }
 }
