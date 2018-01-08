@@ -21,7 +21,7 @@ public class Main {
 		try {
 
             //parseMovies();
-            //parseRunningtimes();
+            parseRunningtimes();
             //parseActors();
             //parseSoundTracksParser();
             //parseCountriesParser();
@@ -73,43 +73,6 @@ public class Main {
         })));
     }
 
-    private static void parseRunningtimes() throws IOException {
-        header.set(1);
-
-        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-        Pattern moviesPatternRunningTimes = Pattern.compile("(.+?)(?=\\s\\(\\d{4,})(.+?)(?=\\t)(.+?)([0-9]+).*");
-
-        AtomicReference<String> lastKnownName = new AtomicReference<>("");
-        AtomicInteger count = new AtomicInteger(1);
-
-        System.out.println(String.format("Parsed running-times.list in %s seconds", parser.streamFile("running-times.list", (line, writer) -> {
-            if (header.get() > 14) {
-                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
-                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
-
-                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-                    try {
-                        String title = moviesMatcher.replaceAll("$1");
-                        String year = moviesMatcher.replaceAll("$2");
-
-                        if (title.equalsIgnoreCase(lastKnownName.get()))
-                        {
-                            count.incrementAndGet();
-                        }
-                        else {
-                            count.set(1);
-                            lastKnownName.set(title);
-                        }
-
-                        writer.write(String.format("%s,%s,%s\n",title,year,count));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else
-                header.incrementAndGet();
-        })));
-    }
 
     private static void parseActors() throws IOException {
         header.set(1);
@@ -353,6 +316,28 @@ public class Main {
                 if (!seriesMatcher.matches() && moviesMatcher.matches()) {
                     try {
                         writer.write(moviesMatcher.replaceAll("$1 ; $5 \n"));
+                    } catch (IOException var7) {
+                        var7.printStackTrace();
+                    }
+                }
+            } else {
+                header.incrementAndGet();
+            }
+
+        })));
+    }
+
+    private static void parseRunningtimes() throws IOException {
+        header.set(1);
+        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("(.+) \\((\\d{4})(.+?)([0-9]+)");
+        System.out.println(String.format("Parsed Movie running-times", parser.streamFile("running-times.list", (line, writer) -> {
+            if (header.get() > 17) {
+                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
+                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
+                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
+                    try {
+                        writer.write(moviesMatcher.replaceAll("$1 ; $4 minuten \n"));
                     } catch (IOException var7) {
                         var7.printStackTrace();
                     }
