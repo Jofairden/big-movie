@@ -151,7 +151,7 @@ public class Main {
                             count.incrementAndGet();
                         }
                         else{
-                            count.set(0);
+                            count.set(1);
                         }
                         lastKnownName.set(movie.get());
                         year.set(getYear(line));
@@ -194,7 +194,7 @@ public class Main {
                         count.incrementAndGet();
                     }
                     else{
-                        count.set(0);
+                        count.set(1);
                     }
 
                     String country = line.substring(line.lastIndexOf('\t')+1);
@@ -235,7 +235,7 @@ public class Main {
                             count.incrementAndGet();
                         }
                         else{
-                            count.set(0);
+                            count.set(1);
                         }
 
                         String genre = line.substring(line.lastIndexOf('\t') + 1);
@@ -277,7 +277,7 @@ public class Main {
                             count.incrementAndGet();
                         }
                         else{
-                            count.set(0);
+                            count.set(1);
                         }
 
                         String locations = line.substring(line.lastIndexOf('\t') + 1);
