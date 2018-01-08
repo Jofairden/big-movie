@@ -23,9 +23,9 @@ public class Main {
             //parseMovies();
             //parseRunningtimes();
             //parseActors();
-            parseSoundTracksParser();
+            //parseSoundTracksParser();
             //parseCountriesParser();
-            //parseGenresParser();
+            parseGenresParser();
            // parseRatings();
            // parseLocationsParser();
 
@@ -229,7 +229,8 @@ public class Main {
                 try {
                     if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
 
-                        String movie = line.substring(0, line.lastIndexOf(')'));
+                        String year = getYear(line);
+                        String movie = line.substring(0, line.lastIndexOf(getYear(line)) -1 );
                         if (movie.equals(lastKnownName.get())){
                             count.incrementAndGet();
                         }
@@ -241,6 +242,10 @@ public class Main {
                         sb.append(movie);
                         sb.append(';');
                         sb.append(genre);
+                        sb.append(';');
+                        sb.append(year);
+                        sb.append(';');
+                        sb.append(count.get());
                         sb.append('\n');
                         writer.write(sb.toString());
                         sb = new StringBuilder();
@@ -249,6 +254,9 @@ public class Main {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+            else{
+                header.incrementAndGet();
             }
         })));
     }
