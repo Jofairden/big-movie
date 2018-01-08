@@ -46,7 +46,7 @@ public final class MovieParser extends Parser {
 				lastKnownName = title;
 			}
 			
-			super.writeLine = String.format("%s,%s,%s\n", title, year, count);
+			super.writeLine = String.format("%s;%s;%s\n", title, year, count);
 			lastKnownName = movieYear;
 		}
 	}
