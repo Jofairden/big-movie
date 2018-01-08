@@ -24,13 +24,13 @@ public class Main {
 
 		try {
 
-            parseMovies();
+            //parseMovies();
             parseRunningtimes();
-            parseActors();
-            parseSoundTracksParser();
-            parseCountriesParser();
-            parseGenresParser();
-            parseLocationsParser();
+            //parseActors();
+            //parseSoundTracksParser();
+            //parseCountriesParser();
+           // parseGenresParser();
+            //parseLocationsParser();
             parseRatings();
             LanguageParser();
 
@@ -415,7 +415,7 @@ public class Main {
         header.set(1);
 
         Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-        Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\(.+?\\))");
+        Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\()(\\d{4}\\/?(I+|V|))\\)");
 
         System.out.println(String.format("Parsed Movie Ratings", parser.streamFile("ratings.list", (line, writer) -> {
             if (header.get() > 28) {
@@ -423,7 +423,7 @@ public class Main {
                 Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
                 if (!seriesMatcher.matches() && moviesMatcher.matches()) {
                     try {
-                        writer.write(moviesMatcher.replaceAll("$2 - $3 - $4 \n"));
+                        writer.write(moviesMatcher.replaceAll("$2;$3;$4;$6$7 \n"));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -453,14 +453,14 @@ public class Main {
     private static void LanguageParser() throws IOException {
         header.set(1);
         Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-        Pattern moviesPatternRunningTimes = Pattern.compile("(.*)(\\([0-9]{4})(.*)(\\t)([A-Z].+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("(.*)\\(((\\d{4}\\/?(I+|V|))\\))(.*?)(\\t)(\\w+)");
         System.out.println(String.format("Parsed Movie Language", parser.streamFile("language.list", (line, writer) -> {
             if (header.get() > 14) {
                 Matcher seriesMatcher = seriesPatternMovies.matcher(line);
                 Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
                 if (!seriesMatcher.matches() && moviesMatcher.matches()) {
                     try {
-                        writer.write(moviesMatcher.replaceAll("$1 ; $5 \n"));
+                        writer.write(moviesMatcher.replaceAll("$1;$3$4;$7 \n"));
                     } catch (IOException var7) {
                         var7.printStackTrace();
                     }
@@ -475,14 +475,14 @@ public class Main {
     private static void parseRunningtimes() throws IOException {
         header.set(1);
         Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
-        Pattern moviesPatternRunningTimes = Pattern.compile("(.+) \\((\\d{4})(.+?)([0-9]+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("(.+) \\((\\d{4}\\/?(I+|))(\\))(.+?)([0-9]+)");
         System.out.println(String.format("Parsed Movie running-times", parser.streamFile("running-times.list", (line, writer) -> {
             if (header.get() > 17) {
                 Matcher seriesMatcher = seriesPatternMovies.matcher(line);
                 Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
                 if (!seriesMatcher.matches() && moviesMatcher.matches()) {
                     try {
-                        writer.write(moviesMatcher.replaceAll("$1 ; $4 minuten \n"));
+                        writer.write(moviesMatcher.replaceAll("$1;$2$3;$6 minuten \n"));
                     } catch (IOException var7) {
                         var7.printStackTrace();
                     }
