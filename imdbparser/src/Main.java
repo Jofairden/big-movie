@@ -25,10 +25,10 @@ public class Main {
             //parseActors();
             //parseSoundTracksParser();
             //parseCountriesParser();
-            parseGenresParser();
+            //parseGenresParser();
            // parseRatings();
            // parseLocationsParser();
-
+            LanguageParser();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -340,5 +340,27 @@ public class Main {
         }
 
         return "????";
+    }
+
+    private static void LanguageParser() throws IOException {
+        header.set(1);
+        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("(.*)(\\([0-9]{4})(.*)(\\t)([A-Z].+)");
+        System.out.println(String.format("Parsed Movie Language", parser.streamFile("language.list", (line, writer) -> {
+            if (header.get() > 14) {
+                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
+                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
+                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
+                    try {
+                        writer.write(moviesMatcher.replaceAll("$1 ; $5 \n"));
+                    } catch (IOException var7) {
+                        var7.printStackTrace();
+                    }
+                }
+            } else {
+                header.incrementAndGet();
+            }
+
+        })));
     }
 }
