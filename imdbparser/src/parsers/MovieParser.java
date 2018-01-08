@@ -41,7 +41,7 @@ public final class MovieParser extends Parser {
 			if (title.equalsIgnoreCase(lastKnownName)) {
 				++count;
 			} else {
-				count = 1;
+				count = 0;
 				lastKnownName = title;
 			}
 			

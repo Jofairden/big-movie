@@ -1,5 +1,6 @@
 package parsers;
 
+import main.Box;
 import main.ImdbUtils;
 import models.ActorModel;
 import models.MovieModel;
@@ -22,14 +23,15 @@ public final class ActorParser extends Parser {
 	private final Map<Integer,ActorModel> actors = new HashMap<>();
 	private int lastKey;
 	private boolean canWrite;
-	private int count;
+	// int needs to be boxed to pass by refence to utils
+	private Box<Integer> count;
 	private int header;
 	
 	public ActorParser(String inputFile) {
 		super(inputFile);
 		lastKey = 0;
 		canWrite = true;
-		count = 0;
+		count = new Box<>(0);
 		header = 0;
 	}
 	
@@ -44,11 +46,11 @@ public final class ActorParser extends Parser {
 		List<String> split = Arrays.stream(line.split("\t")).filter(x -> x.length() > 0).collect(Collectors.toList());
 		
 		if (split.size() == 2) {
-			++count;
+			++count.value;
 			
 			String actorName = split.get(0);
 			String movieName = split.get(1);
-			int occurrence = 1;
+			int occurrence = 0;
 			String year = "0";
 			
 			if (actorName.contains("(")) {

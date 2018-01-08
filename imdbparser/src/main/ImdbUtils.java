@@ -83,25 +83,21 @@ public final class ImdbUtils {
 		return "????";
 	}
 	
-	public static void cleanActorsMap(Map<Integer,ActorModel> actors, int count, Writer writer, int number) {
-		if (count >= number) {
+	public static void cleanActorsMap(Map<Integer,ActorModel> actors, Box<Integer> count, Writer writer, int number) {
+		if (count.value >= number) {
 			actors.forEach((x, y) -> {
 				y.movies.forEach((a, b) -> {
 					try {
-						writer.write(String.format("%s,%s\n", y.Name(), b.Name()));
+						// write artist name, artist occurrence number, movie name, movie year
+						writer.write(String.format("%s;%s;%s;%s\n", y.name, y.occurence, b.name, b.year));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				});
-				try {
-					writer.write("\n");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			});
 			
 			actors.clear();
-			count = 0;
+			count.value = 0;
 		}
 	}
 }
