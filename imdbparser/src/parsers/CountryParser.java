@@ -15,7 +15,7 @@ public final class CountryParser extends Parser {
 	
 	@Override
 	public boolean canParse(String line) {
-		return !line.startsWith("\"") && line.indexOf('(') != -1 || line.indexOf('\t') != -1;
+		return !line.startsWith("\"") && (line.indexOf('(') != -1 || line.indexOf('\t') != -1);
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public final class CountryParser extends Parser {
 		String country = line.substring(line.lastIndexOf('\t') + 1);
 		String year = ImdbUtils.getYear(line);
 		
-		super.writeLine = String.format("%s,%s,%s,%s\n", movie, country, year, count);
+		super.writeLine = String.format("%s,%s,%s,%s\n", movie.trim(), country, year, count);
 		lastKnownName = movie;
 	}
 }
