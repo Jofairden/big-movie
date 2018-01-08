@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-	Authors:
+	Authors: Jildert, Fadi
 	@todo: wrong parsing for name, example: "#1 Single" (2006,USA,
  */
 public final class LocationParser extends Parser {

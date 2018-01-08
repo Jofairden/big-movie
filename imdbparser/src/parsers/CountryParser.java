@@ -1,5 +1,7 @@
 package parsers;
 
+/* Authors: Jildert
+ */
 import main.ImdbUtils;
 
 public final class CountryParser extends Parser {

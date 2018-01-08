@@ -3,7 +3,7 @@ package parsers;
 import main.ImdbUtils;
 
 /*
-	Authors:
+	Authors: Jildert
 	@todo: wrong parsing for name: sometimes skips first letter, titles end on " with whitespace, but don't start with "
  */
 public final class SoundtrackParser extends Parser {

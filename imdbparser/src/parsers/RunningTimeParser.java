@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-	Authors:
+	Authors: Fadi
 	@todo: parsed year still needs separation between year and roman numerals, roman numeral = movie with the same name released in the same year
  */
 public final class RunningTimeParser extends Parser {
