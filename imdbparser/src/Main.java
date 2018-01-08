@@ -23,8 +23,8 @@ public class Main {
             //parseMovies();
             //parseRunningtimes();
             //parseActors();
-            //parseSoundTracksParser();
-            parseCountriesParser();
+            parseSoundTracksParser();
+            //parseCountriesParser();
             //parseGenresParser();
            // parseRatings();
            // parseLocationsParser();
@@ -146,7 +146,14 @@ public class Main {
                 try {
                     if (line.length() > 2 && line.charAt(0) == '#' && line.indexOf('"') != -1) {
 
-                        movie.set(line.substring(3, line.lastIndexOf('"')));
+                        movie.set(line.substring(3, line.lastIndexOf(getYear(line)) -1 ));
+                        if (movie.get().equals(lastKnownName.get())){
+                            count.incrementAndGet();
+                        }
+                        else{
+                            count.set(0);
+                        }
+                        lastKnownName.set(movie.get());
                         year.set(getYear(line));
                     } else if (movie.get() != "") {
                         if (line.length() > 0 && line.charAt(0) == '-') {
@@ -156,6 +163,8 @@ public class Main {
                             sb.append(soundTrack);
                             sb.append(';');
                             sb.append(year);
+                            sb.append(';');
+                            sb.append(count.get());
                             sb.append('\n');
                             writer.write((sb.toString()));
                         }
@@ -178,7 +187,16 @@ public class Main {
             try {
                 if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
 
-                    String movie = line.substring(0,line.lastIndexOf(')') -1);
+
+                    String movie = line.substring(0, line.lastIndexOf(getYear(line)) -1 );
+
+                    if (movie.equals(lastKnownName.get())){
+                        count.incrementAndGet();
+                    }
+                    else{
+                        count.set(0);
+                    }
+
                     String country = line.substring(line.lastIndexOf('\t')+1);
                     String year = getYear(line);
                     sb.append(movie);
@@ -186,9 +204,12 @@ public class Main {
                     sb.append(country);
                     sb.append(';');
                     sb.append(year);
+                    sb.append(';');
+                    sb.append(count.get());
                     sb.append('\n');
                     writer.write(sb.toString());
                     sb = new StringBuilder();
+                    lastKnownName.set(movie);
                 }
             }
             catch(IOException e){
@@ -209,6 +230,13 @@ public class Main {
                     if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
 
                         String movie = line.substring(0, line.lastIndexOf(')'));
+                        if (movie.equals(lastKnownName.get())){
+                            count.incrementAndGet();
+                        }
+                        else{
+                            count.set(0);
+                        }
+
                         String genre = line.substring(line.lastIndexOf('\t') + 1);
                         sb.append(movie);
                         sb.append(';');
@@ -216,6 +244,7 @@ public class Main {
                         sb.append('\n');
                         writer.write(sb.toString());
                         sb = new StringBuilder();
+                        lastKnownName.set(movie);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -236,6 +265,13 @@ public class Main {
 
 
                         String movie = line.substring(0, line.lastIndexOf(')'));
+                        if (movie.equals(lastKnownName.get())){
+                            count.incrementAndGet();
+                        }
+                        else{
+                            count.set(0);
+                        }
+
                         String locations = line.substring(line.lastIndexOf('\t') + 1);
                         String[] locationArray = locations.split(",");
 
@@ -246,6 +282,7 @@ public class Main {
                             sb.append('\n');
                             writer.write(sb.toString());
                             sb = new StringBuilder();
+                            lastKnownName.set(movie);
                         }
                     }
                 } catch (IOException e) {
