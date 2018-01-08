@@ -27,7 +27,7 @@ public class Main {
             //parseCountriesParser();
             //parseCountries();
             //parseGenresParser();
-
+            parseRatings();
             parseLocationsParser();
 
 		} catch (IOException e) {
@@ -253,4 +253,25 @@ public class Main {
             }})));
     }
 
+    private static void parseRatings() throws IOException {
+        header.set(1);
+
+        Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
+        Pattern moviesPatternRunningTimes = Pattern.compile("\\s*(.{10})\\s*([0-9]*)\\s*([0-9].[0-9])\\s*(.*)(\\(.+?\\))");
+
+        System.out.println(String.format("Parsed Movie Ratings", parser.streamFile("ratings.list", (line, writer) -> {
+            if (header.get() > 28) {
+                Matcher seriesMatcher = seriesPatternMovies.matcher(line);
+                Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
+                if (!seriesMatcher.matches() && moviesMatcher.matches()) {
+                    try {
+                        writer.write(moviesMatcher.replaceAll("$2 - $3 - $4 \n"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else
+                header.incrementAndGet();
+        })));
+    }
 }
