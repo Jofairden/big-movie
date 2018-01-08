@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-	Authors:
+	Authors: Fadi
 	@todo: gaat fout op 9, Il buono, also needs roman numerals separated from year
  */
 public final class RatingParser extends Parser {

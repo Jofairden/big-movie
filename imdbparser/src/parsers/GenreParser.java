@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-	Authors: Jildert
+	Authors: Jildert, Fadi
 	@todo: problems parsing
  */
 public final class GenreParser extends Parser {
