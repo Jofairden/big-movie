@@ -24,18 +24,16 @@ public class Main {
 
 		try {
 
-            //parseMovies();
-            //parseRunningtimes();
-            parseActors();
+            parseMovies();
             parseRunningtimes();
-            //parseActors();
-            //parseSoundTracksParser();
-            //parseCountriesParser();
-            //parseGenresParser();
-            //parseLocationsParser();
-           // parseRatings();
-           // parseLocationsParser();
+            parseActors();
+            parseSoundTracksParser();
+            parseCountriesParser();
+            parseGenresParser();
+            parseLocationsParser();
+            parseRatings();
             LanguageParser();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -238,7 +236,7 @@ public class Main {
             StringBuilder sb = new StringBuilder();
 
             try {
-                if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
+                if (!line.startsWith("\"") && line.indexOf('(') != -1 || line.indexOf('\t') != -1) {
 
 
                     String movie = line.substring(0, line.lastIndexOf(getYear(line)) -1 );
@@ -355,7 +353,7 @@ public class Main {
 
             }})));
     }
-    
+
     public static int romanToDecimal(java.lang.String romanNumber) {
         int decimal = 0;
         int lastNumber = 0;
