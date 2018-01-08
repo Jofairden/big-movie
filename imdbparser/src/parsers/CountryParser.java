@@ -2,6 +2,7 @@ package parsers;
 
 /* Authors: Jildert
  */
+
 import main.ImdbUtils;
 
 public final class CountryParser extends Parser {
@@ -27,7 +28,7 @@ public final class CountryParser extends Parser {
 		if (movie.equals(lastKnownName)) {
 			++count;
 		} else {
-			count = 1;
+			count = 0;
 		}
 		
 		String country = line.substring(line.lastIndexOf('\t') + 1);
