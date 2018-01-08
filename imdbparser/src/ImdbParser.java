@@ -26,7 +26,7 @@ public class ImdbParser {
             inputStream = new FileInputStream(filePath + "\\data\\raw\\" + path);
             sc = new Scanner(inputStream, StandardCharsets.ISO_8859_1.name());
             writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(filePath + "\\data\\parsed\\" + path), StandardCharsets.UTF_8));
+                    new FileOutputStream(filePath + "\\data\\parsed\\" + path.replace("list", "csv")), StandardCharsets.UTF_8));
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();

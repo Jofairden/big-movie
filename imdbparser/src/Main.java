@@ -20,14 +20,15 @@ public class Main {
 
 		try {
 
-            parseMovies();
+            //parseMovies();
             //parseRunningtimes();
             //parseActors();
-            //parseSoundtracks();
+            //parseSoundTracksParser();
+            parseCountriesParser();
             //parseCountries();
             //parseGenres();
 
-            parseLocations();
+            //parseLocations();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -134,55 +135,64 @@ public class Main {
         })));
     }
 
-    private static void parseSoundtracks() throws java.io.IOException {
-        PrintWriter pw = new PrintWriter(new File("soundtracks.csv"));
-        StringBuilder sb = new StringBuilder();
-        sb.append("movie");
-        sb.append(';');
-        sb.append("soundtrack");
-        sb.append('\n');
-        pw.write(sb.toString());
-        sb = new StringBuilder();
+    private static void parseSoundTracksParser() throws java.io.IOException{
+        header.set(1);
+        AtomicReference<String> lastKnownName = new AtomicReference<>("");
+        AtomicInteger count = new AtomicInteger(1);
+        AtomicReference<String> movie  = new AtomicReference<>("");
+        System.out.println(String.format("Parsed soundtracks.list in %s seconds", parser.streamFile("soundtracks.list", (line, writer) -> {
+            StringBuilder sb = new StringBuilder();
 
+                try {
+                    if (line.length() > 2 && line.charAt(0) == '#' && line.indexOf('"') != -1) {
 
-        String thisLine = null;
-        String movie = null;
-        //String year = "2020";
-
-        try {
-
-            // open input stream test.txt for reading purpose.
-            BufferedReader br = new BufferedReader(new FileReader(new File("soundtracks.list")));
-
-            while ((thisLine = br.readLine()) != null) {
-                if (thisLine.length() > 2 && thisLine.charAt(0) ==  '#') {
-
-                    if (thisLine.indexOf('"') == -1) continue;
-
-                    movie = thisLine.substring(3, thisLine.lastIndexOf('"'));
-                    //year = thisLine.substring(thisLine.indexOf('(' + 1 ), 4);
-                }
-                else if (movie != null) {
-                    if (thisLine.length() > 0 && thisLine.charAt(0) == '-') {
-                        String soundTrack = thisLine.substring(2) + br.readLine();
-                        sb.append(movie);
-                        sb.append(';');
-                        sb.append(soundTrack);
-                        sb.append('\n');
-                        pw.write(sb.toString());
-                        sb = new StringBuilder();
+                        movie.set(line.substring(3, line.lastIndexOf('"')));
+                        //year = thisLine.substring(thisLine.indexOf('(' + 1 ), 4);
+                    } else if (movie.get() != "") {
+                        if (line.length() > 0 && line.charAt(0) == '-') {
+                            String soundTrack = line.substring(2);
+                            sb.append(movie.get());
+                            sb.append(';');
+                            sb.append(soundTrack);
+                            sb.append('\n');
+                            writer.write((sb.toString()));
+                        }
                     }
                 }
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+                    catch(IOException e){
+                        e.printStackTrace();
+                    }
 
-
-        pw.write(sb.toString());
-        pw.close();
-        System.out.println("done!");
+        })));
     }
+
+    private static void parseCountriesParser() throws java.io.IOException{
+        header.set(1);
+        AtomicReference<String> lastKnownName = new AtomicReference<>("");
+        AtomicInteger count = new AtomicInteger(1);
+        System.out.println(String.format("Parsed countries.list in %s seconds", parser.streamFile("countries.list", (line, writer) -> {
+            StringBuilder sb = new StringBuilder();
+
+            try {
+                if ((line.indexOf('(') != -1 || line.indexOf('\t') != -1)) {
+
+                    String movie = line.substring(0,line.lastIndexOf(')') -1);
+                    String country = line.substring(line.lastIndexOf('\t')+1);
+                    sb.append(movie);
+                    sb.append(';');
+                    sb.append(country);
+                    sb.append('\n');
+                    writer.write(sb.toString());
+                    sb = new StringBuilder();
+                }
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+
+        })));
+    }
+
 
     private static void parseCountries() throws java.io.IOException{
         PrintWriter pw = new PrintWriter(new File("countries.csv"));
