@@ -19,8 +19,6 @@ public final class SoundtrackParser extends Parser {
 		super(inputFile);
 		movie = "";
 		year = "";
-		count = 0;
-		lastKnownName = "";
 	}
 
 	@Override
@@ -33,14 +31,23 @@ public final class SoundtrackParser extends Parser {
 		if (line.length() > 2 && line.charAt(0) == '#') {
 			movie = line.substring(2, line.lastIndexOf(ImdbUtils.getYear(line)) - 1);
 			year = ImdbUtils.getYear(line);
+			count = 0;
 			String movieYear = String.format("%s%s", movie, year);
 
-			if (movieYear.equals(lastKnownName)) {
-				++count;
-			} else {
-				count = 0;
+			int indexRom = line.lastIndexOf("/I");
+			if (indexRom == -1) indexRom = line.lastIndexOf("/V");
+			if (indexRom == -1) indexRom = line.lastIndexOf("/X");
+			int lastIndexRom = indexRom;
+
+			if(indexRom != -1){
+				for (int i = lastIndexRom + 1; i < line.length() ; i ++){
+					if (line.charAt(i) == ')'){
+						lastIndexRom = i ;
+						break;
+					}
+				}
+				if (lastIndexRom > indexRom +1 )count = ImdbUtils.romanToDecimal(line.substring(indexRom + 1, lastIndexRom));
 			}
-			lastKnownName = movieYear;
 
 		} else if (!movie.isEmpty()) {
 			if (line.length() > 0 && line.charAt(0) == '-') {
