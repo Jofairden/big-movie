@@ -44,7 +44,7 @@ public final class SoundtrackParser extends Parser {
 		} else if (!movie.isEmpty()) {
 			if (line.length() > 0 && line.charAt(0) == '-') {
 				String soundTrack = line.substring(2);
-				super.writeLine = String.format("%s;%s;%s;%s\n", movie, soundTrack, year, count);
+				super.writeLine = String.format("%s||%s||%s||%s\n", movie, soundTrack, year, count);
 			}
 		}
 	}

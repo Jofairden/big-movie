@@ -29,7 +29,7 @@ public final class RatingParser extends Parser {
 		Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
 		
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = moviesMatcher.replaceAll("$2;$3;$4;$6$7 \n");
+			super.writeLine = moviesMatcher.replaceAll("$2||$3||$4||$6$7 \n");
 		}
 	}
 }

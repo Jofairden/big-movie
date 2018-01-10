@@ -28,7 +28,7 @@ public final class RunningTimeParser extends Parser {
 		Matcher seriesMatcher = seriesPatternMovies.matcher(line);
 		Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = moviesMatcher.replaceAll("$1;$2$3;$6 \n");
+			super.writeLine = moviesMatcher.replaceAll("$1||$2$3||$6 \n");
 		}
 	}
 }

@@ -36,7 +36,7 @@ public final class CountryParser extends Parser {
 			count = 0;
 		}
 		
-		super.writeLine = String.format("%s;%s;%s;%s\n", movie.trim(), country, year, count);
+		super.writeLine = String.format("%s||%s||%s||%s\n", movie.trim(), country, year, count);
 		lastKnownName = movieYear;
 	}
 }
