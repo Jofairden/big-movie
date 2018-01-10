@@ -63,6 +63,8 @@ public class Main {
 					parser.setOverrideInput("actors");
 				else if (f.equalsIgnoreCase("actressesNames"))
 					parser.setOverrideInput("actresses");
+				else if (f.equalsIgnoreCase("SoundTrackPrimary"))
+					parser.setOverrideInput("soundtracks");
 
 				long takenTime = parserHandler.handleParse(parser);
 				if (takenTime > 0)

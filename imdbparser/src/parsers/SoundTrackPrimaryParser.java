@@ -51,7 +51,7 @@ public final class SoundTrackPrimaryParser extends Parser {
                 super.writeLine = String.format("%s||%s \n", track , line);
                 tracks.put((track + line).hashCode(), (track + line));
             }
-            
+
             written = false;
         }
         else if (line.length() > 2 && line.charAt(0) != '#' && line.charAt(2) == '"' && line.charAt(0) == '-') {
