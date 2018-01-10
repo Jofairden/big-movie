@@ -47,7 +47,7 @@ public final class SoundTrackPrimaryParser extends Parser {
 
             written = false;
         }
-        else if (line.length() > 2 && line.charAt(0) != '#' && line.charAt(0) == '-') {
+        else if (line.length() > 2 && line.charAt(0) != '#' && line.charAt(2) == '"' && line.charAt(0) == '-') {
             track =  line.substring(2);
             written = true;
         }
