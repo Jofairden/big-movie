@@ -5,7 +5,6 @@ import sun.invoke.empty.Empty;
 
 /*
 	Authors: Jildert
-	@todo: wrong parsing for name: sometimes skips first letter, titles end on " with whitespace, but don't start with "
  */
 // Will parse to the following: movie;track;year;occurrence
 public final class SoundtrackParser extends Parser {
@@ -14,6 +13,7 @@ public final class SoundtrackParser extends Parser {
 	private String year;
 	private int count;
 	private String lastKnownName;
+	private boolean written = false;
 
 	public SoundtrackParser(String inputFile) {
 		super(inputFile);
@@ -28,7 +28,11 @@ public final class SoundtrackParser extends Parser {
 
 	@Override
 	public void parseLine(String line) {
-		if (line.length() > 2 && line.charAt(0) == '#' && line.charAt(2) != '"') {
+		if (written){
+			super.writeLine = String.format("||%s \n", line);
+			written = false;
+		}
+		else if (line.length() > 2 && line.charAt(0) == '#' && line.charAt(2) != '"') {
 			movie = line.substring(2, line.lastIndexOf(ImdbUtils.getYear(line)) - 1);
 			year = ImdbUtils.getYear(line);
 			count = 0;
@@ -52,11 +56,10 @@ public final class SoundtrackParser extends Parser {
 		} else if (!movie.isEmpty()) {
 			if (line.length() > 0 && line.charAt(0) == '-') {
 				String soundTrack = line.substring(2);
-				if(!soundTrack.contains("--------------------------------------------------"))
-				{
-					super.writeLine = String.format("%s||%s||%s||%s\n", movie, soundTrack, year, count);
+				if(!soundTrack.contains("--------------------------------------------------")) {
+					super.writeLine = String.format("%s||%s||%s||%s", movie, soundTrack, year, count);
+					written = true;
 				}
-
 			}
 		}
 	}
