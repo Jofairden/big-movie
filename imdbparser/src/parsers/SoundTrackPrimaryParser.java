@@ -18,9 +18,7 @@ public final class SoundTrackPrimaryParser extends Parser {
     private boolean written;
     private final Map<Integer, String> tracks = new HashMap<>();
     private int lastKey;
-    private boolean canWrite;
     private Box<Integer> count;
-    private int header;
 
 
 
@@ -29,21 +27,16 @@ public final class SoundTrackPrimaryParser extends Parser {
         track = "";
         written = false;
         lastKey = 0;
-        canWrite = true;
-        count = new Box<>(0);
-        header = 0;
     }
 
     @Override
     public boolean canParse(String line) {
-        return canWrite;
+        return true;
     }
 
     @Override
     public void parseLine(String line) {
         if (written){
-
-            ++count.value;
 
             lastKey = (track + line).hashCode();
 
@@ -54,7 +47,7 @@ public final class SoundTrackPrimaryParser extends Parser {
 
             written = false;
         }
-        else if (line.length() > 2 && line.charAt(0) != '#' && line.charAt(2) == '"' && line.charAt(0) == '-') {
+        else if (line.length() > 2 && line.charAt(0) != '#' && line.charAt(0) == '-') {
             track =  line.substring(2);
             written = true;
         }
