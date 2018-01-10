@@ -31,9 +31,9 @@ public final class LocationParser extends Parser {
 		Matcher moviesMatcher = moviesPatternLocation.matcher(line);
 		
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = String.format("%s;%s;%s\n",
+			super.writeLine = String.format("%s||%s||%s\n",
 					moviesMatcher.replaceAll("$1").trim(),
-					moviesMatcher.replaceAll("$2;$5"),
+					moviesMatcher.replaceAll("$2||$5"),
 					ImdbUtils.romanToDecimal(moviesMatcher.replaceAll("$3")));
 		}
 	}

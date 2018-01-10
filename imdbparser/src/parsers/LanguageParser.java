@@ -32,9 +32,9 @@ public final class LanguageParser extends Parser {
 		
 		if (!seriesMatcher.matches() && moviesMatcher.matches())
 			super.writeLine =
-					String.format("%s;%s;%s\n",
+					String.format("%s||%s||%s\n",
 							moviesMatcher.replaceAll("$1").trim(),
-							moviesMatcher.replaceAll("$2;$10"),
+							moviesMatcher.replaceAll("$2||$10"),
 							ImdbUtils.romanToDecimal(moviesMatcher.replaceAll("$4")));
 	}
 }

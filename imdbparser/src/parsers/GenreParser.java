@@ -34,9 +34,9 @@ public final class GenreParser extends Parser {
 		Matcher moviesMatcher = moviesPatternGenre.matcher(line);
 		
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = String.format("%s;%s;%s\n",
+			super.writeLine = String.format("%s||%s||%s\n",
 					moviesMatcher.replaceAll("$1").trim(),
-					moviesMatcher.replaceAll("$2;$5"),
+					moviesMatcher.replaceAll("$2||$5"),
 					ImdbUtils.romanToDecimal(moviesMatcher.replaceAll("$4")));
 		}
 	}
