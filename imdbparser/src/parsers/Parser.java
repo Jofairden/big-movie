@@ -10,7 +10,14 @@ import java.io.Writer;
 // The abstract Parser class defines how a parser exists,
 // but how it exactly behaves is defined by the deriving party iself
 public abstract class Parser {
-	
+
+	protected String overrideInput;
+
+	public void setOverrideInput(String overrideInput) {
+		if (this.overrideInput == null || this.overrideInput.isEmpty())
+			this.overrideInput = overrideInput;
+	}
+
 	// an attached writer
 	protected Writer writer;
 	
@@ -27,12 +34,16 @@ public abstract class Parser {
 	
 	// Returns the path to the input file
 	public String getInputPath() {
-		return String.format("%s\\data\\raw\\%s.list", new File("").getAbsolutePath(), inputFile);
+		return String.format("%s\\data\\raw\\%s.list", new File("").getAbsolutePath(), this.overrideInput != null && !this.overrideInput.isEmpty() ? this.overrideInput : inputFile);
 	}
 	
 	// Returns the path to the output file
 	public String getOutputPath() {
 		return String.format("%s\\data\\parsed\\%s.csv", new File("").getAbsolutePath(), inputFile);
+	}
+
+	public String getOutputFolderPath() {
+		return String.format("%s", new File("").getAbsolutePath());
 	}
 	
 	// ctor

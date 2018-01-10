@@ -89,7 +89,7 @@ public final class ImdbUtils {
 		
 		return "????";
 	}
-	
+
 	/*
 		Authors: Daniël, Jeroen
 	 */
@@ -100,7 +100,7 @@ public final class ImdbUtils {
 				y.movies.forEach((a, b) -> {
 					try {
 						// write artist name, artist occurrence number, movie name, movie year
-						writer.write(String.format("%s||%s||%s||%s\n", y.name, y.occurence, b.name, b.year));
+						writer.write(String.format("%s||%s||%s||%s\n", y.name, y.occurence, b.name.trim(), b.year));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

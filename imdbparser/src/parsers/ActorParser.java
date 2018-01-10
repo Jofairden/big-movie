@@ -5,10 +5,14 @@ import main.ImdbUtils;
 import models.ActorModel;
 import models.MovieModel;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static main.ImdbUtils.romanToDecimal;
@@ -22,7 +26,9 @@ import static main.ImdbUtils.romanToDecimal;
 // which requires us to keep track of at least 5 to 10 actors or so, and see if they were already found before.
 // This makes the code quite a bit more inefficient and slower, unfortunately
 public final class ActorParser extends Parser {
-	
+
+	Pattern yearPattern = Pattern.compile(".*\\((\\d{4}|\\?+)\\).*");
+
 	// Keep track of actors in a hashmap
 	private final Map<Integer,ActorModel> actors = new HashMap<>();
 	// The last key for the hashmap is tracked
@@ -67,22 +73,32 @@ public final class ActorParser extends Parser {
 			String actorName = split.get(0);
 			String movieName = split.get(1);
 			int occurrence = 0;
-			String year = "0";
+			String year = "????";
 			
 			if (actorName.contains("(")) {
 				occurrence = romanToDecimal(new StringBuilder(actorName).reverse().toString().split(" ")[0].replaceAll("[)|(]", ""));
 			}
 			if (movieName.contains("(")) {
-				year = movieName.split("\\(")[1].split("\\)")[0];
+
+				Matcher matcher = yearPattern.matcher(movieName);
+				if (matcher.matches())
+				{
+					year = matcher.replaceAll("$1");
+					String[] temp = year.split("/");
+					if (temp.length > 1)
+						year = temp[0];
+				}
 			}
-			
+
+			String combActorName = String.format("%s%s", actorName, occurrence);
+
 			// temp store actor hash
-			lastKey = actorName.hashCode();
+			lastKey = combActorName.hashCode();
 			
 			// Create actor, put the movie, put the actor
 			ActorModel actor = new ActorModel(actorName.split("\\(")[0].replace("(", "").trim(), occurrence);
 			actor.movies.putIfAbsent(movieName.hashCode(), new MovieModel(movieName.split("\\(")[0].replace("(", ""), year));
-			actors.putIfAbsent(actorName.hashCode(), actor);
+			actors.putIfAbsent(combActorName.hashCode(), actor);
 			// With a size of 1, we are on a line for a movie the previous actor played in
 		} else if (split.size() == 1) {
 			// When we hit a specific match of dashes, we reached eof after which we disallow further parsing
@@ -93,9 +109,16 @@ public final class ActorParser extends Parser {
 				// We can continue, clean up the movie like above and attach it to the actor
 				String movieName = split.get(0);
 				
-				String year = "0";
+				String year = "????";
 				if (movieName.contains("(")) {
-					year = movieName.split("\\(")[1].split("\\)")[0];
+					Matcher matcher = yearPattern.matcher(movieName);
+					if (matcher.matches())
+					{
+						year = matcher.replaceAll("$1");
+						String[] temp = year.split("/");
+						if (temp.length > 1)
+							year = temp[0];
+					}
 				}
 				actors.get(lastKey).movies.putIfAbsent(movieName.hashCode(), new MovieModel(movieName.split("\\(")[0].replace("(", ""), year));
 			}

@@ -47,6 +47,8 @@ public class Main {
 			put("language", LanguageParser.class);
 			put("actors", ActorParser.class);
 			put("actresses", ActorParser.class);
+			put("actorNames", ActorNameParser.class);
+			put("actressesNames", ActorNameParser.class);
 		}};
 		
 		// loop every parser map
@@ -56,6 +58,11 @@ public class Main {
 			try {
 				Constructor c = p.getConstructor(String.class);
 				Parser parser = (Parser) c.newInstance(f);
+				if (f.equalsIgnoreCase("actorNames"))
+					parser.setOverrideInput("actors");
+				else if (f.equalsIgnoreCase("actressesNames"))
+					parser.setOverrideInput("actresses");
+
 				long takenTime = parserHandler.handleParse(parser);
 				if (takenTime > 0)
 					System.out.println(String.format("Parsed %s in %s seconds", parser.inputFile, takenTime));
