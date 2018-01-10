@@ -39,6 +39,7 @@ public class Main {
 		Map<String,Class<? extends Parser>> parsers = new HashMap<String,Class<? extends Parser>>() {{
 			put("movies", MovieParser.class);
 			put("countries", CountryParser.class);
+			put("SoundTrackPrimary", SoundTrackPrimaryParser.class);
 			put("soundtracks", SoundtrackParser.class);
 			put("genres", GenreParser.class);
 			put("ratings", RatingParser.class);
