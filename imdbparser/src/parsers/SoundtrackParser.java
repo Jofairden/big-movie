@@ -28,7 +28,7 @@ public final class SoundtrackParser extends Parser {
 
 	@Override
 	public void parseLine(String line) {
-		if (line.length() > 2 && line.charAt(0) == '#') {
+		if (line.length() > 2 && line.charAt(0) == '#' && line.charAt(2) != '"') {
 			movie = line.substring(2, line.lastIndexOf(ImdbUtils.getYear(line)) - 1);
 			year = ImdbUtils.getYear(line);
 			count = 0;
@@ -54,7 +54,7 @@ public final class SoundtrackParser extends Parser {
 				String soundTrack = line.substring(2);
 				if(!soundTrack.contains("--------------------------------------------------"))
 				{
-					super.writeLine = String.format("%s;%s;%s;%s\n", movie, soundTrack, year, count);
+					super.writeLine = String.format("%s||%s||%s||%s\n", movie, soundTrack, year, count);
 				}
 
 			}
