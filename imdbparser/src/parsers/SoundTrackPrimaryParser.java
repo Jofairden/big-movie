@@ -1,6 +1,5 @@
 package parsers;
 
-import main.Box;
 import main.ImdbUtils;
 import sun.invoke.empty.Empty;
 
@@ -18,7 +17,6 @@ public final class SoundTrackPrimaryParser extends Parser {
     private boolean written;
     private final Map<Integer, String> tracks = new HashMap<>();
     private int lastKey;
-    private Box<Integer> count;
 
 
 
