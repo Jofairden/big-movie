@@ -6,6 +6,7 @@ CREATE TABLE `soundtracks` (
 	INDEX `id` (`id`),
 	INDEX `title` (`title`)
 )
+COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=655351
 ;
