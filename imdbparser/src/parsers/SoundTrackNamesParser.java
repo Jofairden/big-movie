@@ -1,26 +1,19 @@
 package parsers;
 
-import main.ImdbUtils;
-import sun.invoke.empty.Empty;
-
-import java.io.Console;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /*
-	Authors: Jildert
+	Authors: Jildert, Daniel
  */
 // Will parse to the following: track||composer
-public final class SoundTrackPrimaryParser extends Parser {
+public final class SoundTrackNamesParser extends Parser {
 
     private String track;
     private boolean written;
     private final Map<Integer, String> tracks = new HashMap<>();
     private int lastKey;
 
-
-
-    public SoundTrackPrimaryParser(String inputFile) {
+    public SoundTrackNamesParser(String inputFile) {
         super(inputFile);
         track = "";
         written = false;
@@ -39,7 +32,7 @@ public final class SoundTrackPrimaryParser extends Parser {
             lastKey = (track + line).hashCode();
 
             if (!tracks.containsKey(lastKey)){
-                super.writeLine = String.format("%s||%s \n", track , line);
+                super.writeLine = String.format("%s||%s \n", track , line.trim());
                 tracks.put((track + line).hashCode(), (track + line));
             }
 
