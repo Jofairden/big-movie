@@ -1,11 +1,14 @@
 package parsers;
 
+import main.ImdbUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-	Authors: Fadi
-	@todo: gaat fout op 9, Il buono, also needs roman numerals separated from year
+	Authors: Fadi (1e ver), Daniel (2e ver)
+
+	// -> votes, score, title, year, occurrence
  */
 public final class RatingParser extends Parser {
 	
@@ -29,7 +32,12 @@ public final class RatingParser extends Parser {
 		Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
 		
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = moviesMatcher.replaceAll("$2||$3||$4||$6$7 \n");
+			super.writeLine =
+					String.format("%s||%s||%s||%s\n",
+							moviesMatcher.replaceAll("$2||$3"),
+							moviesMatcher.replaceAll("$4").trim(),
+							moviesMatcher.replaceAll("$6"),
+							ImdbUtils.romanToDecimal(moviesMatcher.replaceAll("$7")));
 		}
 	}
 }
