@@ -9,9 +9,11 @@ public class MovieModel {
 	
 	public final String name;
 	public final String year;
+	public final int occurence;
 	
-	public MovieModel(String name, String year) {
+	public MovieModel(String name, String year, int occurence) {
 		this.name = name;
 		this.year = year;
+		this.occurence = occurence;
 	}
 }

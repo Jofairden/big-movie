@@ -60,7 +60,8 @@ public final class ActorParser extends Parser {
 	
 	@Override
 	public void parseLine(String line) {
-		
+
+		int occurenceMovie = 0;
 		// Split input line on tabs, and we filter any empty splits
 		List<String> split = Arrays.stream(line.split("\t")).filter(x -> x.length() > 0).collect(Collectors.toList());
 		
@@ -73,6 +74,7 @@ public final class ActorParser extends Parser {
 			String actorName = split.get(0);
 			String movieName = split.get(1);
 			int occurrence = 0;
+
 			String year = "????";
 			
 			if (actorName.contains("(")) {
@@ -97,10 +99,10 @@ public final class ActorParser extends Parser {
 			
 			// Create actor, put the movie, put the actor
 			ActorModel actor = new ActorModel(actorName.split("\\(")[0].replace("(", "").trim(), occurrence);
-			actor.movies.putIfAbsent(movieName.hashCode(), new MovieModel(movieName.split("\\(")[0].replace("(", ""), year));
+			actor.movies.putIfAbsent(movieName.hashCode(), new MovieModel(movieName.split("\\(")[0].replace("(", ""), year, occurenceMovie));
 			actors.putIfAbsent(combActorName.hashCode(), actor);
 			// With a size of 1, we are on a line for a movie the previous actor played in
-		} else if (split.size() == 1) {
+		} else if (split.size() == 1 ) {
 			// When we hit a specific match of dashes, we reached eof after which we disallow further parsing
 			if (line.equalsIgnoreCase("-----------------------------------------------------------------------------")) {
 				canWrite = false;
@@ -120,7 +122,26 @@ public final class ActorParser extends Parser {
 							year = temp[0];
 					}
 				}
-				actors.get(lastKey).movies.putIfAbsent(movieName.hashCode(), new MovieModel(movieName.split("\\(")[0].replace("(", ""), year));
+				occurenceMovie = 0;
+				//String movieYear = String.format("%s%s", movie, year);
+
+				int indexRom = line.lastIndexOf("/I");
+				if (indexRom == -1) indexRom = line.lastIndexOf("/V");
+				if (indexRom == -1) indexRom = line.lastIndexOf("/X");
+				int lastIndexRom = indexRom;
+
+				if(indexRom != -1) {
+					for (int i = lastIndexRom + 1; i < line.length(); i++) {
+						if (line.charAt(i) == ')') {
+							lastIndexRom = i;
+							break;
+						}
+					}
+					if (lastIndexRom > indexRom + 1)
+						occurenceMovie = ImdbUtils.romanToDecimal(line.substring(indexRom + 1, lastIndexRom-1));
+				}
+
+				actors.get(lastKey).movies.putIfAbsent(movieName.hashCode(), new MovieModel(movieName.split("\\(")[0].replace("(", ""), year, occurenceMovie));
 			}
 		} else {
 			// When we hit a blank line, we reset data needed, and flush the actors

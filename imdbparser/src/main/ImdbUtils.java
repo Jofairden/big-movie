@@ -100,7 +100,7 @@ public final class ImdbUtils {
 				y.movies.forEach((a, b) -> {
 					try {
 						// write artist name, artist occurrence number, movie name, movie year
-						writer.write(String.format("%s||%s||%s||%s\n", y.name, y.occurence, b.name.trim(), b.year));
+						if (b.name.trim().length() > 0 && b.name.trim().charAt(0) != '"') writer.write(String.format("%s||%s||%s||%s||%s\n", y.name, y.occurence, b.name.trim(), b.year, b.occurence));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
