@@ -1,11 +1,12 @@
 package parsers;
 
+import main.ImdbUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-	Authors: Fadi
-	@todo: parsed year still needs separation between year and roman numerals, roman numeral = movie with the same name released in the same year
+	Authors: Fadi (1e ver), Daniel (2e ver)
  */
 public final class RunningTimeParser extends Parser {
 	
@@ -28,7 +29,12 @@ public final class RunningTimeParser extends Parser {
 		Matcher seriesMatcher = seriesPatternMovies.matcher(line);
 		Matcher moviesMatcher = moviesPatternRunningTimes.matcher(line);
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = moviesMatcher.replaceAll("$1||$2$3||$6 \n");
+			super.writeLine =
+					String.format("%s||%s||%s||%s\n",
+							moviesMatcher.replaceAll("$1").trim(),
+							moviesMatcher.replaceAll("$2"),
+							moviesMatcher.replaceAll("$6"),
+							ImdbUtils.romanToDecimal(moviesMatcher.replaceAll("$3")));
 		}
 	}
 }
