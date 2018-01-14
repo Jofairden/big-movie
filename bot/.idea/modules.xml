@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bigmovie.bot.iml" filepath="$PROJECT_DIR$/.idea/modules/bigmovie.bot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bigmovie.bot_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bigmovie.bot_main.iml" group="bigmovie.bot" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bigmovie.bot_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bigmovie.bot_test.iml" group="bigmovie.bot" />
+    </modules>
+  </component>
+</project>
