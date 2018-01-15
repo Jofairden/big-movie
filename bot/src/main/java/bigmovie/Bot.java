@@ -40,6 +40,9 @@ public final class Bot extends ListenerAdapter {
 		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
 		bot.sortReplies();
 		bot.setSubroutine("jdbc", new JdbcSubroutine());
+		//bot.setSubroutine("send", new SendSubroutine(this));
+		bot.setSubroutine("system", new SystemSubroutine());
+
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
 		try {
