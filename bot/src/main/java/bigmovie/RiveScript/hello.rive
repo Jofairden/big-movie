@@ -1,0 +1,16 @@
+! version = 2.0
+
++ hello
+- Hello, human!
+
++ my name is *
+- <set name=<formal>> Nice to meet you, <get name>.
+
++ which films play in more than 1 country?
+- <call>jdbc localhost 3306 bigmovie root root SELECT title, COUNT(c.movie_id) AS total FROM movies AS m, country_movie AS c WHERE m.id = c.movie_id GROUP BY c.movie_id HAVING total > 1; </call>
+
++ which movies did _ _ *
+- <call>jdbc localhost 3306 bigmovie root root select title from movies limit 1</call>
+
++ *
+- I don't get it

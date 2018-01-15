@@ -23,11 +23,11 @@ public class JdbcSubroutine implements Subroutine {
         String db = args[2];
         String username = args[3];
         String password = args[4];
-        String sql = "";
-        String result = "";
+        StringBuilder sql = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         for (int i=5; i<args.length; i++) 
-            sql = sql + " " + args[i];
-        sql = sql.trim();
+            sql.append(" ").append(args[i]);
+        sql = new StringBuilder(sql.toString().trim());
 
         Connection connection = null;
         Statement statement = null;
@@ -45,30 +45,33 @@ public class JdbcSubroutine implements Subroutine {
                     "jdbc:mysql://" + host + ":" + port + "/" + db + "?autoReconnect=true&useSSL=false",
                     username, password);
             statement=(Statement) connection.createStatement();
-            resultSet=statement.executeQuery(sql);
+            resultSet=statement.executeQuery(sql.toString());
             while(resultSet.next()) {
                 int i = resultSet.getMetaData().getColumnCount();
                 for (int j = 1; j <= i; j++) {
-                    if (result.equals("")) {
-                        result = resultSet.getString(j);
+                    if (result.toString().equals("")) {
+                        result = new StringBuilder(resultSet.getString(j));
                     } else {
-                        result += resultSet.getString(j) + " ";
+                        result.append(resultSet.getString(j)).append(" ");
                     }
                 }
-                if (!result.equals("")) 
-                    result += "\n";
+                if (!result.toString().equals(""))
+                    result.append("\n");
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ignored) {
         } finally{
             try {
-                resultSet.close();
-                statement.close();
-                connection.close();
-            } catch (SQLException ex) {
+                if (resultSet != null)
+                    resultSet.close();
+                if (statement != null)
+                    statement.close();
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException ignored) {
             }
         }
         
-        return result;
+        return result.toString();
     }
     
 }
