@@ -9,8 +9,10 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import com.rivescript.RiveScript;
+import net.dv8tion.jda.core.requests.restaction.MessageAction;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
@@ -40,7 +42,7 @@ public final class Bot extends ListenerAdapter {
 		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
 		bot.sortReplies();
 		bot.setSubroutine("jdbc", new JdbcSubroutine());
-		//bot.setSubroutine("send", new SendSubroutine(this));
+		bot.setSubroutine("send", new SendSubroutine());
 		bot.setSubroutine("system", new SystemSubroutine());
 
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
@@ -76,6 +78,10 @@ public final class Bot extends ListenerAdapter {
 		else{
 			String reply = bot.reply(String.valueOf(chat_id), content);
 			MessageChannel channel = event.getChannel();
+
+			if (reply.startsWith("RGenreFile:")) {
+				channel.sendFile(new File(reply.substring(reply.indexOf('&' + 1)))).queue();
+			}
 			channel.sendMessage(reply).queue();
 		}
 	}

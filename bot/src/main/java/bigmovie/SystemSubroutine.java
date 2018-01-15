@@ -18,7 +18,7 @@ public class SystemSubroutine implements Subroutine {
 
         java.util.Scanner s;
         try {
-            s = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A");
+            s = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream());
             return s.hasNext() ? s.next() : "";
         } catch (IOException ex) {
             Logger.getLogger(SystemSubroutine.class.getName()).log(Level.SEVERE, null, ex);

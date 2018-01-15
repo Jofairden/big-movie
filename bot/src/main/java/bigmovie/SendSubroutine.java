@@ -22,30 +22,16 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
  * @author Aswin van Woudenberg
  */
 public class SendSubroutine implements Subroutine {
-    ListenerAdapter lisAdptr;
-    
-    public SendSubroutine(ListenerAdapter sender) {
-        lisAdptr = sender;
-    }
-    
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
         String type = args[0];
         if ("photo".equals(type)) {
             String f_id = args[1];
             String caption = "";
-            for (int i=2; i<args.length; i++) 
+            for (int i = 2; i < args.length; i++)
                 caption = caption + " " + args[i];
             caption = caption.trim();
-            //SendPhoto msg = new SendPhoto()
-            //        .setChatId(rs.currentUser())
-            //        .setNewPhoto(new File(f_id))
-            //        .setCaption(caption);
-           // try {
-            //    lisAdptr.sendPhoto(msg); // Call method to send the photo with caption
-           //} catch (TelegramApiException e) {
-           //     e.printStackTrace();
-           // }
+            return "RGenreFile: " + caption + "&" + f_id;
         }
         return "";
     }

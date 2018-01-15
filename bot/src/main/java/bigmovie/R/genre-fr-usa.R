@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-#install.packages("RMySQL")
+install.packages("RMySQL", repos= "http://cran.us.r-project.org")
 library(RMySQL)
 
 con <- dbConnect(MySQL(), dbname="database", user="root", password="")
