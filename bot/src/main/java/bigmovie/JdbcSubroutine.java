@@ -3,6 +3,9 @@ package bigmovie;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 import com.rivescript.macro.Subroutine;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +33,12 @@ public class JdbcSubroutine implements Subroutine {
         Statement statement = null;
         ResultSet resultSet = null;
 
-        //heb geen wachtwoord
-        password = "";
+        //pak DB password uit DbPassword.txt file
+        try {
+            password = BotUtils.Readfile("src/main/java/bigmovie/DbPassword.txt", StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             connection=(Connection) DriverManager.getConnection(
