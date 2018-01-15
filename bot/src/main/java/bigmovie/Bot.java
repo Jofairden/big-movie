@@ -10,6 +10,10 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 
 public final class Bot extends ListenerAdapter {
 	
@@ -30,15 +34,15 @@ public final class Bot extends ListenerAdapter {
 		return api;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
 		try {
 			api = new JDABuilder(AccountType.BOT)
-					.setToken("token")           //The token of the account that is logging in.
+					.setToken(BotUtils.Readfile("src/main/java/bigmovie/BotToken.txt", StandardCharsets.UTF_8)) //The token of the account that is logging in, get from file BotToken.txt
 					.addEventListener(new Bot())  //An instance of a class that will handle events.
 					.buildBlocking();  //There are 2 ways to login, blocking vs async. Blocking guarantees that JDA will be completely loaded.
-			api.getPresence().setGame(Game.watching("videos"));
+			api.getPresence().setGame(Game.watching("Porno"));
 			System.out.println("Bot ready! API loaded!");
 		} catch (LoginException | InterruptedException e) {
 			//If anything goes wrong in terms of authentication, this is the exception that will represent it
