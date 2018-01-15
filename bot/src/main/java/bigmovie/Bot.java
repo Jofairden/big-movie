@@ -19,7 +19,6 @@ import java.nio.file.FileSystems;
 public final class Bot extends ListenerAdapter {
 	
 	// Bot example © Groep 11
-	// Replace token! - @todo: make configuration file handling
 	// Build project: CTRL + F9
 	// Grade JavaExec: CTRL + SHIFT + F10
 	// OAuth2 URL Gen: https://discordapp.com/developers/tools/oauth2-url-generator/
@@ -73,10 +72,22 @@ public final class Bot extends ListenerAdapter {
 			MessageChannel channel = event.getChannel();
 			channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
 		}
-		else{
+		else if (content.startsWith("!")) {
 			String reply = bot.reply(String.valueOf(chat_id), content);
 			MessageChannel channel = event.getChannel();
-			channel.sendMessage(reply).queue();
+			if (!reply.isEmpty()) {
+				reply = reply.replace("\n", ", ").substring(0, 2000);
+				int last = reply.lastIndexOf(",");
+				reply = reply.substring(0, last);
+				channel.sendMessage(reply).queue();
+
+//				int a = reply.length() / 2000;
+//				for (int i = 0; i < a; i++) {
+//					channel.sendMessage(reply.substring(2000 * i, 2000 + 2000 * i)).queue();
+//				}
+
+			}
+
 		}
 	}
 }
