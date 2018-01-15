@@ -8,8 +8,13 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import com.rivescript.RiveScript;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 
 public final class Bot extends ListenerAdapter {
 	
@@ -29,16 +34,23 @@ public final class Bot extends ListenerAdapter {
 	public JDA getAPI() {
 		return api;
 	}
+	static RiveScript bot = new RiveScript();
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
+		bot.sortReplies();
+		bot.setSubroutine("jdbc", new JdbcSubroutine());
+		//bot.setSubroutine("send", new SendSubroutine(this));
+		bot.setSubroutine("system", new SystemSubroutine());
+
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
 		try {
 			api = new JDABuilder(AccountType.BOT)
-					.setToken("token")           //The token of the account that is logging in.
+					.setToken(BotUtils.Readfile("src/main/java/bigmovie/BotToken.txt", StandardCharsets.UTF_8)) //The token of the account that is logging in, get from file BotToken.txt
 					.addEventListener(new Bot())  //An instance of a class that will handle events.
 					.buildBlocking();  //There are 2 ways to login, blocking vs async. Blocking guarantees that JDA will be completely loaded.
-			api.getPresence().setGame(Game.watching("videos"));
+			api.getPresence().setGame(Game.watching("Porno"));
 			System.out.println("Bot ready! API loaded!");
 		} catch (LoginException | InterruptedException e) {
 			//If anything goes wrong in terms of authentication, this is the exception that will represent it
@@ -53,11 +65,18 @@ public final class Bot extends ListenerAdapter {
 		// We don't want to respond to other bot accounts, including ourselves
 		Message message = event.getMessage();
 		String content = message.getContentRaw();
+		long chat_id = event.getMessageIdLong();
+
 		// getContentRaw() is an atomic getter
 		// getContent() is a lazy getter which modifies the content for e.g. console view (strip discord formatting)
 		if (content.equals("!ping")) {
 			MessageChannel channel = event.getChannel();
 			channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
+		}
+		else{
+			String reply = bot.reply(String.valueOf(chat_id), content);
+			MessageChannel channel = event.getChannel();
+			channel.sendMessage(reply).queue();
 		}
 	}
 }
