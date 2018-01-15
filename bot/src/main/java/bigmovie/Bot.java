@@ -72,13 +72,13 @@ public final class Bot extends ListenerAdapter {
 			MessageChannel channel = event.getChannel();
 			channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
 		}
-		else if (content.startsWith("!")) {
-			String reply = bot.reply(String.valueOf(chat_id), content);
+		else if (content.toLowerCase().startsWith("bot")) {
+			String reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replaceFirst("bot", "").trim());
 			MessageChannel channel = event.getChannel();
 			if (!reply.isEmpty()) {
-				reply = reply.replace("\n", ", ").substring(0, 2000);
+				/*reply = reply.replace("\n", ", ").substring(0, 2000);
 				int last = reply.lastIndexOf(",");
-				reply = reply.substring(0, last);
+				reply = reply.substring(0, last);*/
 				channel.sendMessage(reply).queue();
 
 //				int a = reply.length() / 2000;
