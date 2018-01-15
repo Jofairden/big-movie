@@ -39,6 +39,7 @@ public final class Bot extends ListenerAdapter {
 	public static void main(String[] args) throws IOException {
 		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
 		bot.sortReplies();
+		bot.setSubroutine("jdbc", new JdbcSubroutine());
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
 		try {
