@@ -34,8 +34,11 @@ public final class Bot extends ListenerAdapter {
 	public JDA getAPI() {
 		return api;
 	}
+	static RiveScript bot = new RiveScript();
 	
 	public static void main(String[] args) throws IOException {
+		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
+		bot.sortReplies();
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
 		try {
@@ -58,11 +61,18 @@ public final class Bot extends ListenerAdapter {
 		// We don't want to respond to other bot accounts, including ourselves
 		Message message = event.getMessage();
 		String content = message.getContentRaw();
+		long chat_id = event.getMessageIdLong();
+
 		// getContentRaw() is an atomic getter
 		// getContent() is a lazy getter which modifies the content for e.g. console view (strip discord formatting)
 		if (content.equals("!ping")) {
 			MessageChannel channel = event.getChannel();
 			channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
+		}
+		else{
+			String reply = bot.reply(String.valueOf(chat_id), content);
+			MessageChannel channel = event.getChannel();
+			channel.sendMessage(reply).queue();
 		}
 	}
 }
