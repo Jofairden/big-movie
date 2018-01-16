@@ -32,13 +32,21 @@ public final class Bot extends ListenerAdapter {
 	// (db / settings and more)
 	
 	private static JDA api;
-	
-	public JDA getAPI() {
+	private static BotConfig config;
+
+	public static JDA getAPI() {
 		return api;
 	}
-	static RiveScript bot = new RiveScript();
+	public static BotConfig getConfig() { return config; }
+	public static RiveScript bot = new RiveScript();
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
+		try {
+			config = BotConfig.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
 		bot.sortReplies();
 		bot.setSubroutine("jdbc", new JdbcSubroutine());
@@ -49,10 +57,10 @@ public final class Bot extends ListenerAdapter {
 		// we would use AccountType.CLIENT
 		try {
 			api = new JDABuilder(AccountType.BOT)
-					.setToken(BotUtils.Readfile("src/main/java/bigmovie/BotToken.txt", StandardCharsets.UTF_8)) //The token of the account that is logging in, get from file BotToken.txt
+					.setToken(config.getTOKEN()) //The token of the account that is logging in
 					.addEventListener(new Bot())  //An instance of a class that will handle events.
 					.buildBlocking();  //There are 2 ways to login, blocking vs async. Blocking guarantees that JDA will be completely loaded.
-			api.getPresence().setGame(Game.watching("Porno"));
+			api.getPresence().setGame(Game.streaming("porn", "pornhub.com"));
 			System.out.println("Bot ready! API loaded!");
 		} catch (LoginException | InterruptedException e) {
 			//If anything goes wrong in terms of authentication, this is the exception that will represent it
@@ -82,7 +90,20 @@ public final class Bot extends ListenerAdapter {
                     String reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replaceFirst("bot", "").trim());
                     MessageChannel channel = event.getChannel();
 
+
 				if (!reply.isEmpty()) {
+
+					String path = reply.substring(reply.indexOf('&') + 1);
+					channel.sendFile(new File(path)).queue();
+					reply = "There it is! The graph produced by R";
+				}
+				/*reply = reply.replace("\n", ", ").substring(0, 2000);
+				int last = reply.lastIndexOf(",");
+				reply = reply.substring(0, last);*/
+				if (reply.length() > 2000)
+					reply = reply.substring(0, 2000);
+
+				channel.sendMessage(reply).queue();
 
 					if (reply.startsWith("There it is!RGenreFile:")) {
 
@@ -96,7 +117,7 @@ public final class Bot extends ListenerAdapter {
         	//				}
                     }
                 }
-			} catch (IOException e) {
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
