@@ -52,7 +52,7 @@ public final class Bot extends ListenerAdapter {
 					.setToken(BotUtils.Readfile("src/main/java/bigmovie/BotToken.txt", StandardCharsets.UTF_8)) //The token of the account that is logging in, get from file BotToken.txt
 					.addEventListener(new Bot())  //An instance of a class that will handle events.
 					.buildBlocking();  //There are 2 ways to login, blocking vs async. Blocking guarantees that JDA will be completely loaded.
-			api.getPresence().setGame(Game.watching("Porno"));
+			api.getPresence().setGame(Game.streaming("porn", "pornhub.com"));
 			System.out.println("Bot ready! API loaded!");
 		} catch (LoginException | InterruptedException e) {
 			//If anything goes wrong in terms of authentication, this is the exception that will represent it
@@ -85,6 +85,7 @@ public final class Bot extends ListenerAdapter {
 
 					String path = reply.substring(reply.indexOf('&') + 1);
 					channel.sendFile(new File(path)).queue();
+					reply = "There it is! The graph produced by R";
 			}
 				/*reply = reply.replace("\n", ", ").substring(0, 2000);
 				int last = reply.lastIndexOf(",");
