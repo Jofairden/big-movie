@@ -1,0 +1,8 @@
+{
+  DB_HOST:"127.0.0.1",
+  DB_COL:"bigmovie",
+  DB_USR:"root",
+  DB_PW:"root",
+  DB_PORT:"3306",
+  TOKEN:"NDAyMTI0MzAzNzQ0NjMwNzg0.DT4Dmg.cklSUZztvL66QNmH0r_f7ShCtB4"
+}
