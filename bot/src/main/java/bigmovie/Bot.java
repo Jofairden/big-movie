@@ -112,7 +112,7 @@ public final class Bot extends ListenerAdapter {
 					/*reply = reply.replace("\n", ", ").substring(0, 2000);
 					int last = reply.lastIndexOf(",");
 					reply = reply.substring(0, last);*/
-				if (reply.length() > 0)
+				if (!reply.isEmpty())
 					channel.sendMessage(reply).queue();
 				//				}
 			}

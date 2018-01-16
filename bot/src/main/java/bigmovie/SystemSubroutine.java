@@ -15,7 +15,7 @@ public class SystemSubroutine implements Subroutine {
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
         BotConfig config = Bot.getConfig();
-        args[0] = config.getRscriptPath();
+        args[0] = config.getRscript_PATH();
         String cmd = StringUtils.join(args, " ");
 
         java.util.Scanner s;
