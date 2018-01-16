@@ -83,18 +83,18 @@ public final class Bot extends ListenerAdapter {
 			MessageChannel channel = event.getChannel();
 			channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
 		}
-		else if (content.toLowerCase().startsWith("bot")) {
-			String reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replaceFirst("bot", "").trim());
-			MessageChannel channel = event.getChannel();
-
-			if (!reply.isEmpty()) {
-				
-				if (reply.startsWith("There it is!packageRGenreFile: ")) {
-
-					String path = reply.substring(reply.indexOf('&') + 1);
-					channel.sendFile(new File(path)).queue();
-					reply = "There it is! The graph produced by R";
-			}
+		else {
+			try {
+				if (content.toLowerCase().startsWith("<@" + BotUtils.Readfile("src/main/java/bigmovie/BotID.txt", StandardCharsets.UTF_8) + ">")) {
+                    String reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replaceFirst("bot", "").trim());
+                    MessageChannel channel = event.getChannel();
+				if (!reply.isEmpty()) {
+					if (reply.startsWith("There it is!")) {
+						String path = reply.substring(reply.indexOf('&') + 1);
+						channel.sendFile(new File(path)).queue();
+						reply = "There it is! The graph produced by R";
+					}
+				}
 				/*reply = reply.replace("\n", ", ").substring(0, 2000);
 				int last = reply.lastIndexOf(",");
 				reply = reply.substring(0, last);*/
@@ -103,13 +103,21 @@ public final class Bot extends ListenerAdapter {
 
 				channel.sendMessage(reply).queue();
 
-//				int a = reply.length() / 2000;
-//				for (int i = 0; i < a; i++) {
-//					channel.sendMessage(reply.substring(2000 * i, 2000 + 2000 * i)).queue();
-//				}
+					if (reply.startsWith("There it is!RGenreFile:")) {
 
+						String path = reply.substring(reply.indexOf('&') + 1);
+						channel.sendFile(new File(path)).queue();
+					}
+					/*reply = reply.replace("\n", ", ").substring(0, 2000);
+					int last = reply.lastIndexOf(",");
+					reply = reply.substring(0, last);*/
+					channel.sendMessage(reply).queue();
+        	//				}
+                    }
+                }
+			catch (IOException e) {
+				e.printStackTrace();
 			}
-
 		}
 	}
 }

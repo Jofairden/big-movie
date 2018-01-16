@@ -3,7 +3,7 @@
 install.packages("RMySQL", repos= "http://cran.us.r-project.org")
 library(RMySQL)
 
-con <- dbConnect(MySQL(), dbname="database", user="root", password="")
+con <- dbConnect(MySQL(), dbname="bigmovie", user="root", password="")
 values <- dbGetQuery(con, "select name as format, count as freq from movies")
 
 png(filename="genre-fr-usa.jpg")

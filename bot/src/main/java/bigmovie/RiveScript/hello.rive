@@ -6,11 +6,24 @@
 + my name is *
 - <set name=<formal>> Nice to meet you, <get name>.
 
-+ which films play in more than 1 country?
-- <call>jdbc SELECT title, COUNT(c.movie_id) AS total FROM movies AS m, country_movie AS c WHERE m.id = c.movie_id GROUP BY c.movie_id HAVING total > 1; </call>
++ which films play in more than 1 country
+- <call>jdbc question1.sql</call>
 
-+ which movies did _ _ *
-- <call>jdbc select title from movies limit 1</call>
++ which soundtrack is most used in movies
+- <call>jdbc question2.sql</call>
+
++ which movies have the highest score with the least amount of votes
+- <call>jdbc question3.sql</call>
+
++ what is the shortest movie with a score of 8.5 or higher
+- <call>jdbc question4.sql</call>
+
++ which movies play in New York
+- <call>jdbc question5.sql</call>
+
++ what are the 10 most popular spoken languages in movies
+- <call>jdbc question6.sql</call>
 
 + *
 - I don't get it
+- Come again
