@@ -30,12 +30,12 @@
 + what is the date?
 - The date is: <call>system date</call>
 
-+ which movies did _ _ *
-- <call>jdbc localhost 3306 database root root select name from movies limit 1</call>
++ which movies did _ * play in
+- <call>jdbc SELECT title from movies WHERE movies.id IN (Select movie_id FROM actor_movie Where actor_id IN (Select id From actors Where name LIKE '%<star2>, <star1>%' ))</call>
 
 + [*] genre [*]
 - There it is! 
-^ <call>system C:\Program Files\R\R-3.4.2\bin\Rscript.exe src/main/java/bigmovie/R/genre-fr-usa.R</call>
+^ <call>system Rscript.exe src/main/java/bigmovie/R/genre-fr-usa.R</call>
 ^ <call>send photo genre-fr-usa.jpg The graph produced by R</call>
 
 // Substitutions
