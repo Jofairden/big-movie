@@ -1,11 +1,11 @@
 package parsers;
 
-/*
-	Authors: Jildert
- */
 
 import main.ImdbUtils;
 
+/*
+	Authors: Jildert
+ */
 // Will parse to the following: title;country;year;occurrence
 public final class CountryParser extends Parser {
 	

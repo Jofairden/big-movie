@@ -1,22 +1,24 @@
 package parsers;
 
-import main.ImdbUtils;
-
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-	Authors: Jildert, Fadi
+	Authors: Daniel
  */
-// Will parse to the following: movie;year;location;occurrence
-public final class LocationParser extends Parser {
+// Will parse to the following: location
+// introduced in late changes
+public class LocationNamesParser extends Parser {
 	
+	private Set<Integer> knownValues = new HashSet<>();
 	private final Pattern seriesPatternMovies = Pattern.compile("(^\".+)");
 	private final Pattern moviesPatternLocation = Pattern.compile("(.*)\\((\\d{4}|\\?{1,})(\\/\\w*)?\\)?(\\s\\(.{1,2}\\))?\\s*(.*)");
 	
 	private int header;
 	
-	public LocationParser(String inputFile) {
+	public LocationNamesParser(String inputFile) {
 		super(inputFile);
 	}
 	
@@ -31,10 +33,12 @@ public final class LocationParser extends Parser {
 		Matcher moviesMatcher = moviesPatternLocation.matcher(line);
 		
 		if (!seriesMatcher.matches() && moviesMatcher.matches()) {
-			super.writeLine = String.format("%s||%s||%s\n",
-					moviesMatcher.replaceAll("$1").trim(),
-					moviesMatcher.replaceAll("$2||$5"),
-					ImdbUtils.romanToDecimal(moviesMatcher.replaceAll("$3")));
+			String value = moviesMatcher.replaceAll("$5");
+			if (!knownValues.contains(value.hashCode())) {
+				knownValues.add(value.hashCode());
+				super.writeLine = String.format("%s\n", value);
+			}
 		}
 	}
+	
 }
