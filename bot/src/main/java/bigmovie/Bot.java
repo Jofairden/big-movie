@@ -91,7 +91,8 @@ public final class Bot extends ListenerAdapter {
 				if (!reply.isEmpty()) {
 					if (reply.startsWith("There it is!")) {
 						String path = reply.substring(reply.indexOf('&') + 1);
-						channel.sendFile(new File(path)).queue();
+						String current = System.getProperty(("user.dir"));
+						channel.sendFile(new File(current + "\\" +path)).queue();
 						reply = "There it is! The graph produced by R";
 					}
 				}
