@@ -21,14 +21,11 @@ public class JdbcSubroutine implements Subroutine {
     public String call(com.rivescript.RiveScript rs, String[] args) {
         String sql = null;
         StringBuilder result = new StringBuilder();
-	    try {
-		    sql = Resources.toString(JdbcSubroutine.class.getResource(String.format("/sql/%s", args[0])), Charsets.UTF_8);
-	    } catch (IOException e) {
-		    e.printStackTrace();
-	    }
 
-	    if (sql == null)
-	    	return "";
+        for (String arg : args) {
+            result.append(arg + " ");
+        }
+        sql = result.toString();
 
         Connection connection = null;
         Statement statement = null;
