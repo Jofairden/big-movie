@@ -89,7 +89,7 @@ public final class Bot extends ListenerAdapter {
 
 			if (!reply.isEmpty()) {
 				
-				if (reply.startsWith("There it is!RGenreFile:")) {
+				if (reply.startsWith("There it is!packageRGenreFile: ")) {
 
 					String path = reply.substring(reply.indexOf('&') + 1);
 					channel.sendFile(new File(path)).queue();
