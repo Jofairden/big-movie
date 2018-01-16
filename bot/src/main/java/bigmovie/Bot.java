@@ -85,41 +85,36 @@ public final class Bot extends ListenerAdapter {
 		}
 
 		else {
-			try {
-				if (content.toLowerCase().startsWith("<@" + BotUtils.Readfile("src/main/java/bigmovie/BotID.txt", StandardCharsets.UTF_8) + ">")) {
-                    String reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replaceFirst("bot", "").trim());
-                    MessageChannel channel = event.getChannel();
 
+			String reply = "";
+			MessageChannel channel = event.getChannel();
 
-				if (!reply.isEmpty()) {
+			if (message.isMentioned(api.getSelfUser()))
+				reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replace(api.getSelfUser().getAsMention(), ""));
 
-					String path = reply.substring(reply.indexOf('&') + 1);
-					channel.sendFile(new File(path)).queue();
-					reply = "There it is! The graph produced by R";
-				}
+//			if (!reply.isEmpty()) {
+//				String path = reply.substring(reply.indexOf('&') + 1);
+//				channel.sendFile(new File(path)).queue();
+//				reply = "There it is! The graph produced by R";
+//			}
+
 				/*reply = reply.replace("\n", ", ").substring(0, 2000);
 				int last = reply.lastIndexOf(",");
 				reply = reply.substring(0, last);*/
-				if (reply.length() > 2000)
-					reply = reply.substring(0, 2000);
+			if (reply.length() > 2000)
+				reply = reply.substring(0, 2000);
 
-				channel.sendMessage(reply).queue();
+			if (reply.startsWith("There it is!RGenreFile:")) {
 
-					if (reply.startsWith("There it is!RGenreFile:")) {
-
-						String path = reply.substring(reply.indexOf('&') + 1);
-						channel.sendFile(new File(path)).queue();
-					}
+				String path = reply.substring(reply.indexOf('&') + 1);
+				channel.sendFile(new File(path)).queue();
+			}
 					/*reply = reply.replace("\n", ", ").substring(0, 2000);
 					int last = reply.lastIndexOf(",");
 					reply = reply.substring(0, last);*/
-					channel.sendMessage(reply).queue();
-        	//				}
-                    }
-                }
-			catch (IOException e) {
-				e.printStackTrace();
-			}
+			if (reply.length() > 0)
+				channel.sendMessage(reply).queue();
+			//				}
 		}
 	}
 }
