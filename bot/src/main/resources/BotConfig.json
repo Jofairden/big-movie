@@ -1,8 +1,0 @@
-{
-  DB_HOST:"127.0.0.1",
-  DB_COL:"database",
-  DB_USR:"root",
-  DB_PW:"",
-  DB_PORT:"3306",
-  TOKEN:"NDAyMzk5NTk4NDY5MDU0NDY1.DT4Z0A.zHYBDPsBTRFquFjHjRWmKfwJk_U"
-}
