@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 
 public final class Bot extends ListenerAdapter {
 	
@@ -80,8 +81,10 @@ public final class Bot extends ListenerAdapter {
 
 			if (!reply.isEmpty()) {
 				
-				if (reply.startsWith("RGenreFile:")) {
-				channel.sendFile(new File(reply.substring(reply.indexOf('&' + 1)))).queue();
+				if (reply.startsWith("There it is!RGenreFile:")) {
+
+					String path = reply.substring(reply.indexOf('&') + 1);
+					channel.sendFile(new File(path)).queue();
 			}
 				/*reply = reply.replace("\n", ", ").substring(0, 2000);
 				int last = reply.lastIndexOf(",");
