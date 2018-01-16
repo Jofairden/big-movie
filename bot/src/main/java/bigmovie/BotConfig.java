@@ -20,6 +20,7 @@ public class BotConfig {
 	private String DB_PW;
 	private String DB_PORT;
 	private String TOKEN;
+	private String RScript_PATH;
 
 	public String getDB_HOST() {
 		return DB_HOST;
@@ -44,6 +45,8 @@ public class BotConfig {
 	public String getDB_COL() {
 		return DB_COL;
 	}
+
+	public  String getRscriptPath(){return RScript_PATH;}
 
 	public static BotConfig read() throws IOException {
 		try(Reader reader = new InputStreamReader(BotConfig.class.getResourceAsStream("/BotConfig.json"), "UTF-8")){
