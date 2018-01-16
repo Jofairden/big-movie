@@ -53,6 +53,7 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("jdbc", new JdbcSubroutine());
 		bot.setSubroutine("send", new SendSubroutine());
 		bot.setSubroutine("system", new SystemSubroutine());
+		bot.setSubroutine("rscript", new RSubroutine());
 
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
