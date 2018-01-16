@@ -1,6 +1,7 @@
 package bigmovie;
 
 import com.rivescript.Config;
+import com.rivescript.RiveScript;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -9,16 +10,10 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import com.rivescript.RiveScript;
-import net.dv8tion.jda.core.requests.restaction.MessageAction;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Paths;
 
 public final class Bot extends ListenerAdapter {
 	
@@ -34,27 +29,40 @@ public final class Bot extends ListenerAdapter {
 	
 	private static JDA api;
 	private static BotConfig config;
-
+	
 	public static JDA getAPI() {
 		return api;
 	}
-	public static BotConfig getConfig() { return config; }
+	
+	public static BotConfig getConfig() {
+		return config;
+	}
+	
 	public static RiveScript bot = new RiveScript(Config.utf8());
 	
-	public static void main(String[] args){
+	// Subroutines
+	public final static JdbcSubroutine jdbcSubroutine = new JdbcSubroutine();
+	public final static SendSubroutine sendSubroutine = new SendSubroutine();
+	public final static SystemSubroutine systemSubroutine = new SystemSubroutine();
+	public final static RSubroutine rSubroutine = new RSubroutine();
+	public final static MessageSubroutine messageSubroutine = new MessageSubroutine();
+	
+	public static void main(String[] args) {
 		try {
 			config = BotConfig.read();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		// Load subroutines
 		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
 		bot.sortReplies();
-		bot.setSubroutine("jdbc", new JdbcSubroutine());
-		bot.setSubroutine("send", new SendSubroutine());
-		bot.setSubroutine("system", new SystemSubroutine());
-		bot.setSubroutine("rscript", new RSubroutine());
-
+		bot.setSubroutine("jdbc", jdbcSubroutine);
+		bot.setSubroutine("send", sendSubroutine);
+		bot.setSubroutine("system", systemSubroutine);
+		bot.setSubroutine("rscript", rSubroutine);
+		bot.setSubroutine("singlemessage", messageSubroutine);
+		
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
 		try {
@@ -70,52 +78,50 @@ public final class Bot extends ListenerAdapter {
 		}
 	}
 	
+	public static MessageReceivedEvent lastMessageReceivedEvent;
+	public static String lastSqlResult;
+	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
+		lastMessageReceivedEvent = event;
+		
 		if (event.getAuthor().isBot())
 			return;
 		// We don't want to respond to other bot accounts, including ourselves
 		Message message = event.getMessage();
 		String content = message.getContentRaw();
 		long chat_id = event.getMessageIdLong();
-
+		
 		// getContentRaw() is an atomic getter
 		// getContent() is a lazy getter which modifies the content for e.g. console view (strip discord formatting)
-		if (content.equals("!ping")) {
-			MessageChannel channel = event.getChannel();
-			channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
-		} else {
-			String reply = "";
-			MessageChannel channel = event.getChannel();
-
-			if (message.isMentioned(api.getSelfUser())) {
-				reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replace(api.getSelfUser().getAsMention(), ""));
-				if (!reply.isEmpty()) {
-					if (reply.startsWith("There it is!")) {
-						String path = reply.substring(reply.indexOf('&') + 1);
-						String current = System.getProperty(("user.dir"));
-						channel.sendFile(new File(current + "\\" +path)).queue();
-						reply = "There it is! The graph produced by R";
-					}
-				}
-				/*reply = reply.replace("\n", ", ").substring(0, 2000);
-				int last = reply.lastIndexOf(",");
-				reply = reply.substring(0, last);*/
-				if (reply.length() > 2000)
-					reply = reply.substring(0, 2000);
-
-				if (reply.startsWith("There it is!RGenreFile:")) {
-
+		
+		String reply;
+		MessageChannel channel = event.getChannel();
+		
+		if (message.isMentioned(api.getSelfUser())) {
+			reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replace(api.getSelfUser().getAsMention(), ""));
+			if (!reply.isEmpty()) {
+				if (reply.startsWith("There it is!")) {
 					String path = reply.substring(reply.indexOf('&') + 1);
-					channel.sendFile(new File(path)).queue();
+					String current = System.getProperty(("user.dir"));
+					channel.sendFile(new File(current + "\\" + path)).queue();
+					reply = "There it is! The graph produced by R";
 				}
-					/*reply = reply.replace("\n", ", ").substring(0, 2000);
-					int last = reply.lastIndexOf(",");
-					reply = reply.substring(0, last);*/
-				if (!reply.isEmpty())
-					channel.sendMessage(reply).queue();
-				//				}
 			}
+			
+			// Substring if too long
+			if (reply.length() > 2000)
+				reply = reply.substring(0, 2000);
+			
+			if (reply.startsWith("There it is!RGenreFile:")) {
+				String path = reply.substring(reply.indexOf('&') + 1);
+				channel.sendFile(new File(path)).queue();
+			}
+			
+			// If not empty, attempt send.
+			if (!reply.isEmpty())
+				channel.sendMessage(reply).queue();
+			//				}
 		}
 	}
 }

@@ -6,12 +6,12 @@
 < begin
 
 // The Botmaster's Name
-! var master = localuser
+! var master = totally not jofairden
 
 // Bot Variables
-! var name     = Aiden
-! var fullname = Aiden Rive
-! var age      = 5
+! var name     = Bigmovie
+! var fullname = Bigmovie The Movie Watcher
+! var age      = 0
 ! var birthday = October 12
 ! var sex      = male
 ! var location = Michigan
@@ -24,7 +24,7 @@
 ! var book     = Myst
 ! var author   = Stephen King
 ! var job      = robot
-! var website  = www.rivescript.com
+! var website  = no website you scumbag
 
 // Substitutions
 ! sub &quot;    = "

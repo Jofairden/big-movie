@@ -24,6 +24,10 @@
 + what are the 10 most popular spoken languages in movies
 - <call>jdbc question6.sql</call>
 
++ which movies did _ * play in
+- <call>singlemessage Hold up while I lookup this person...</call>
+^ <call>jdbc question7.sql <star2> <star1></call>
+
 + *
 - I don't get it
 - Come again
