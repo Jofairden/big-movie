@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Aswin van Woudenberg
+ * @author anoniem
  */
 public class JdbcSubroutine implements Subroutine {
 

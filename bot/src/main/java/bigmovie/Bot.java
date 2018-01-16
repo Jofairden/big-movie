@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 
 public final class Bot extends ListenerAdapter {
 	
@@ -74,25 +75,25 @@ public final class Bot extends ListenerAdapter {
 			MessageChannel channel = event.getChannel();
 			channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
 		}
+
 		else {
 			try {
 				if (content.toLowerCase().startsWith("<@" + BotUtils.Readfile("src/main/java/bigmovie/BotID.txt", StandardCharsets.UTF_8) + ">")) {
                     String reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replaceFirst("bot", "").trim());
                     MessageChannel channel = event.getChannel();
 
-                    if (!reply.isEmpty()) {
-                        if (reply.startsWith("RGenreFile:")) {
-                        channel.sendFile(new File(reply.substring(reply.indexOf('&' + 1)))).queue();
-                    }
-                        /*reply = reply.replace("\n", ", ").substring(0, 2000);
-                        int last = reply.lastIndexOf(",");
-                        reply = reply.substring(0, last);*/
-                        channel.sendMessage(reply).queue();
+				if (!reply.isEmpty()) {
 
-        //				int a = reply.length() / 2000;
-        //				for (int i = 0; i < a; i++) {
-        //					channel.sendMessage(reply.substring(2000 * i, 2000 + 2000 * i)).queue();
-        //				}
+					if (reply.startsWith("There it is!RGenreFile:")) {
+
+						String path = reply.substring(reply.indexOf('&') + 1);
+						channel.sendFile(new File(path)).queue();
+					}
+					/*reply = reply.replace("\n", ", ").substring(0, 2000);
+					int last = reply.lastIndexOf(",");
+					reply = reply.substring(0, last);*/
+					channel.sendMessage(reply).queue();
+        	//				}
                     }
                 }
 			} catch (IOException e) {

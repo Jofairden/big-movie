@@ -19,7 +19,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /**
  *
- * @author Aswin van Woudenberg
+ * @author anoniem
  */
 public class SendSubroutine implements Subroutine {
     @Override
