@@ -30,7 +30,7 @@
 + what is the date?
 - The date is: <call>system date</call>
 
-+ which movies did _ _ *
++ which movies did _ * play in
 - <call>jdbc SELECT title from movies WHERE movies.id IN (Select movie_id FROM actor_movie Where actor_id IN (Select id From actors Where name LIKE '%<star2>, <star1>%' ))</call>
 
 + [*] genre [*]

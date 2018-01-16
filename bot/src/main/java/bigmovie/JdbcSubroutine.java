@@ -26,6 +26,7 @@ public class JdbcSubroutine implements Subroutine {
             result.append(arg + " ");
         }
         sql = result.toString();
+        result = new StringBuilder();
 
         Connection connection = null;
         Statement statement = null;
