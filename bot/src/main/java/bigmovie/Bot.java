@@ -1,5 +1,6 @@
 package bigmovie;
 
+import com.rivescript.Config;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -38,7 +39,7 @@ public final class Bot extends ListenerAdapter {
 		return api;
 	}
 	public static BotConfig getConfig() { return config; }
-	public static RiveScript bot = new RiveScript();
+	public static RiveScript bot = new RiveScript(Config.utf8());
 	
 	public static void main(String[] args){
 		try {
