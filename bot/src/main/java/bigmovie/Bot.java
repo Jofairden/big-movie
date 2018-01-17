@@ -1,5 +1,6 @@
 package bigmovie;
 
+import bigmovie.Subroutines.*;
 import com.rivescript.Config;
 import com.rivescript.RiveScript;
 import net.dv8tion.jda.core.AccountType;
@@ -41,7 +42,7 @@ public final class Bot extends ListenerAdapter {
 	public static RiveScript bot = new RiveScript(Config.utf8());
 	
 	// Subroutines
-	public final static JdbcSubroutine jdbcSubroutine = new JdbcSubroutine();
+	public final static ActorInMoviesSubroutine actorInMoviesSubroutine = new ActorInMoviesSubroutine();
 	public final static SendSubroutine sendSubroutine = new SendSubroutine();
 	public final static SystemSubroutine systemSubroutine = new SystemSubroutine();
 	public final static RSubroutine rSubroutine = new RSubroutine();
@@ -57,7 +58,7 @@ public final class Bot extends ListenerAdapter {
 		// Load subroutines
 		bot.loadDirectory("src/main/java/bigmovie/RiveScript");
 		bot.sortReplies();
-		bot.setSubroutine("jdbc", jdbcSubroutine);
+		bot.setSubroutine("actorInMovies", actorInMoviesSubroutine);
 		bot.setSubroutine("send", sendSubroutine);
 		bot.setSubroutine("system", systemSubroutine);
 		bot.setSubroutine("rscript", rSubroutine);

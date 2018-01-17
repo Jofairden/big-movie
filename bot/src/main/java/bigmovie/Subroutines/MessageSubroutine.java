@@ -1,5 +1,6 @@
-package bigmovie;
+package bigmovie.Subroutines;
 
+import bigmovie.Bot;
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-	Author: Daniel
+	@author Daniel
 	The subroutine can queue a single message at a time
 	It is possible to supply an embed with title and description
  */
