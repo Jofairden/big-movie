@@ -28,8 +28,10 @@ public class SystemSubroutine implements Subroutine {
             p.waitFor();
 
 
-            rs.getSubstitution("send photo genre-fr-usa.jpg The graph produced by R");
-            String argString ="photo genre-fr-usa.jpg The graph produced by R";
+            //rs.getSubstitution("send photo genre-fr-usa.jpg The graph produced by R");
+            String file = cmd.substring( cmd.lastIndexOf("/") + 1);
+            file = file.substring(0, file.lastIndexOf('.') );
+            String argString ="photo " +  file + ".jpg The graph produced by R";
             String[] argsArray = argString.split(" ");
             Bot.sendSubroutine.call(rs, argsArray);
 
