@@ -27,13 +27,18 @@ public class SystemSubroutine implements Subroutine {
             s = new java.util.Scanner(p.getInputStream());
             p.waitFor();
 
+
+            rs.getSubstitution("send photo genre-fr-usa.jpg The graph produced by R");
+            String argString ="photo genre-fr-usa.jpg The graph produced by R";
+            String[] argsArray = argString.split(" ");
+            Bot.sendSubroutine.call(rs, argsArray);
+
             return s.hasNext() ? s.next() : "";
         } catch (Exception e) {
             Logger.getLogger(SystemSubroutine.class.getName()).log(Level.SEVERE, null, e);
         }
 
 
-        rs.getSubstitution("send photo genre-fr-usa.jpg The graph produced by R");
 
         return "";
     }
