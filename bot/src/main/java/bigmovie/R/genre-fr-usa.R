@@ -3,10 +3,10 @@
 install.packages("RMySQL", repos= "http://cran.us.r-project.org")
 library(RMySQL)
 
-con <- dbConnect(MySQL(), dbname="bigmovie", user="root", password="")
+con <- dbConnect(MySQL(), dbname="bigmovieold", user="root", password="root")
 values <- dbGetQuery(con,
                      "SELECT c.country as `format`, (count(g.genre) / 1000000) as `freq`
-FROM movies m
+                    FROM movies m
                      INNER JOIN country_movie c ON c.movie_id=m.id
                      INNER JOIN movie_genre g ON g.movie_id=m.id
                      WHERE c.country LIKE '%FRANCE%' OR c.country LIKE '%USA%'

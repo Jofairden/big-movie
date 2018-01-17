@@ -32,8 +32,18 @@
 
 + [*] genre [*]
 - There it is! 
-^ <call>system Rscript.exe src/main/java/bigmovie/R/genre-fr-usa.R</call>
+^ <call>rscript src/main/java/bigmovie/R/genre-fr-usa.R</call>
 ^ <call>send photo genre-fr-usa.jpg The graph produced by R</call>
+
++ [*] test [*]
+- There it is!
+^ <call>rscript src/main/java/bigmovie/R/test.R</call>
+^ <call>send photo test.jpg Graph heuuu</call>
+
++ [*] vraag8 [*]
+- There it is!
+^ <call>rscript src/main/java/bigmovie/R/Vraag8.R</call>
+^ <call>send photo Vraag8.jpg Graph heuuu</call>
 
 // Substitutions
 ! sub i'm     = i am
