@@ -1,5 +1,6 @@
 /* Welke films spelen (gedeeltelijk) in New York? */
 SELECT m.title, l.location
 FROM movies m
-INNER JOIN location_movie l ON l.movie_id = m.id
-AND l.location LIKE "%New York%";
+INNER JOIN location_movie lm ON lm.movie_id = m.id
+INNER JOIN locations l ON l.id = lm.location_id
+AND l.location LIKE "%new york%";
