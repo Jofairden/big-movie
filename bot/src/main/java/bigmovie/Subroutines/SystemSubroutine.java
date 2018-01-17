@@ -1,5 +1,7 @@
-package bigmovie;
+package bigmovie.Subroutines;
 
+import bigmovie.Bot;
+import bigmovie.BotConfig;
 import com.rivescript.macro.Subroutine;
 import com.rivescript.util.StringUtils;
 import java.io.IOException;
