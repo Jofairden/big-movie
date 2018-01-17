@@ -5,6 +5,7 @@
  */
 package bigmovie.Subroutines;
 
+import bigmovie.Bot;
 import com.rivescript.macro.Subroutine;
 import java.io.File;
 
@@ -31,7 +32,10 @@ public class SendSubroutine implements Subroutine {
             for (int i = 2; i < args.length; i++)
                 caption = caption + " " + args[i];
             caption = caption.trim();
-            return "RGenreFile: " + caption + "&" + f_id;
+
+            Bot.lastChannel.sendFile(new File(f_id)).queue();
+
+            return caption;
         }
         return "";
     }

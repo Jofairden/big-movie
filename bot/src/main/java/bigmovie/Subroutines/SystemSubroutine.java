@@ -5,6 +5,7 @@ import bigmovie.BotConfig;
 import com.rivescript.macro.Subroutine;
 import com.rivescript.util.StringUtils;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,11 +23,25 @@ public class SystemSubroutine implements Subroutine {
 
         java.util.Scanner s;
         try {
-            s = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream());
+            Process p = Runtime.getRuntime().exec(cmd);
+            s = new java.util.Scanner(p.getInputStream());
+            p.waitFor();
+
+
+            //rs.getSubstitution("send photo genre-fr-usa.jpg The graph produced by R");
+            String file = cmd.substring( cmd.lastIndexOf("/") + 1);
+            file = file.substring(0, file.lastIndexOf('.') );
+            String argString ="photo " +  file + ".jpg The graph produced by R";
+            String[] argsArray = argString.split(" ");
+            Bot.sendSubroutine.call(rs, argsArray);
+
             return s.hasNext() ? s.next() : "";
-        } catch (IOException ex) {
-            Logger.getLogger(SystemSubroutine.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            Logger.getLogger(SystemSubroutine.class.getName()).log(Level.SEVERE, null, e);
         }
+
+
+
         return "";
     }
     

@@ -28,6 +28,12 @@
 - <call>singlemessage Hold up while I lookup this person...</call>
 ^ <call>actorInMovies question7.sql <star2> <star1></call>
 
++ [*] genre [*]
+- <call>singlemessage Hold up while I lookup..</call>
+^ <call>rscript src/main/java/bigmovie/R/genre-fr-usa.R</call>
+^ <call>send photo genre-fr-usa.jpg</call>
+^ Produced by R.
+
 + *
 - I don't get it
 - Come again

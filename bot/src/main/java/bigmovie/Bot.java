@@ -81,6 +81,7 @@ public final class Bot extends ListenerAdapter {
 	
 	public static MessageReceivedEvent lastMessageReceivedEvent;
 	public static String lastSqlResult;
+	public  static MessageChannel lastChannel;
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
@@ -98,15 +99,14 @@ public final class Bot extends ListenerAdapter {
 		
 		String reply;
 		MessageChannel channel = event.getChannel();
-		
+
+		lastChannel = channel;
+
 		if (message.isMentioned(api.getSelfUser())) {
 			reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replace(api.getSelfUser().getAsMention(), ""));
 			if (!reply.isEmpty()) {
 				if (reply.startsWith("There it is!")) {
-					String path = reply.substring(reply.indexOf('&') + 1);
-					String current = System.getProperty(("user.dir"));
-					channel.sendFile(new File(current + "\\" + path)).queue();
-					reply = "There it is! The graph produced by R";
+
 				}
 			}
 			
