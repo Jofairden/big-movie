@@ -4,12 +4,10 @@ CREATE TABLE `actors` (
 	`gender` CHAR(1) NOT NULL,
 	`occurrence` INT(11) NOT NULL,
 	PRIMARY KEY (`id`),
-	INDEX `name` (`name`),
-	INDEX `gender` (`gender`),
-	INDEX `occurrence` (`occurrence`),
-	INDEX `id` (`id`)
+	INDEX `id` (`id`),
+	INDEX `name` (`name`)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=4184729
+AUTO_INCREMENT=1bigmovie_backup
 ;

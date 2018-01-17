@@ -2,9 +2,9 @@ xx = marked done
 
 welke staan nu niet apart:
 (deze hebben met de late changes hun eigen parser classe gekregen in het parser project)
-	-locations xx
-	-languages xx
-	-countries xx
+	-locations xx (kan wel 2x of vaker voorkomen, dus koppeltabel)
+	-languages xx (kan wel 2x of vaker voorkomen, dus koppeltabel)
+	-countries xx (kan wel 2x of vaker voorkomen, dus koppeltabel)
 dus apart in csv parsen, de strings hiervan
 en dan opslaan in eigen tabel
 e.g. locations tabel bevat columns: id, location
@@ -14,5 +14,11 @@ welke staan nu wel apart maar moeten niet:
 	-running times (kan bij movies bijgevoegd worden)
 	-ratings (hoeveel stemmen en avg score voor de film) (kan bij movies bijgevoegd worden)
 (deze hebben geen aparte parsers nodig, alleen de sql queries moeten aangepast worden)
+
+
+andere aanpassingen:
+	grondig gekeken naar welke columns indexed moeten zijn
+	in het kort, velden die zeer divers, specifiek of uniek zijn zullen goede indexers maken
+	(b.v. title veld van movies)
 
 - 16 jan. 2018 (late changes)

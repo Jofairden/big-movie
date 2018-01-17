@@ -43,6 +43,7 @@ public class Main {
 			put("soundtrackNames", SoundTrackNamesParser.class);
 			put("soundtracks", SoundtrackParser.class);
 			put("genres", GenreParser.class);
+			put("genreNames", GenreNamesParser.class);
 			put("ratings", RatingParser.class);
 			put("locations", LocationParser.class);
 			put("locationNames", LocationNamesParser.class);
@@ -80,6 +81,8 @@ public class Main {
 					parser.setOverrideInput("soundtracks");
 				else if (f.equalsIgnoreCase("countryNames"))
 					parser.setOverrideInput("countries");
+				else if (f.equalsIgnoreCase("genreNames"))
+					parser.setOverrideInput("genres");
 				else if (f.equalsIgnoreCase("locationNames"))
 					parser.setOverrideInput("locations");
 				else if (f.equalsIgnoreCase("languageNames"))
