@@ -3,16 +3,40 @@
 install.packages("RMySQL", repos= "http://cran.us.r-project.org")
 library(RMySQL)
 
-con <- dbConnect(MySQL(), dbname="bigmovie", user="root", password="")
+con <- dbConnect(MySQL(), dbname="bigmovie", user="root", password="root")
 values <- dbGetQuery(con,
-                     "SELECT c.country as `format`, (count(g.genre) / 1000000) as `freq`
+                     "SELECT c.country as `format`, g.genre as `genre`, count(m.title) as  `freq`
 FROM movies m
-                     INNER JOIN country_movie c ON c.movie_id=m.id
-                     INNER JOIN movie_genre g ON g.movie_id=m.id
-                     WHERE c.country LIKE '%FRANCE%' OR c.country LIKE '%USA%'
-                     GROUP BY c.country;")
+INNER JOIN country_movie cm ON cm.movie_id = m.id
+INNER JOIN genre_movie gm ON gm.movie_id = m.id
+INNER JOIN countries c ON c.id = cm.country_id
+INNER JOIN genres g ON g.id = gm.genre_id
+WHERE c.country LIKE '%usa%' OR c.country LIKE '%france%'
+GROUP BY c.country, g.genre;")
+
+splitValues <- split(values, values$format)
+
 
 png(filename="genre-fr-usa.jpg")
-barplot(values$freq, names.arg = values$format, horiz=FALSE, cex.names=1, ylab="movies with violence * one million")
+
+
+par(mfrow=c(1,2))
+
+slices <- splitValues$USA$freq 
+lbls <- splitValues$USA$genre
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+    main="Pie Chart of Genres in USA")
+
+slices <- splitValues$France$freq 
+lbls <- splitValues$France$genre
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+    main="Pie Chart of Genres in France")
+
 dev.off()
 

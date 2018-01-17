@@ -30,11 +30,6 @@
 + what is the date?
 - The date is: <call>system date</call>
 
-+ [*] genre [*]
-- There it is! 
-^ <call>system Rscript.exe src/main/java/bigmovie/R/genre-fr-usa.R</call>
-^ <call>send photo genre-fr-usa.jpg The graph produced by R</call>
-
 // Substitutions
 ! sub i'm     = i am
 ! sub i'd     = i would
