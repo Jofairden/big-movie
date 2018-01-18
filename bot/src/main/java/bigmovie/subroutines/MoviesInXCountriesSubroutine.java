@@ -16,7 +16,7 @@ public class MoviesInXCountriesSubroutine implements Subroutine {
 				int parsed = Integer.parseInt(args[1]);
 				
 				String result = BotUtils.execSqlQuery(args[0], new PrepArg[] {
-						new PrepArg<>(parsed)
+						new PrepArg<Integer>(parsed)
 				});
 				
 				String msg = Bot.messageSubroutine.call(rs, String.format("context:embed fieldtitle:Movies %s", result).split(" "));
