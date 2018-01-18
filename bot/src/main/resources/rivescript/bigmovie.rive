@@ -19,7 +19,10 @@
 
 + what is the shortest movie with a score of 8.5 or higher
 
-+ which movies play in New York
++ which movies play in *
+- <call>buildmessage Performing query...</call>
+^ <call>movielocation movielocation.sql <star1></call>
+^ There it is!
 
 + what are the 10 most popular spoken languages in movies
 - <call>buildmessage Hold up while I'm counting languages </call>

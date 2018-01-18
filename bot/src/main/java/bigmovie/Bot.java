@@ -51,7 +51,8 @@ public final class Bot extends ListenerAdapter {
 	public final static MoviesInXCountriesSubroutine moviesInXCountriesSubroutine = new MoviesInXCountriesSubroutine();
 	public final static SoundtrackSubroutine soundtrackSubroutine = new SoundtrackSubroutine();
 	public final static PopularLanguageSubroutine popularLanguageSubroutine = new PopularLanguageSubroutine();
-	
+	public final static MovieLocationSubroutine movieLocationSubroutine = new MovieLocationSubroutine();
+
 	public static void main(String[] args) {
 		try {
 			config = BotConfig.read();
@@ -69,6 +70,7 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("moviesinxcountries", moviesInXCountriesSubroutine);
 		bot.setSubroutine("soundtracks", soundtrackSubroutine);
 		bot.setSubroutine("language", popularLanguageSubroutine);
+		bot.setSubroutine("movielocation", movieLocationSubroutine);
 		
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
