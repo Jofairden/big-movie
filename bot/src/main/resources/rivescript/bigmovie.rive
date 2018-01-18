@@ -1,5 +1,11 @@
 ! version = 2.0
 
+
+// Substitutions
+!sub act = play
+
+
+
 + hello
 - Hello, human!
 
@@ -25,6 +31,12 @@
 ^ <call>moviesxscore moviexscore.sql <star1></call>
 ^ There it is!
 
++ which movies occurred in *
+@ which movies play in <star1>
+
++ which movies did play in *
+@ which movies play in <star1>
+
 + which movies play in *
 - <call>buildmessage Performing query...</call>
 ^ <call>movielocation movielocation.sql <star1></call>
@@ -35,9 +47,9 @@
 ^ <call>language language.sql</call>
 ^ There it is!
 
-+ which movies did _ * play in
++ * movies did _ * play _
 - <call>buildmessage Hold up while I lookup this person...</call>
-^ <call>actorinmovies actorinmovies.sql <star2> <star1></call>
+^ <call>actorinmovies actorinmovies.sql <star3> <star2></call>
 
 + [*] genre [*]
 - <call>buildmessage Please give me a moment...</call>
