@@ -25,9 +25,15 @@
 ^ <call>moviesxscore moviexscore.sql <star1></call>
 ^ There it is!
 
-+ which movies play in New York
++ which movies play in *
+- <call>buildmessage Performing query...</call>
+^ <call>movielocation movielocation.sql <star1></call>
+^ There it is!
 
 + what are the 10 most popular spoken languages in movies
+- <call>buildmessage Hold up while I'm counting languages </call>
+^ <call>language language.sql</call>
+^ There it is!
 
 + which movies did _ * play in
 - <call>buildmessage Hold up while I lookup this person...</call>
@@ -37,6 +43,12 @@
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:genre-fr-usa.r</call>
 ^ <call>buildmessage context:file resource:genre-fr-usa.png</call>
+^ Produced by R.
+
++ [*] genre [*]
+- <call>buildmessage Please give me a moment...</call>
+^ <call>rscript resource:Vraag8.r</call>
+^ <call>buildmessage context:file resource:Vraag8.png</call>
 ^ Produced by R.
 
 + [*] test [*]

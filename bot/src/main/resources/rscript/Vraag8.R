@@ -1,29 +1,31 @@
-# add packages if not present
-pacman::p_load(RMySQL)
+#!/usr/bin/Rscript
 
+install.packages("RMySQL", repos= "http://cran.us.r-project.org")
+library(RMySQL)
 con <- dbConnect(MySQL(), dbname="bigmovie", user="root", password="root")
 
 values <- dbGetQuery(con,"SELECT c.country, m.release_year, COUNT(*) AS number_movies
-                     FROM country_movie cm
-                     INNER JOIN movies m ON m.id = cm.movie_id
-                     INNER JOIN countries c ON cm.country_id = c.id
-                     GROUP BY c.country, m.release_year
-                     HAVING c.country LIKE '%germany%';")
-
+FROM movies m
+INNER JOIN  country_movie cm ON cm.movie_id = m.id
+INNER JOIN countries c ON c.id = cm.country_id
+GROUP BY c.country, m.release_year
+HAVING c.country LIKE '%Germany%';")
 values <- values[(values$release_year > 0),]
 
 aggregate(values$number_movies ~ values$release_year, data=values, sum)
 
 values <- aggregate(values$number_movies ~ values$release_year, data=values, sum)
 
-png(filename=paste(getwd(), "build/resources/main/Vraag8.png", sep="/"))
+png(filename="vraag8.jpg")
 
 par(col="blue")
 heading = paste("type=", "h")
 plot(values$`values$release_year`, values$`values$number_movies`,
-     xlab= "Jaar", ylab= "Total", type="h", xlim=c(1,100), ylim=c(1,100))
+xlab= "Jaar", ylab= "Total", type="h" ) 
 
 
 title(main="Land", col.main="black", font.main=4)
 box()
 dev.off()
+
+
