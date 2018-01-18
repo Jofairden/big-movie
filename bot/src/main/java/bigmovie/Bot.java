@@ -1,6 +1,5 @@
 package bigmovie;
 
-import bigmovie.subroutines.SoundtrackSubroutine;
 import bigmovie.subroutines.*;
 import com.rivescript.Config;
 import com.rivescript.RiveScript;
@@ -12,6 +11,8 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
@@ -29,6 +30,10 @@ public final class Bot extends ListenerAdapter {
 	// RestAction docs: https://github.com/DV8FromTheWorld/JDA/wiki/7%29-Using-RestAction
 	// Yui bot: https://github.com/DV8FromTheWorld/Yui/blob/master/src/main/java/net/dv8tion/discord/
 	// (db / settings and more)
+	
+	// Define a static logger variable so that it references the
+	// Logger instance named "Bot".
+	private static final Logger logger = LogManager.getLogger(Bot.class);
 	
 	private static JDA api;
 	private static BotConfig config;
@@ -54,14 +59,22 @@ public final class Bot extends ListenerAdapter {
 	public final static MovieXScoreSubroutine moviesXScoreSubroutine = new MovieXScoreSubroutine();
 	public final static PopularLanguageSubroutine popularLanguageSubroutine = new PopularLanguageSubroutine();
 	public final static MovieLocationSubroutine movieLocationSubroutine = new MovieLocationSubroutine();
-
+	
 	public static void main(String[] args) {
+		
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("java logging level is DEBUG Enabled");
+		}
+		
 		try {
+			logger.info("Loading BotConfig...");
 			config = BotConfig.read();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		logger.info("Setting up RiveScript subroutines...");
 		// Load subroutines
 		bot.loadDirectory("src/main/resources/rivescript");
 		bot.sortReplies();
@@ -75,7 +88,8 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("moviesxscore", moviesXScoreSubroutine);
 		bot.setSubroutine("language", popularLanguageSubroutine);
 		bot.setSubroutine("movielocation", movieLocationSubroutine);
-
+		
+		logger.info("Initiating JDA API and logging in...");
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
 		try {
@@ -84,12 +98,13 @@ public final class Bot extends ListenerAdapter {
 					.addEventListener(new Bot())  //An instance of a class that will handle events.
 					.buildBlocking();  //There are 2 ways to login, blocking vs async. Blocking guarantees that JDA will be completely loaded.
 			api.getPresence().setGame(Game.watching("movies"));
-			System.out.println("Bot ready! API loaded!");
+			logger.info("Bot ready! API loaded!");
 		} catch (LoginException | InterruptedException e) {
 			//If anything goes wrong in terms of authentication, this is the exception that will represent it
 			e.printStackTrace();
 		}
 		
+		logger.info("Initializing pacman...");
 		// init stuff
 		BotUtils.execRSript(Objects.requireNonNull(BotUtils
 				.getResourcePath("rscript/initPacman.R"))
