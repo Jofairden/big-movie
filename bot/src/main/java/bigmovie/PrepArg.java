@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 public final class PrepArg<T> {
 	
-	T prop;
+	private T prop;
 	
 	public PrepArg(T prop) {
 		this.prop = prop;
@@ -21,13 +21,11 @@ public final class PrepArg<T> {
 	// apply boxed property to statement
 	public void apply(PreparedStatement statement, int index) throws SQLException {
 		// @todo when needed, add more checks here
-		if (prop instanceof String) {
+		if (prop instanceof String)
 			statement.setString(index, (String) prop);
-		} else if (prop instanceof Integer) {
+		else if (prop instanceof Integer)
 			statement.setInt(index, (Integer) prop);
-		}
-		else if(prop instanceof Double) {
+		else if(prop instanceof Double)
 			statement.setDouble(index,(Double) prop);
-		}
 	}
 }
