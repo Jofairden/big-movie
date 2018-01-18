@@ -11,11 +11,14 @@
 ^ <call>moviesinxcountries moviesinxcountries.sql <star1></call>
 
 + which soundtrack is most used in movies
-- <call> buildmessage Hold up while I'm counting soundtracks </call>
+- <call>buildmessage Hold up while I'm counting soundtracks </call>
 ^ <call>soundtracks soundtracks.sql</call>
 ^ There it is!
 
 + which movies have the highest score with the least amount of votes
+- <call>buildmessage Performing query... </call>
+^ <call>movieshighscorelowvotes movieshighscorelowvotes.sql</call>
+^ There it is!
 
 + what is the shortest movie with a score of 8.5 or higher
 
