@@ -27,17 +27,17 @@
 + [*] genre [*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:genre-fr-usa.r</call>
-^ <call>buildmessage context:file resource:/genre-fr-usa.png</call>
+^ <call>buildmessage context:file resource:genre-fr-usa.png</call>
 ^ Produced by R.
 
 + [*] test [*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:test.R</call>
-^ <call>buildmessage context:file resource:/test.png</call>
+^ <call>buildmessage context:file resource:test.png</call>
 ^ Produced by R.
 
 + [*] q8 [*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:Vraag8.R</call>
-^ <call>buildmessage context:file resource:/Vraag8.png</call>
+^ <call>buildmessage context:file resource:Vraag8.png</call>
 ^ Produced by R.

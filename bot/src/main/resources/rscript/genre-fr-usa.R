@@ -18,7 +18,7 @@ GROUP BY c.country, g.genre;")
 splitValues <- split(values, values$format)
 
 # open filewrite
-png(filename=paste(getwd(), "src/main/resources/genre-fr-usa.png", sep="/"), width=1500, height=1240)
+png(filename=paste(getwd(), "build/resources/main/genre-fr-usa.png", sep="/"), width=1500, height=1240)
 
 par(mfrow=c(1,2))
 

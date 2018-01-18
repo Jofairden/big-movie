@@ -36,9 +36,10 @@ public class BotUtils {
 	 */
 	public static Path getResourcePath(String resourceName) {
 		try {
-			return Paths.get(BotUtils
+			return Paths.get(Objects.requireNonNull(BotUtils
 					.class
-					.getResource(resourceName)
+					.getClassLoader()
+					.getResource(resourceName))
 					.toURI());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
