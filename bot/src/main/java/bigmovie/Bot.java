@@ -1,5 +1,6 @@
 package bigmovie;
 
+import bigmovie.Subroutines.SoundtrackSubroutine;
 import bigmovie.subroutines.*;
 import com.rivescript.Config;
 import com.rivescript.RiveScript;
@@ -48,6 +49,7 @@ public final class Bot extends ListenerAdapter {
 	public final static RscriptSubroutine rscriptSubroutine = new RscriptSubroutine();
 	public final static MessageSubroutine messageSubroutine = new MessageSubroutine();
 	public final static MoviesInXCountriesSubroutine moviesInXCountriesSubroutine = new MoviesInXCountriesSubroutine();
+	public final static SoundtrackSubroutine soundtrackSubroutine = new SoundtrackSubroutine();
 	
 	public static void main(String[] args) {
 		try {
@@ -64,6 +66,7 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("rscript", rscriptSubroutine);
 		bot.setSubroutine("buildmessage", messageSubroutine);
 		bot.setSubroutine("moviesinxcountries", moviesInXCountriesSubroutine);
+		bot.setSubroutine("soundtracks", soundtrackSubroutine);
 		
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT
