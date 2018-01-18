@@ -36,6 +36,12 @@
 ^ <call>buildmessage context:file resource:genre-fr-usa.png</call>
 ^ Produced by R.
 
++ [*] genre [*]
+- <call>buildmessage Please give me a moment...</call>
+^ <call>rscript resource:Vraag8.r</call>
+^ <call>buildmessage context:file resource:Vraag8.png</call>
+^ Produced by R.
+
 + [*] test [*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:test.R</call>
