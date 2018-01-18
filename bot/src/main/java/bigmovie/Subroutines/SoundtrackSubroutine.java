@@ -13,11 +13,10 @@ public class SoundtrackSubroutine implements Subroutine {
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
 
-        String result = BotUtils.execSqlQuery(args[0], new PrepArg[] {
-                new PrepArg<>(String.join("%", Arrays.stream(args).skip(1).collect(Collectors.toList())) + "%")
-        });
+        String result = BotUtils.execSqlQuery(args[0], null);
 
-        String msg = Bot.messageSubroutine.call(rs, String.format("context:embed fieldtitle:Movies %s", result).split(" "));
+        result.replace("\"", "\t");
+        String msg = Bot.messageSubroutine.call(rs, String.format("context:embed fieldtitle:Soundtrack %s", result).split(" "));
         BotUtils.embedErr(msg);
         return "";
     }
