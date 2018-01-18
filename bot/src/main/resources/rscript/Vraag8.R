@@ -10,17 +10,17 @@ values <- dbGetQuery(con,"SELECT c.country, m.release_year, COUNT(*) AS number_m
                      GROUP BY c.country, m.release_year
                      HAVING c.country LIKE '%germany%';")
 
-values <- values[(values$releaseYear > 0),]
+values <- values[(values$release_year > 0),]
 
-aggregate(values$number_movies ~ values$releaseYear, data=values, sum)
+aggregate(values$number_movies ~ values$release_year, data=values, sum)
 
-values <- aggregate(values$number_movies ~ values$releaseYear, data=values, sum)
+values <- aggregate(values$number_movies ~ values$release_year, data=values, sum)
 
 png(filename=paste(getwd(), "build/resources/main/Vraag8.png", sep="/"))
 
 par(col="blue")
 heading = paste("type=", "h")
-plot(values$`values$releaseYear`, values$`values$number_movies`,
+plot(values$`values$release_year`, values$`values$number_movies`,
      xlab= "Jaar", ylab= "Total", type="h", xlim=c(1,100), ylim=c(1,100))
 
 
