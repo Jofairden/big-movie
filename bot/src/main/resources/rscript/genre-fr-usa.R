@@ -1,7 +1,7 @@
 #!/usr/bin/Rscript
 
-#install.packages("RMySQL", repos= "http://cran.us.r-project.org")
-library(RMySQL)
+# add packages if not present
+pacman::p_load(RMySQL)
 
 con <- dbConnect(MySQL(), dbname="bigmovie", user="root", password="root")
 values <- dbGetQuery(con,
@@ -17,9 +17,8 @@ GROUP BY c.country, g.genre;")
 
 splitValues <- split(values, values$format)
 
-
-png(filename="genre-fr-usa.jpg", width=1500, height=1240)
-
+# open filewrite
+png(filename=paste(getwd(), "build/resources/main/genre-fr-usa.png", sep="/"), width=1500, height=1240)
 
 par(mfrow=c(1,2))
 

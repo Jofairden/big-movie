@@ -1,9 +1,0 @@
-package 'bit' successfully unpacked and MD5 sums checked
-package 'pkgconfig' successfully unpacked and MD5 sums checked
-package 'rlang' successfully unpacked and MD5 sums checked
-package 'bit64' successfully unpacked and MD5 sums checked
-package 'hms' successfully unpacked and MD5 sums checked
-package 'Rcpp' successfully unpacked and MD5 sums checked
-package 'BH' successfully unpacked and MD5 sums checked
-package 'plogr' successfully unpacked and MD5 sums checked
-package 'RMariaDB' successfully unpacked and MD5 sums checked

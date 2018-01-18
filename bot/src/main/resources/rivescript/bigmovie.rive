@@ -1,0 +1,43 @@
+! version = 2.0
+
++ hello
+- Hello, human!
+
++ my name is *
+- <set name=<formal>> Nice to meet you, <get name>.
+
++ which films play in more than * country
+- <call>buildmessage Performing query...</call>
+^ <call>moviesinxcountries moviesinxcountries.sql <star1></call>
+
++ which soundtrack is most used in movies
+
++ which movies have the highest score with the least amount of votes
+
++ what is the shortest movie with a score of 8.5 or higher
+
++ which movies play in New York
+
++ what are the 10 most popular spoken languages in movies
+
++ which movies did _ * play in
+- <call>buildmessage Hold up while I lookup this person...</call>
+^ <call>actorinmovies actorinmovies.sql <star2> <star1></call>
+
++ [*] genre [*]
+- <call>buildmessage Please give me a moment...</call>
+^ <call>rscript resource:genre-fr-usa.r</call>
+^ <call>buildmessage context:file resource:genre-fr-usa.png</call>
+^ Produced by R.
+
++ [*] test [*]
+- <call>buildmessage Please give me a moment...</call>
+^ <call>rscript resource:test.R</call>
+^ <call>buildmessage context:file resource:test.png</call>
+^ Produced by R.
+
++ [*] q8 [*]
+- <call>buildmessage Please give me a moment...</call>
+^ <call>rscript resource:Vraag8.R</call>
+^ <call>buildmessage context:file resource:Vraag8.png</call>
+^ Produced by R.
