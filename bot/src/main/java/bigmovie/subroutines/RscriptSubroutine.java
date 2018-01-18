@@ -21,7 +21,7 @@ public class RscriptSubroutine implements Subroutine {
 			// assume resource path
 			path = Objects.requireNonNull(BotUtils.getResourcePath(
 					String.format(
-							"rscript/%s",
+							"/rscript/%s",
 							args[0].split(":")[1])
 			)).toString();
 		} else {

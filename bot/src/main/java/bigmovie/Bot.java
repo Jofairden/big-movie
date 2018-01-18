@@ -81,7 +81,7 @@ public final class Bot extends ListenerAdapter {
 		
 		// init stuff
 		BotUtils.execRSript(Objects.requireNonNull(BotUtils
-				.getResourcePath("rscript/initPacman.R"))
+				.getResourcePath("/rscript/initPacman.R"))
 				.toString());
 	}
 	
