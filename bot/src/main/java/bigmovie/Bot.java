@@ -50,7 +50,8 @@ public final class Bot extends ListenerAdapter {
 	public final static MessageSubroutine messageSubroutine = new MessageSubroutine();
 	public final static MoviesInXCountriesSubroutine moviesInXCountriesSubroutine = new MoviesInXCountriesSubroutine();
 	public final static SoundtrackSubroutine soundtrackSubroutine = new SoundtrackSubroutine();
-	public final static MoviesHighScoreLowVotes moviesHighScoreLowVotes = new MoviesHighScoreLowVotes();
+	public final static MoviesHighScoreLowVotesSubroutine moviesHighScoreLowVotesSubroutine = new MoviesHighScoreLowVotesSubroutine();
+	public final static MovieXScoreSubroutine moviesXScoreSubroutine = new MovieXScoreSubroutine();
 	
 	public static void main(String[] args) {
 		try {
@@ -68,7 +69,8 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("buildmessage", messageSubroutine);
 		bot.setSubroutine("moviesinxcountries", moviesInXCountriesSubroutine);
 		bot.setSubroutine("soundtracks", soundtrackSubroutine);
-		bot.setSubroutine("movieshighscorelowvotes", moviesHighScoreLowVotes);
+		bot.setSubroutine("movieshighscorelowvotes", moviesHighScoreLowVotesSubroutine);
+		bot.setSubroutine("moviesxscore", moviesXScoreSubroutine);
 
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
 		// we would use AccountType.CLIENT

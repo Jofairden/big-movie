@@ -20,7 +20,10 @@
 ^ <call>movieshighscorelowvotes movieshighscorelowvotes.sql</call>
 ^ There it is!
 
-+ what is the shortest movie with a score of 8.5 or higher
++ what is the shortest movie with a score of * or higher
+- <call>buildmessage Performing query... </call>
+^ <call>moviesxscore moviexscore.sql <star1></call>
+^ There it is!
 
 + which movies play in New York
 
