@@ -22,6 +22,9 @@
 + which movies play in New York
 
 + what are the 10 most popular spoken languages in movies
+- <call>buildmessage Hold up while I'm counting languages </call>
+^ <call>language language.sql</call>
+^ There it is!
 
 + which movies did _ * play in
 - <call>buildmessage Hold up while I lookup this person...</call>
