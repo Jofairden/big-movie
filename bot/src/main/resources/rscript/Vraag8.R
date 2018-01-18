@@ -1,7 +1,6 @@
 #!/usr/bin/Rscript
+pacman::p_load(RMySQL)
 
-install.packages("RMySQL", repos= "http://cran.us.r-project.org")
-library(RMySQL)
 con <- dbConnect(MySQL(), dbname="bigmovie", user="root", password="root")
 
 values <- dbGetQuery(con,"SELECT c.country, m.release_year, COUNT(*) AS number_movies
@@ -16,15 +15,14 @@ aggregate(values$number_movies ~ values$release_year, data=values, sum)
 
 values <- aggregate(values$number_movies ~ values$release_year, data=values, sum)
 
-png(filename="vraag8.jpg")
+png(filename=paste(getwd(), "build/resources/main/vraag8.png", sep="/"))
 
 par(col="blue")
 heading = paste("type=", "h")
 plot(values$`values$release_year`, values$`values$number_movies`,
-xlab= "Jaar", ylab= "Total", type="h" ) 
+xlab= "Year", ylab= "Total", type="h" )
 
-
-title(main="Land", col.main="black", font.main=4)
+title(main="Country", col.main="black", font.main=4)
 box()
 dev.off()
 

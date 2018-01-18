@@ -5,7 +5,7 @@ import bigmovie.BotUtils;
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
 
-public class MoviesHighScoreLowVotes implements Subroutine {
+public class MoviesHighScoreLowVotesSubroutine implements Subroutine {
 	@Override
 	public String call(RiveScript rs, String[] args) {
 		String result = BotUtils.execSqlQuery(args[0], null);

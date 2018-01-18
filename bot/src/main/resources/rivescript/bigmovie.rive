@@ -26,7 +26,10 @@
 ^ <call>movieshighscorelowvotes movieshighscorelowvotes.sql</call>
 ^ There it is!
 
-+ what is the shortest movie with a score of 8.5 or higher
++ what is the shortest movie with a score of * or higher
+- <call>buildmessage Performing query... </call>
+^ <call>moviesxscore moviexscore.sql <star1></call>
+^ There it is!
 
 + which movies occurred in *
 @ which movies play in <star1>
@@ -54,20 +57,14 @@
 ^ <call>buildmessage context:file resource:genre-fr-usa.png</call>
 ^ Produced by R.
 
-+ [*] genre [*]
-- <call>buildmessage Please give me a moment...</call>
-^ <call>rscript resource:Vraag8.r</call>
-^ <call>buildmessage context:file resource:Vraag8.png</call>
-^ Produced by R.
-
 + [*] test [*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:test.R</call>
 ^ <call>buildmessage context:file resource:test.png</call>
 ^ Produced by R.
 
-+ [*] q8 [*]
++ [*] country [*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:Vraag8.R</call>
-^ <call>buildmessage context:file resource:Vraag8.png</call>
+^ <call>buildmessage context:file resource:vraag8.png</call>
 ^ Produced by R.

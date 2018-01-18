@@ -4,5 +4,5 @@ SELECT
 	m.running_time,
 	m.score
 FROM movies m
-WHERE m.score >= 8.5
+WHERE m.score >= ?
 AND m.running_time = (SELECT MIN(running_time) FROM movies);

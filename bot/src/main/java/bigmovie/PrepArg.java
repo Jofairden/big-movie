@@ -26,5 +26,8 @@ public final class PrepArg<T> {
 		} else if (prop instanceof Integer) {
 			statement.setInt(index, (Integer) prop);
 		}
+		else if(prop instanceof Double) {
+			statement.setDouble(index,(Double) prop);
+		}
 	}
 }
