@@ -8,4 +8,4 @@ FROM
 GROUP BY
   movie_id
 HAVING
-  total > 3;
+  total > ?;
