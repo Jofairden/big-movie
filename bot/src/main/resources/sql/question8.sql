@@ -8,7 +8,7 @@ FROM
   LEFT  JOIN country_movie AS cm ON cm.movie_id = m.id
   LEFT  JOIN countries AS c ON c.id = cm.country_id
 WHERE
-  country = 'Germany'
+  country LIKE '%Germany'
 GROUP BY
   country,
   release_year;
