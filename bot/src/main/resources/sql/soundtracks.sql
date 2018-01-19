@@ -1,9 +1,14 @@
 /* Welke soundtrack is het meeste gebruikt in films? (zelf bedacht) */
-SELECT 
-		COUNT(*) AS occurrences,
-		s.title AS soundtrack_title
-FROM movie_soundtrack ms, soundtracks s
-WHERE s.id = ms.soundtrack_id
-GROUP BY ms.soundtrack_id
-ORDER BY COUNT(*) desc
-LIMIT 1
+SELECT
+  title,
+  COUNT(title) AS `occurrences`
+  /* note: there is many permutations (such as all upper-case) so the count is much higher than expected */
+FROM
+	movie_soundtrack AS ms
+	INNER JOIN soundtracks AS s ON s.id = ms.soundtrack_id
+GROUP BY
+  title
+ORDER BY
+  `occurrences` DESC
+LIMIT
+  1;

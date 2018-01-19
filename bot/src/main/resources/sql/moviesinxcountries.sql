@@ -1,6 +1,11 @@
 /*Welke films spelen in meer dan 1 land? */
-SELECT title, COUNT(c.movie_id) AS total
-FROM movies AS m, country_movie AS c
-WHERE m.id = c.movie_id
-GROUP BY c.movie_id
-HAVING total > ?;
+SELECT
+  title,
+  COUNT(cm.movie_id) AS `total`
+FROM
+  movies AS m
+  INNER JOIN country_movie AS cm ON cm.movie_id = m.id
+GROUP BY
+  movie_id
+HAVING
+  total > 3;
