@@ -68,3 +68,9 @@
 ^ <call>rscript resource:Vraag8.R</call>
 ^ <call>buildmessage context:file resource:vraag8.png</call>
 ^ Produced by R.
+
++ [*] vraag9 [*]
+- <call>buildmessage Please give me a moment...</call>
+^ <call>rscript resource:Vraag9.R</call>
+^ <call>buildmessage context:file resource:vraag9.png</call>
+^ Produced by R.
