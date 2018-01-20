@@ -181,7 +181,11 @@ public class BotUtils {
 		writer.println(content);
 		writer.close();
 	}
-	
+
+    public static String firstToUpper(String input)
+    {
+        return Character.toUpperCase(input.charAt(0)) + input.substring(1);
+    }
 }
 
 

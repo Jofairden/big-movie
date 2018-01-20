@@ -1,8 +1,8 @@
 #!/usr/bin/Rscript
 pacman::p_load(RMySQL)
 
-genreList <- c("Action", "Horror", "Comedy", "Adult", "Drama")
-
+genreList <- readLines("build/resources/main/genres.csv")
+print(genreList)
 
 if (length(genreList) >= 1)
   {

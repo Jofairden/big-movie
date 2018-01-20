@@ -14,17 +14,30 @@ public class WriteCountryTempSubroutine implements Subroutine{
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
         StringBuilder sb = new StringBuilder();
+        String path;
         if (args.length > 1){
-            //write temp country for R to read
-            String path = args[0];
 
-            for (int i = 1 ; i < args.length; i ++){
-                sb.append(args[i]).append(" ");
+            if (args[0].equals("context:genres") && args.length > 2){
+                path = args[1];
+                for (int i = 2; i < args.length; i++) {
+                    sb.append(BotUtils.firstToUpper(args[i])).append("\n");
+                }
+
             }
+            else {
+
+                //write temp country for R to read
+                path = args[0];
+
+                for (int i = 1; i < args.length; i++) {
+                    sb.append(args[i]).append(" ");
+                }
+            }
+
             try {
-                String country = sb.toString();
-                country = country.trim();
-                BotUtils.writeFile(args[0], country);
+                String data = sb.toString();
+                data = data.trim();
+                BotUtils.writeFile(path, data);
             } catch (FileNotFoundException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
