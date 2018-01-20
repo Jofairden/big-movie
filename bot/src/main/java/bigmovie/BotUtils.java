@@ -5,9 +5,7 @@ import com.google.common.io.Resources;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -176,6 +174,12 @@ public class BotUtils {
 									, total, sent, rem)
 					).queue();
 		}
+	}
+
+	public static void writeFile(String path, String content) throws FileNotFoundException, UnsupportedEncodingException {
+		PrintWriter writer = new PrintWriter(path, "UTF-8");
+		writer.println(content);
+		writer.close();
 	}
 	
 }
