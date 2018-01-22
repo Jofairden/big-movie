@@ -43,7 +43,7 @@ public class WriteExecuteSendR implements Subroutine{
                 //country no existo
                 PrepArg[] prepargsC = new PrepArg[]{new PrepArg<String>( "%" + sb.toString().trim() + "%")};
                 if (BotUtils.execSqlQuery("getCountry.sql" , prepargsC ).equals("")){
-                    Bot.messageSubroutine.call(rs, new String[]{"Country: " + prepargsC[0] + " not found"});
+                    Bot.messageSubroutine.call(rs, new String[]{"Country: " +  sb.toString().trim() + " not found"});
                 }
                 else{
                     WriteFile(sb, path);
