@@ -22,13 +22,16 @@ public class WriteExecuteSendR implements Subroutine{
 
                 for (int i = 2; i < args.length; i++) {
 
+                    args[i] = args[i].replace(",", "");
+                    if (args[i].equals("and")) continue;
+
                     PrepArg[] prepargsC = new PrepArg[]{new PrepArg<String>( "%" + args[i].trim() + "%")};
                     if (BotUtils.execSqlQuery("getGenre.sql" , prepargsC ).equals("")){
                         Bot.messageSubroutine.call(rs, new String[]{"Genre: " +  args[i].trim() + " not found"});
                         return "";
                     }
 
-                    sb.append(BotUtils.firstToUpper(args[i])).append("\n");
+                  sb.append(BotUtils.firstToUpper(args[i])).append("\n");
                 }
                 WriteFile(sb, path);
                 Bot.rscriptSubroutine.call(rs, new String[]{"resource:Vraag9.R"});

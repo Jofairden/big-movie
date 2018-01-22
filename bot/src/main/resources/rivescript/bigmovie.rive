@@ -51,7 +51,7 @@
 - <call>buildmessage Hold up while I lookup this person...</call>
 ^ <call>actorinmovies actorinmovies.sql <star3> <star2></call>
 
-+ [*] genre [*]
++ [*] genre * france * usa[*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:genre-fr-usa.r</call>
 ^ <call>buildmessage context:file resource:genre-fr-usa.png</call>
@@ -63,10 +63,13 @@
 ^ <call>buildmessage context:file resource:test.png</call>
 ^ Produced by R.
 
-+ * country *
++ how much (movies|films) are made in *
+@ what are the amount of <star1> made in <star2>
+
++ what are the amount of (movies|films) made in *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write build\resources\main\country.txt <star2></call>
 
-+ * vraag9 *
++ what is the popularity [*] (genres|genre) *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write context:genres build\resources\main\genres.csv <star2></call>
