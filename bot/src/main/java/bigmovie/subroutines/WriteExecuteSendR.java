@@ -24,6 +24,7 @@ public class WriteExecuteSendR implements Subroutine{
                     sb.append(BotUtils.firstToUpper(args[i])).append("\n");
                 }
 
+                WriteFile(sb, path);
                 Bot.rscriptSubroutine.call(rs, new String[]{"resource:Vraag9.R"});
                 Bot.messageSubroutine.call(rs, new String[]{"context:file", "resource:vraag9.png"});
             }
@@ -45,20 +46,23 @@ public class WriteExecuteSendR implements Subroutine{
                     Bot.messageSubroutine.call(rs, new String[]{"Country: " + prepargsC[0] + " not found"});
                 }
                 else{
+                    WriteFile(sb, path);
                     Bot.rscriptSubroutine.call(rs, new String[]{"resource:Vraag8.R"});
                     Bot.messageSubroutine.call(rs, new String[]{"context:file", "resource:vraag8.png"});
                     Bot.messageSubroutine.call(rs, new String[]{"Produced by R."});
                 }
             }
-
-            try {
-                String data = sb.toString();
-                data = data.trim();
-                BotUtils.writeFile(path, data);
-            } catch (FileNotFoundException | UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
         }
         return "";
+    }
+
+    private void WriteFile(StringBuilder sb, String path){
+        try {
+            String data = sb.toString();
+            data = data.trim();
+            BotUtils.writeFile(path, data);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }
