@@ -73,6 +73,4 @@
 + * vraag9 *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write context:genres build\resources\main\genres.csv <star2></call>
-^ <call>rscript resource:Vraag9.R</call>
-^ <call>buildmessage context:file resource:vraag9.png</call>
 ^ Produced by R.
