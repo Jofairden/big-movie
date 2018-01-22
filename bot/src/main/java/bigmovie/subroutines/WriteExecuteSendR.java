@@ -21,12 +21,19 @@ public class WriteExecuteSendR implements Subroutine{
                 path = args[1];
 
                 for (int i = 2; i < args.length; i++) {
+
+                    PrepArg[] prepargsC = new PrepArg[]{new PrepArg<String>( "%" + args[i].trim() + "%")};
+                    if (BotUtils.execSqlQuery("getGenre.sql" , prepargsC ).equals("")){
+                        Bot.messageSubroutine.call(rs, new String[]{"Genre: " +  args[i].trim() + " not found"});
+                        return "";
+                    }
+
                     sb.append(BotUtils.firstToUpper(args[i])).append("\n");
                 }
-
                 WriteFile(sb, path);
                 Bot.rscriptSubroutine.call(rs, new String[]{"resource:Vraag9.R"});
                 Bot.messageSubroutine.call(rs, new String[]{"context:file", "resource:vraag9.png"});
+                Bot.messageSubroutine.call(rs, new String[]{"Produced by R."});
             }
             else if (args[0].equals("context:genres") ){
                 Bot.messageSubroutine.call(rs, new String[]{"Please add between 1 and 11 genres, splitted by space"});
@@ -40,7 +47,7 @@ public class WriteExecuteSendR implements Subroutine{
                     sb.append(args[i]).append(" ");
                 }
 
-                //country no existo
+                //check if country exists
                 PrepArg[] prepargsC = new PrepArg[]{new PrepArg<String>( "%" + sb.toString().trim() + "%")};
                 if (BotUtils.execSqlQuery("getCountry.sql" , prepargsC ).equals("")){
                     Bot.messageSubroutine.call(rs, new String[]{"Country: " +  sb.toString().trim() + " not found"});
