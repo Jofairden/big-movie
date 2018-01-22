@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class WriteCountryTempSubroutine implements Subroutine{
+public class WriteExecuteSendR implements Subroutine{
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
         StringBuilder sb = new StringBuilder();
@@ -37,6 +37,17 @@ public class WriteCountryTempSubroutine implements Subroutine{
 
                 for (int i = 1; i < args.length; i++) {
                     sb.append(args[i]).append(" ");
+                }
+
+                //country no existo
+                PrepArg[] prepargsC = new PrepArg[]{new PrepArg<String>( "%" + sb.toString().trim() + "%")};
+                if (BotUtils.execSqlQuery("getCountry.sql" , prepargsC ).equals("")){
+                    Bot.messageSubroutine.call(rs, new String[]{"Country: " + prepargsC[0] + " not found"});
+                }
+                else{
+                    Bot.rscriptSubroutine.call(rs, new String[]{"resource:Vraag8.R"});
+                    Bot.messageSubroutine.call(rs, new String[]{"context:file", "resource:vraag8.png"});
+                    Bot.messageSubroutine.call(rs, new String[]{"Produced by R."});
                 }
             }
 
