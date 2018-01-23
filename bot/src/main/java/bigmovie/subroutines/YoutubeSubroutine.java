@@ -1,5 +1,7 @@
 package bigmovie.subroutines;
 
+import bigmovie.Bot;
+import bigmovie.BotUtils;
 import com.rivescript.macro.Subroutine;
 
 import java.io.IOException;
@@ -17,9 +19,14 @@ public class YoutubeSubroutine implements Subroutine {
 
         try {
 
+            String movieName = "";
 
-            String movieName = args[0];
-            String movieTrailer = movieName + "trailer";
+            for(int i=1; i<args.length; i++)
+            {
+                movieName = movieName + " " + args[i];
+            }
+
+            String movieTrailer = movieName + " " + "trailer";
             String youtubeName = movieTrailer.replace(' ', '+');
             String webPage = "https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query=" + youtubeName;
             //Convert de input naar een youtube link
@@ -58,13 +65,16 @@ public class YoutubeSubroutine implements Subroutine {
             }
             //Zoek waar de substring in de string met de website inhoud zit en sla de begin en eid positie ervan op
 
-
+            String webAdres = "https://www.youtube.com/watch?v=" + result.substring(indexStart,indexEnd);
             System.out.println(movieName);
             System.out.println(webPage);
             System.out.println(indexStart);
             System.out.println(indexEnd);
+            System.out.println(movieName);
             System.out.println("https://www.youtube.com/watch?v=" + result.substring(indexStart,indexEnd));
             //Maak de link aan van de meest relevante video
+
+            return webAdres;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
