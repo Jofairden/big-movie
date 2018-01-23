@@ -5,6 +5,7 @@ pacman::p_load(RMySQL)
 genreList <- readLines("build/resources/main/genres.csv")
 print(genreList)
 
+
 if (length(genreList) >= 1)
   {
   
