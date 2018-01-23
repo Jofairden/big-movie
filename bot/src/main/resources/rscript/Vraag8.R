@@ -1,4 +1,5 @@
 #!/usr/bin/Rscript
+# @author Fadi
 pacman::p_load(RMySQL)
 pacman::p_load(readr)
 

@@ -70,7 +70,7 @@
 + how much (movies|films) are made in *
 @ what are the amount of <star1> made in <star2>
 
-+ what _ the amount of (movies|films) made in *
++ what [_] the amount of (movies|films) made in *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write build\resources\main\country.txt <star2></call>
 

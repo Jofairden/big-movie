@@ -1,5 +1,7 @@
 #!/usr/bin/Rscript
 
+# @author Jildert
+
 # add packages if not present
 pacman::p_load(RMySQL)
 
@@ -37,13 +39,13 @@ INNER JOIN country_movie cm ON cm.movie_id = m.id
 INNER JOIN countries c ON c.id = cm.country_id AND c.country LIKE '%france%';")
 
 usaPercentage = valuesUSA / totalUSA * 100
-francePercentage = valuesFrance / totalUSA * 100
+francePercentage = valuesFrance / totalFrance * 100
 
 # open filewrite
 png(filename=paste(getwd(), "build/resources/main/genre-fr-usa.png", sep="/"))
 
 plotVal <- cbind(usaPercentage$freq,francePercentage$freq)
 
-barplot(plotVal, main="Procent of violence movies", beside=TRUE, names.arg=c("USA", "France"), col=c("red","darkblue"))
+barplot(plotVal, main="Procent of violence movies", ylim=c(0,10), beside=TRUE, names.arg=c("USA", "France"), col=c("red","darkblue"))
 
 dev.off()
