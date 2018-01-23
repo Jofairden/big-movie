@@ -10,6 +10,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+/**
+ * @author Jildert
+ * Writes a file and calls other subroutines depening on given context
+ */
 public class WriteExecuteSendR implements Subroutine{
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {

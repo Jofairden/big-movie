@@ -15,12 +15,18 @@ public class ActorInMoviesSubroutine implements Subroutine {
 	
 	@Override
 	public String call(com.rivescript.RiveScript rs, String[] args) {
-		
+
+		String context = "context:embed fieldtitle:Movies %s";
 		String result = BotUtils.execSqlQuery(args[0], new PrepArg[] {
 				new PrepArg<>(String.join("%", Arrays.stream(args).skip(1).collect(Collectors.toList())) + "%")
 		});
-		
-		String msg = Bot.messageSubroutine.call(rs, String.format("context:embed fieldtitle:Movies %s", result).split(" "));
+
+		if (result.equals("")) {
+			result = "I don't know that person";
+			context = "%s..";
+		}
+
+		String msg = Bot.messageSubroutine.call(rs, String.format(context, result).split(" "));
 		BotUtils.embedErr(msg);
 		return "";
 	}

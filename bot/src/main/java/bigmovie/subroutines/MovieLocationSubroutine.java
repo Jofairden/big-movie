@@ -7,7 +7,9 @@ import com.rivescript.macro.Subroutine;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
+/**
+ * @author Daniel, Jildert
+ */
 public class MovieLocationSubroutine implements Subroutine{
 
     @Override

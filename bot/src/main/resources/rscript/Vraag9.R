@@ -1,4 +1,5 @@
 #!/usr/bin/Rscript
+# @author Fadi
 pacman::p_load(RMySQL)
 
 genreList <- readLines("build/resources/main/genres.csv")
