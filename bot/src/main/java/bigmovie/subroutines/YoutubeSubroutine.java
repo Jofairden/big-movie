@@ -21,7 +21,7 @@ public class YoutubeSubroutine implements Subroutine {
 
             String movieName = "";
 
-            for(int i=1; i<args.length; i++)
+            for(int i=0; i<args.length; i++)
             {
                 movieName = movieName + " " + args[i];
             }
