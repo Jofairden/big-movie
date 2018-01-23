@@ -51,6 +51,10 @@
 - <call>buildmessage Hold up while I lookup this person...</call>
 ^ <call>actorinmovies actorinmovies.sql <star3> <star2></call>
 
+
++ what is the * violence * [france|usa] * (france|usa)
+@ <star1> genre <star2> france <star3> usa <star4>
+
 + [*] genre * france * usa[*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:genre-fr-usa.r</call>
@@ -66,7 +70,7 @@
 + how much (movies|films) are made in *
 @ what are the amount of <star1> made in <star2>
 
-+ what are the amount of (movies|films) made in *
++ what _ the amount of (movies|films) made in *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write build\resources\main\country.txt <star2></call>
 
