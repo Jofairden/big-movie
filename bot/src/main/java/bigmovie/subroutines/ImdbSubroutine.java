@@ -92,8 +92,6 @@ public class ImdbSubroutine implements Subroutine {
                     }
                     else
                     {
-                        System.out.println(movieName.charAt(0));
-                        System.out.println(args[0].charAt(0));
                         return ("Movie not found, did you mistype it?");
                     }
                 }
