@@ -79,4 +79,4 @@
 ^ <call>write context:genres build\resources\main\genres.csv <star2></call>
 
 + trailer *
-- <call>youtube <star1></call>
+- <call>youtube youtube.sql <star1></call>
