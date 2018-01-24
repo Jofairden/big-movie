@@ -78,5 +78,5 @@
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write context:genres build\resources\main\genres.csv <star2></call>
 
-+ trailer *
++ * trailer *
 - <call>youtube youtube.sql <star1></call>

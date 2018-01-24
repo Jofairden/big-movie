@@ -142,11 +142,6 @@ public final class Bot extends ListenerAdapter {
 		
 		if (message.isMentioned(api.getSelfUser())) {
 			reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replace(api.getSelfUser().getAsMention(), ""));
-			if (!reply.isEmpty()) {
-				if (reply.startsWith("There it is!")) {
-					// @todo ??
-				}
-			}
 			
 			// Substring if too long
 			if (reply.length() > 2000)
