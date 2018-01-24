@@ -1,0 +1,14 @@
+! version = 2.0
+
++ [*] do you know (da wae|the way) [*]
+- <call>buildmessage Oh I know da wae.</call>
+^ <call>buildmessage context:file resource:memes\wae.jpg</call>
+
++ [*] send [*] meme [*]
+- <call>buildmessage context:file resource:memes\memebot.jpg</call>
+- <call>buildmessage context:file resource:memes\salty.png</call>
+- <call>buildmessage context:file resource:memes\forTheScreen.jpg</call>
+- <call>buildmessage context:file resource:memes\dragon.jpg</call>
+- <call>buildmessage context:file resource:memes\weird.jpg</call>
+- <call>buildmessage context:file resource:memes\uber.jpg</call>
+- <call>buildmessage context:file resource:memes\money.png</call>
