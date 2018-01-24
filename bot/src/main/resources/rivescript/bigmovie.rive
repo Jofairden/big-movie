@@ -80,3 +80,6 @@
 
 + trailer *
 - <call>youtube youtube.sql <star1></call>
+
++ * imdbinfo *
+- <call>imdb <star1> <star2></call>
