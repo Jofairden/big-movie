@@ -91,10 +91,11 @@
 - <call>youtube youtube.sql <star1></call>
 - It looks like I couldn't find anything. // this activates if it doesnt find shit
 
-+ show trailer *
+// show trailer x, show me trailer x,
++ [show|get|send|give] [me|] trailer *
 @ trailer <star1>
 
-+ show the trailer of *
++ show [*] trailer [of|] [movie|] *
 @ trailer <star1>
 
 + laat de trailer zien van *
@@ -111,6 +112,9 @@
 
 + [*] the imdb info of * made in *
 @ <star2> imdbinfo <star1>
+
++ * imdb *
+@ <star1> imdbinfo <star2>
 
 + toon de imdb info van * die gemaakt is in *
 @ <star2> imdbinfo <star1>

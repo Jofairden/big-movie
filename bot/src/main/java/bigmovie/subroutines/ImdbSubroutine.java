@@ -12,6 +12,7 @@ import java.net.URLConnection;
 
 /**
  * @author Fadi (Daniel: cleanup)
+ * @todo convert to httpGET subroutine
  */
 public class ImdbSubroutine implements Subroutine {
 	
