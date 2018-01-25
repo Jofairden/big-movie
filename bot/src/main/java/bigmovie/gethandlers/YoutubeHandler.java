@@ -8,7 +8,10 @@ import bigmovie.subroutines.HttpGETSubroutine;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Collectors;
-
+/**
+ * @author Fadi
+ * Can search for the requested movie on youtbe, and serve the link
+ */
 public class YoutubeHandler extends GetHandler {
 	
 	@Override
