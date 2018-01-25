@@ -5,12 +5,8 @@ import bigmovie.BotUtils;
 import bigmovie.PrepArg;
 import bigmovie.subroutines.HttpGETSubroutine;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class YoutubeHandler extends GetHandler {
@@ -45,27 +41,19 @@ public class YoutubeHandler extends GetHandler {
 				movieName = new StringBuilder(movieName.substring(1));
 			}
 			//Haal de eerste spatie weg
-
-//			System.out.println(movieName);
+			
 			
 			String movieTrailer = movieName + " " + "movie trailer";
 			String youtubeName = movieTrailer.replace(' ', '+');
-			String webPage = "https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query=" + youtubeName;
-			//Convert de input naar een youtube link
 			
-			URL url = new URL(webPage);
-			URLConnection urlConnection = url.openConnection();
-			InputStream is = urlConnection.getInputStream();
-			InputStreamReader isr = new InputStreamReader(is);
-			//Maak de connectie naar de youtube link aan
+			// perform get
+			String result = HttpGETSubroutine.GetAddr.asHTML(getAddr.get(new HashMap<String,String>() {
+				{
+					put("sp", "EgIQAQ%253D%253D");
+					put("search_query", youtubeName);
+				}
+			})).getBody().asString();
 			
-			int numCharsRead;
-			char[] charArray = new char[1024];
-			StringBuilder sb = new StringBuilder();
-			while ((numCharsRead = isr.read(charArray)) > 0) {
-				sb.append(charArray, 0, numCharsRead);
-			}
-			String result = sb.toString();
 			//Zet de inhoud van de youtube link in een string
 			
 			if (!result.contains(movieName.toString())) // Zoek naar de movieName op youtube : 2de controle
@@ -113,7 +101,7 @@ public class YoutubeHandler extends GetHandler {
 			
 			return true;
 			
-		} catch (IOException | NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			Bot.logger.error(e.toString());
 		}
 		

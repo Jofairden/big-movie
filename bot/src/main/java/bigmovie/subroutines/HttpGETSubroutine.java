@@ -35,8 +35,8 @@ public class HttpGETSubroutine implements Subroutine {
 	public enum GetAddr {
 		MEMES("https://api.imgflip.com/get_memes", new MemeHandler()),
 		YESORNO("https://yesno.wtf/api", new YesOrNoHandler()),
-		IMDB("http://www.imdb.com/find?ref_=nv_sr_fn&q=", new ImdbHandler()),
-		YOUTUBE("https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query=", new YoutubeHandler());
+		IMDB("http://www.imdb.com/find", new ImdbHandler()),
+		YOUTUBE("https://www.youtube.com/results", new YoutubeHandler());
 		
 		public final String url;
 		private final GetHandler handler;
@@ -65,6 +65,7 @@ public class HttpGETSubroutine implements Subroutine {
 		public static Response asJson(Response response) {
 			return response
 					.then()
+					.assertThat()
 					// check that the content type return from the API is JSON
 					.contentType(ContentType.JSON)
 					.extract()
@@ -79,6 +80,15 @@ public class HttpGETSubroutine implements Subroutine {
 		// Return the response as a JSONArray
 		public static JSONArray asJSONArray(Response response) {
 			return new JSONArray(response.print());
+		}
+		
+		public static Response asHTML(Response response) {
+			return response
+					.then()
+					.assertThat()
+					.contentType(ContentType.HTML)
+					.extract()
+					.response();
 		}
 	}
 	
