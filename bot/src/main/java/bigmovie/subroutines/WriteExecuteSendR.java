@@ -51,7 +51,7 @@ public class WriteExecuteSendR implements Subroutine {
 					sb.append(args[i]).append(" ");
 				}
 				
-				//check if country exists
+				//check if country exists in database
 				PrepArg[] prepargsC = new PrepArg[] {new PrepArg<String>("%" + sb.toString().trim() + "%")};
 				if (BotUtils.execSqlQuery("getCountry.sql", prepargsC).equals("")) {
 					Bot.messageSubroutine.call(rs, new String[] {"Country: " + sb.toString().trim() + " not found"});
@@ -65,7 +65,8 @@ public class WriteExecuteSendR implements Subroutine {
 		}
 		return "";
 	}
-	
+
+	//Writing the string in stringbuilder to the given path, for rscript to read and process.
 	private void WriteFile(StringBuilder sb, String path) {
 		try {
 			String data = sb.toString();
