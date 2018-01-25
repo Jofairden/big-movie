@@ -1,19 +1,15 @@
 ! version = 2.0
 
-+ [*] do you know (da wae|the way) [*]
+// keep spelling errors in mind here
++ [*] (do|did|od|ddi) [*] (know|knew|kenw|kown|konw) (da wae|the way|teh way|da wea) [*]
 - <call>buildmessage Oh I know da wae.</call>
 ^ <call>buildmessage context:file resource:memes\wae.jpg</call>
 
 
-+ [*] send [*] meme [*]
-- <call>buildmessage context:file resource:memes\memebot.jpg</call>
-- <call>buildmessage context:file resource:memes\salty.png</call>
-- <call>buildmessage context:file resource:memes\forTheScreen.jpg</call>
-- <call>buildmessage context:file resource:memes\dragon.jpg</call>
-- <call>buildmessage context:file resource:memes\weird.jpg</call>
-- <call>buildmessage context:file resource:memes\uber.jpg</call>
-- <call>buildmessage context:file resource:memes\money.png</call>
+// usages: get me a meme, get a meme, send memes, get some memes, yo give me memes homie ... and so forth
++ [*] (tell|send|show|get|give) [*] (meme|memes) [*]
+- <call>meme</call>
 
-+ [*] send [*] nudes [*]
++ [*] (tell|send|show|get|give) [*] nudes [*]
 - <call>buildmessage context:file resource:memes\okay.jpg</call>
 ^ <call>buildmessage Oh you like that?</call>

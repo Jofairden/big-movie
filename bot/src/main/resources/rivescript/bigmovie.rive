@@ -7,6 +7,7 @@
 // Substitutions
 !sub act = play
 
++ [*] hello [*]
 - Hello, human!
 
 + my name is *
