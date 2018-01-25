@@ -1,9 +1,13 @@
+// Rivescript
+// Made by the entire team: Jeroen, Jildert, Fadi & Daniel
+// Group 11
+
 ! version = 2.0
 
 // Substitutions
 !sub act = play
 
-+ hello
++ [*] hello [*]
 - Hello, human!
 
 + my name is *
@@ -12,108 +16,104 @@
 + which films play in more than * (country|countries)
 - <call>buildmessage Performing query...</call>
 ^ <call>moviesinxcountries moviesinxcountries.sql <star1></call>
+^ <call>randmessage context:react</call>
 
 + which soundtrack is most used in movies
 - <call>buildmessage Hold up while I'm counting soundtracks </call>
 ^ <call>soundtracks soundtracks.sql</call>
-^ There it is!
-    + welke soundtrack [*] het meest gebruikt in films
-    @ which soundtrack is most used in movies
+^ <call>randmessage context:react</call>
 
 + which movies have the highest score with the least amount of votes
 - <call>buildmessage Performing query... </call>
 ^ <call>movieshighscorelowvotes movieshighscorelowvotes.sql</call>
-^ There it is!
-    + welke film [*] de hoogste score [*] de (laagste|minste) [*] stemmen
-    @ which movies have the highest score with the least amount of votes
+^ <call>randmessage context:react</call>
 
 + [*] shortest movies [*] score [of|] * higher
 - <call>buildmessage Performing query... </call>
-^ <call>moviesxscore moviexscore.sql <star2></call>
-^ There it is!
+^ <call>moviesxscore moviexscore.sql <star1></call>
+^ <call>randmessage context:react</call>
 
++ which movies occurred in *
+@ which movies play in <star1>
+
++ which movies did play in *
+@ which movies play in <star1>
 
 + which movies play in *
 - <call>buildmessage Performing query...</call>
 ^ <call>movielocation movielocation.sql <star1></call>
-^ There it is!
-    + which movies occurred in *
-    @ which movies play in <star1>
-
-    + which movies played in *
-    @ which movies play in <star1>
-
-    + which movies did play in *
-    @ which movies play in <star1>
-
-    + welke film speeld in *
-    @ which movies play in <star1>
-
-    + welke film speelde zich af in *
-    @ which movies play in <star1>
+^ <call>randmessage context:react</call>
 
 + what are the 10 most popular spoken languages in movies
 - <call>buildmessage Hold up while I'm counting languages </call>
 ^ <call>language language.sql</call>
-^ There it is!
+^ <call>randmessage context:react</call>
 
 + * movies did _ * play [_|]
 - <call>buildmessage Hold up while I lookup this person...</call>
 ^ <call>actorinmovies actorinmovies.sql <star3> <star2></call>
+^ <call>randmessage context:react</call>
+
++ what is the * violence * [france|usa] * (france|usa)
+@ <star1> genre <star2> france <star3> usa <star4>
 
 + [*] genre * france * usa[*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:genre-fr-usa.r</call>
 ^ <call>buildmessage context:file resource:genre-fr-usa.png</call>
-^ Produced by R.
-    + what is the * violence * [france|usa] * (france|usa)
-    @ <star1> genre <star2> france <star3> usa <star4>
+^ <call>randmessage context:react</call>
 
 + [*] test [*]
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>rscript resource:test.R</call>
 ^ <call>buildmessage context:file resource:test.png</call>
-^ Produced by R.
+^ <call>randmessage context:react</call>
 
 
 + what [_] the amount of (movies|films) made in *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write build\resources\main\country.txt <star2></call>
-    + how many (movies|films) [*] made in *
-    @ what are the amount of <star1> made in <star2>
+^ <call>randmessage context:react</call>
 
-    + hoeveel (films) zijn [*] gemaakt in *
-    @ what are the amount of <star1> made in <star2>
+
++ how many (movies|films) [*] made in *
+@ what are the amount of <star1> made in <star2>
+
++ hoeveel (films) zijn [*] gemaakt in *
+@ what are the amount of <star1> made in <star2>
 
 + what is the popularity [*] (genres|genre) *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write context:genres build\resources\main\genres.csv <star2></call>
-    + [*] de populariteit van de (genres|genre) *
-    @ what is the popularity [*] <star1> <star2>
-
-    + show the popularity [*] (genres|genre) *
-    @ what is the popularity [*] <star1> <star2>
+^ <call>randmessage context:react</call>
 
 + trailer *
 - <call>youtube youtube.sql <star1></call>
-    + show trailer *
-    @ trailer <star1>
+- It looks like I couldn't find anything. // this activates if it doesnt find shit
 
-    + show the trailer of *
-    @ trailer <star1>
++ show trailer *
+@ trailer <star1>
 
-    + laat de trailer zien van *
-    @ trailer <star1>
++ show the trailer of *
+@ trailer <star1>
 
++ laat de trailer zien van *
+@ trailer <star1>
+
++ toon de populariteit van de (genres|genre) *
+@ what is the popularity [*] <star1> <star2>
+
++ show the popularity [*] (genres|genre) *
+@ what is the popularity [*] <star1> <star2>
 
 + * imdbinfo *
 - <call>imdb <star1> <star2></call>
-    + [*] the imdb info of * made in *
-    @ <star2> imdbinfo <star1>
 
-    + toon de imdb info van * die gemaakt is in *
-    @ <star2> imdbinfo <star1>
++ [*] the imdb info of * made in *
+@ <star2> imdbinfo <star1>
 
-    + laat de imdb info zien van * die gemaakt is in *
-    @ <star2> imdbinfo <star1>
++ toon de imdb info van * die gemaakt is in *
+@ <star2> imdbinfo <star1>
 
++ laat de imdb info zien van * die gemaakt is in *
+@ <star2> imdbinfo <star1>

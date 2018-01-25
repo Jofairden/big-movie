@@ -4,27 +4,67 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import org.json.JSONObject;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Objects;
 
 public class BotUtils {
 	
 	/**
-	 * @todo remove, not needed ??
+	 * @author Daniel
+	 * The following function sends a GET request
+	 * to the given url, with optional parameters given (?q=a&b=c&c=d etc.)
+	 * parameters will be set from the given Map, in the format: key=value
+	 * The function assumes a JSON response, and return it as a JSONObject
 	 */
-	public static String readFile(String path, Charset encoding)
-			throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(path));
-		return new String(encoded, encoding);
+	public static JSONObject httpGetJsonResponse(String reqUrl, Map<String,String> args) throws Exception {
+		
+		boolean anyArgs = !args.isEmpty();
+		
+		StringBuilder urlBuilder = new StringBuilder();
+		urlBuilder.append(reqUrl);
+		
+		// optional parameters
+		if (anyArgs) {
+			urlBuilder.append("?");
+			
+			// append every parameter
+			args.forEach((key, value) -> {
+				urlBuilder.append(String.format("%s=%s&", key, value));
+			});
+			
+			urlBuilder.deleteCharAt(urlBuilder.toString().length() - 1); // delete trailing &
+		}
+		
+		String url = urlBuilder.toString();
+		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		// optional default is GET
+		con.setRequestMethod("GET");
+		//add request header
+		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+		int responseCode = con.getResponseCode();
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuilder response = new StringBuilder();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		return new JSONObject(response.toString());
 	}
 	
 	/**
@@ -175,17 +215,16 @@ public class BotUtils {
 					).queue();
 		}
 	}
-
+	
 	public static void writeFile(String path, String content) throws FileNotFoundException, UnsupportedEncodingException {
 		PrintWriter writer = new PrintWriter(path, "UTF-8");
 		writer.println(content);
 		writer.close();
 	}
-
-    public static String firstToUpper(String input)
-    {
-        return Character.toUpperCase(input.charAt(0)) + input.substring(1);
-    }
+	
+	public static String firstToUpper(String input) {
+		return Character.toUpperCase(input.charAt(0)) + input.substring(1);
+	}
 }
 
 
