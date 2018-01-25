@@ -36,7 +36,11 @@ public class WriteExecuteSendR implements Subroutine {
 					
 					sb.append(BotUtils.firstToUpper(args[i])).append("\n");
 				}
-				WriteFile(sb, path);
+				try {
+					BotUtils.writeFile(path, sb.toString().trim());
+				} catch (FileNotFoundException | UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 				Bot.rscriptSubroutine.call(rs, new String[] {"resource:Vraag9.R"});
 				Bot.messageSubroutine.call(rs, new String[] {"context:file", "resource:vraag9.png"});
 				Bot.messageSubroutine.call(rs, new String[] {"Produced by R."});
@@ -51,12 +55,16 @@ public class WriteExecuteSendR implements Subroutine {
 					sb.append(args[i]).append(" ");
 				}
 				
-				//check if country exists
+				//check if country exists in database
 				PrepArg[] prepargsC = new PrepArg[] {new PrepArg<String>("%" + sb.toString().trim() + "%")};
 				if (BotUtils.execSqlQuery("getCountry.sql", prepargsC).equals("")) {
 					Bot.messageSubroutine.call(rs, new String[] {"Country: " + sb.toString().trim() + " not found"});
 				} else {
-					WriteFile(sb, path);
+					try {
+						BotUtils.writeFile(path, sb.toString().trim());
+					} catch (FileNotFoundException | UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
 					Bot.rscriptSubroutine.call(rs, new String[] {"resource:Vraag8.R"});
 					Bot.messageSubroutine.call(rs, new String[] {"context:file", "resource:vraag8.png"});
 					Bot.messageSubroutine.call(rs, new String[] {"Produced by R."});
@@ -65,14 +73,5 @@ public class WriteExecuteSendR implements Subroutine {
 		}
 		return "";
 	}
-	
-	private void WriteFile(StringBuilder sb, String path) {
-		try {
-			String data = sb.toString();
-			data = data.trim();
-			BotUtils.writeFile(path, data);
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			Bot.logger.error(e.toString());
-		}
-	}
+
 }

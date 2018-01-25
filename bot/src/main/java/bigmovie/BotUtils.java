@@ -351,7 +351,7 @@ public class BotUtils {
 	
 	/**
 	 * Writes file to given path, with given content
-	 *
+	 * @author Jeroen
 	 * @param path
 	 * @param content
 	 * @throws FileNotFoundException
@@ -366,7 +366,7 @@ public class BotUtils {
 	
 	/**
 	 * Converts the first char to uppercase
-	 *
+	 * @author Jildert
 	 * @param input
 	 * @return
 	 */
