@@ -33,13 +33,23 @@ public class YoutubeSubroutine implements Subroutine {
 				// Controleer of de film in de database zit
 				
 				String movieName = "";
-				
+
+
 				for (int i = 1; i < args.length; i++) {
 					movieName = movieName + " " + args[i];
 				}
 				//Bouw de volledige naam van de film
+
+				if (movieName.charAt(0) == ' ')
+				{
+					movieName = movieName.substring(1);
+				}
+				//Haal de eerste spatie weg
+
+				System.out.println(movieName);
+
 				
-				String movieTrailer = movieName + " " + "trailer";
+				String movieTrailer = movieName + " " + "movie trailer";
 				String youtubeName = movieTrailer.replace(' ', '+');
 				String webPage = "https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query=" + youtubeName;
 				//Convert de input naar een youtube link
@@ -57,38 +67,45 @@ public class YoutubeSubroutine implements Subroutine {
 					sb.append(charArray, 0, numCharsRead);
 				}
 				String result = sb.toString();
+				System.out.println(movieName);
+				System.out.println("hitman");
 				//Zet de inhoud van de youtube link in een string
-				
-				String search = "<a href=\"/watch?v=";
-				int indexFound = result.indexOf(search);
-				int indexStart = indexFound + search.length();
-				int indexEnd = 0;
-				int indexCounter = indexStart;
-				String stringEnd = "\"";
-				
-				
-				while (!result.substring(indexCounter, indexCounter + 1).equals(stringEnd)) {
-					indexCounter += 1;
-					
-					if (result.substring(indexCounter, indexCounter + 1).equals(stringEnd)) {
-						indexEnd = indexCounter;
+				if(result.indexOf(movieName) != -1) {
+					String search = "<a href=\"/watch?v=";
+					int indexFound = result.indexOf(search);
+					int indexStart = indexFound + search.length();
+					int indexEnd = 0;
+					int indexCounter = indexStart;
+					String stringEnd = "\"";
+
+
+					while (!result.substring(indexCounter, indexCounter + 1).equals(stringEnd)) {
+						indexCounter += 1;
+
+						if (result.substring(indexCounter, indexCounter + 1).equals(stringEnd)) {
+							indexEnd = indexCounter;
+						}
 					}
+					//Zoek waar de substring in de string met de website inhoud zit en sla de begin en eid positie ervan op
+
+					String webAdres = "https://www.youtube.com/watch?v=" + result.substring(indexStart, indexEnd);
+					System.out.println(movieName);
+					System.out.println(webPage);
+					System.out.println(indexStart);
+					System.out.println(indexEnd);
+					System.out.println(movieName);
+					System.out.println("https://www.youtube.com/watch?v=" + result.substring(indexStart, indexEnd));
+					//Maak de link aan van de meest relevante video
+
+					Bot.randMessageSubroutine.call(rs, new String[]{
+							"context:trailer"
+					});
+
+					return webAdres;
 				}
-				//Zoek waar de substring in de string met de website inhoud zit en sla de begin en eid positie ervan op
-				
-				String webAdres = "https://www.youtube.com/watch?v=" + result.substring(indexStart, indexEnd);
-				System.out.println(movieName);
-				System.out.println(webPage);
-				System.out.println(indexStart);
-				System.out.println(indexEnd);
-				System.out.println(movieName);
-				System.out.println("https://www.youtube.com/watch?v=" + result.substring(indexStart, indexEnd));
-				//Maak de link aan van de meest relevante video
-				
-				Bot.randMessageSubroutine.call(rs, new String[] {
-						"context:trailer"
-				});
-				return webAdres;
+				else {
+					return "I couldn't find this movie on youtube.";
+				}
 			} else {
 				return "I couldn't find this movie in my database.";
 			}
