@@ -108,7 +108,7 @@
 @ what is the popularity [*] <star1> <star2>
 
 + * imdbinfo *
-- <call>imdb <star1> <star2></call>
+- <call>httpget context:imdb <star1> <star2></call>
 
 + [*] the imdb info of * made in *
 @ <star2> imdbinfo <star1>

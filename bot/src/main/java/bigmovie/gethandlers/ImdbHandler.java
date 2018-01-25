@@ -1,7 +1,7 @@
-package bigmovie.subroutines;
+package bigmovie.gethandlers;
 
 import bigmovie.Bot;
-import com.rivescript.macro.Subroutine;
+import bigmovie.subroutines.HttpGETSubroutine;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,16 +9,14 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-
 /**
- * @author Fadi (Daniel: cleanup)
- * @todo convert to httpGET subroutine
+ * @author Fadi
+ * Can search for the requested movie on imdb, and serve the link
  */
-public class ImdbSubroutine implements Subroutine {
+public class ImdbHandler extends GetHandler {
 	
 	@Override
-	public String call(com.rivescript.RiveScript rs, String[] args) {
-		
+	public boolean handleRequest(HttpGETSubroutine.GetAddr getAddr, String[] args) {
 		
 		try {
 			StringBuilder movieName = new StringBuilder();
@@ -43,7 +41,7 @@ public class ImdbSubroutine implements Subroutine {
 			
 			int numCharsRead;
 			char[] charArray = new char[1024];
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			while ((numCharsRead = isr.read(charArray)) > 0) {
 				sb.append(charArray, 0, numCharsRead);
 			}
@@ -52,13 +50,23 @@ public class ImdbSubroutine implements Subroutine {
 			
 			int movieNotFound = result.indexOf("No results found for");
 			if (movieNotFound != -1)         // 1ste controle, kijk of er resultaten zijn voor de search
-				return "Movie not found";
+			{
+				Bot.messageSubroutine.call(null, new String[] {
+						"Movie not found"
+				});
+				return false;
+			}
 			
 			
 			String search = "(" + year + ") </td>";
 			int indexFound = result.indexOf(search);
 			if (indexFound == -1)        // 2de controle, kijk of het jaar erbj staat
-				return "Year/movie not found, did you mistype it?";
+			{
+				Bot.messageSubroutine.call(null, new String[] {
+						"Year/movie not found, did you mistype it?"
+				});
+				return false;
+			}
 			
 			int indexStart = indexFound - 1;
 			int indexEnd = 0;
@@ -79,7 +87,12 @@ public class ImdbSubroutine implements Subroutine {
 			String normalMovieName = args[1];
 			String movieNameUpper = normalMovieName.toUpperCase();
 			if (result.charAt(indexEnd + 3) != normalMovieName.charAt(0) && result.charAt(indexEnd + 3) != movieNameUpper.charAt(0))      // Derde controle, Kijk of de letters overeen komen
-				return "Movie not found, did you mistype it?";
+			{
+				Bot.messageSubroutine.call(null, new String[] {
+						"Movie not found, did you mistype it?"
+				});
+				return false;
+			}
 			
 			String webAdress = "http://www.imdb.com" + result.substring(indexStart, indexEnd);
 			//Maak de link aan van de movie info op de imdb website
@@ -89,14 +102,16 @@ public class ImdbSubroutine implements Subroutine {
 			System.out.println(indexEnd);
 			System.out.println(webAdress);
 			
-			return webAdress;
+			
+			Bot.messageSubroutine.call(null, new String[] {
+					"I found it! Link:", webAdress
+			});
 			// Geef het webadress door als een discord message
 			
 		} catch (IOException e) {
 			Bot.logger.error(e.toString());
 		}
 		
-		return "";
-		
+		return false;
 	}
 }

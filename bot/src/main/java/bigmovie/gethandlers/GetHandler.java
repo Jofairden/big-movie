@@ -14,7 +14,7 @@ public abstract class GetHandler {
 	 * @param getAddr the get address object
 	 * @return Whether the request was handled with success
 	 */
-	public abstract boolean handleRequest(HttpGETSubroutine.GetAddr getAddr);
+	public abstract boolean handleRequest(HttpGETSubroutine.GetAddr getAddr, String[] args);
 
 //	public <T extends GetHandler> GetHandler as(T type) {
 //		return (type.getClass().cast(this));

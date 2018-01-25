@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class YesOrNoHandler extends GetHandler {
 	
 	@Override
-	public boolean handleRequest(HttpGETSubroutine.GetAddr getAddr) {
+	public boolean handleRequest(HttpGETSubroutine.GetAddr getAddr, String[] args) {
 		try {
 			JSONObject json = HttpGETSubroutine.GetAddr.asJSONObject(getAddr.get(null));
 			

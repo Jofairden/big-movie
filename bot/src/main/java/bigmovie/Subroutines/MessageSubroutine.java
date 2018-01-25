@@ -26,7 +26,8 @@ public class MessageSubroutine implements Subroutine {
 	
 	@Override
 	public String call(RiveScript rs, String[] args) {
-		if (Bot.lastMessageReceivedEvent != null) {
+		if (Bot.lastMessageReceivedEvent != null
+				&& args.length > 0) {
 			
 			// assume embed
 			// which will put remaining args in a single field
@@ -129,6 +130,6 @@ public class MessageSubroutine implements Subroutine {
 			}
 		}
 		
-		return "";
+		return null;
 	}
 }

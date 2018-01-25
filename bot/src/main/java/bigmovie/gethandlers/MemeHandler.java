@@ -30,7 +30,7 @@ public final class MemeHandler extends GetHandler {
 	}
 	
 	@Override
-	public boolean handleRequest(HttpGETSubroutine.GetAddr getAddr) {
+	public boolean handleRequest(HttpGETSubroutine.GetAddr getAddr, String[] args) {
 		try {
 			// we dont know any memes, get the memes
 			

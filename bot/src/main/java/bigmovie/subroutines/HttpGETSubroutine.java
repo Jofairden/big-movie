@@ -2,6 +2,7 @@ package bigmovie.subroutines;
 
 import bigmovie.Bot;
 import bigmovie.gethandlers.GetHandler;
+import bigmovie.gethandlers.ImdbHandler;
 import bigmovie.gethandlers.MemeHandler;
 import bigmovie.gethandlers.YesOrNoHandler;
 import com.rivescript.RiveScript;
@@ -11,6 +12,7 @@ import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +37,8 @@ public class HttpGETSubroutine implements Subroutine {
 	 */
 	public enum GetAddr {
 		MEMES("https://api.imgflip.com/get_memes", new MemeHandler()),
-		YESORNO("https://yesno.wtf/api", new YesOrNoHandler());
+		YESORNO("https://yesno.wtf/api", new YesOrNoHandler()),
+		IMDB("http://www.imdb.com/find?ref_=nv_sr_fn&q=", new ImdbHandler());
 		
 		public final String url;
 		private final GetHandler handler;
@@ -46,8 +49,8 @@ public class HttpGETSubroutine implements Subroutine {
 		}
 		
 		// Send the handle to the handler
-		public boolean handle() {
-			return handler.handleRequest(this);
+		public boolean handle(String[] args) {
+			return handler.handleRequest(this, args);
 		}
 		
 		// Perform the get, with given args (optional)
@@ -93,9 +96,11 @@ public class HttpGETSubroutine implements Subroutine {
 				
 				//@todo: if this grows big, turn into a dataset
 				if (context.equalsIgnoreCase("meme")) {
-					boolean result = GetAddr.MEMES.handle();
+					boolean result = GetAddr.MEMES.handle(null);
 				} else if (context.equalsIgnoreCase("yesorno")) {
-					boolean result = GetAddr.YESORNO.handle();
+					boolean result = GetAddr.YESORNO.handle(null);
+				} else if (context.equalsIgnoreCase("imdb")) {
+					boolean result = GetAddr.IMDB.handle(Arrays.stream(args).skip(1).toArray(String[]::new));
 				}
 			} else {
 				Bot.logger.error("HttpGET requested, but no context given");

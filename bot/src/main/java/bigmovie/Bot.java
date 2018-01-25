@@ -69,7 +69,6 @@ public final class Bot extends ListenerAdapter {
 	public final static WriteExecuteSendR writeExecuteSendR = new WriteExecuteSendR();
 	public final static YoutubeSubroutine youtubeSubroutine = new YoutubeSubroutine();
 	public final static RandMessageSubroutine randMessageSubroutine = new RandMessageSubroutine();
-	public final static ImdbSubroutine imdbSubroutine = new ImdbSubroutine();
 	public final static HttpGETSubroutine httpGETSubroutine = new HttpGETSubroutine();
 	
 	public static void main(String[] args) {
@@ -105,7 +104,6 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("write", writeExecuteSendR);
 		bot.setSubroutine("youtube", youtubeSubroutine);
 		bot.setSubroutine("randmessage", randMessageSubroutine);
-		bot.setSubroutine("imdb", imdbSubroutine);
 		bot.setSubroutine("httpget", httpGETSubroutine);
 		
 		logger.info("Initiating JDA API and logging in...");
