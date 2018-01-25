@@ -1,8 +1,8 @@
-package bigmovie.subroutines;
+package bigmovie.gethandlers;
 
+import bigmovie.Bot;
 import bigmovie.BotUtils;
-import com.rivescript.RiveScript;
-import com.rivescript.macro.Subroutine;
+import bigmovie.subroutines.HttpGETSubroutine;
 import org.json.JSONObject;
 
 /**
@@ -10,25 +10,24 @@ import org.json.JSONObject;
  * Will answer yes or no, with a gif response
  * @TODO: their API is broken or something, do not use.
  */
-public class YesOrNoSubroutine implements Subroutine {
-	
-	private static final String getAddr = "https://yesno.wtf/api";
+public class YesOrNoHandler extends GetHandler {
 	
 	@Override
-	public String call(RiveScript rs, String[] args) {
-		
+	public boolean handleRequest(HttpGETSubroutine.GetAddr getAddr) {
 		try {
-			JSONObject json = BotUtils.httpGetJsonResponse(getAddr, null);
+			JSONObject json = HttpGETSubroutine.GetAddr.asJSONObject(getAddr.get(null));
 			
 			String answer = json.getString("answer");
 			String image = json.getString("image");
 			
 			BotUtils.trySendFileFromStream(image, answer);
+			return true;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			// something else went wrong
+			Bot.logger.error(e.toString());
 		}
 		
-		return null;
+		return false;
 	}
 }

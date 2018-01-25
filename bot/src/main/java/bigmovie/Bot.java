@@ -18,6 +18,7 @@ import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 public final class Bot extends ListenerAdapter {
 	
@@ -48,6 +49,9 @@ public final class Bot extends ListenerAdapter {
 	
 	public static RiveScript bot = new RiveScript(Config.utf8());
 	
+	// random object
+	public static final Random random = new Random();
+	
 	// subroutines
 	public final static ActorInMoviesSubroutine actorInMoviesSubroutine = new ActorInMoviesSubroutine();
 	public final static SystemSubroutine systemSubroutine = new SystemSubroutine();
@@ -63,8 +67,7 @@ public final class Bot extends ListenerAdapter {
 	public final static YoutubeSubroutine youtubeSubroutine = new YoutubeSubroutine();
 	public final static RandMessageSubroutine randMessageSubroutine = new RandMessageSubroutine();
 	public final static ImdbSubroutine imdbSubroutine = new ImdbSubroutine();
-	public final static MemeSubroutine memeSubroutine = new MemeSubroutine();
-	public final static YesOrNoSubroutine yesOrNoSubroutine = new YesOrNoSubroutine();
+	public final static HttpGETSubroutine httpGETSubroutine = new HttpGETSubroutine();
 	
 	public static void main(String[] args) {
 		
@@ -100,8 +103,7 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("youtube", youtubeSubroutine);
 		bot.setSubroutine("randmessage", randMessageSubroutine);
 		bot.setSubroutine("imdb", imdbSubroutine);
-		bot.setSubroutine("meme", memeSubroutine);
-		bot.setSubroutine("yesorno", yesOrNoSubroutine);
+		bot.setSubroutine("httpget", httpGETSubroutine);
 		
 		logger.info("Initiating JDA API and logging in...");
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account

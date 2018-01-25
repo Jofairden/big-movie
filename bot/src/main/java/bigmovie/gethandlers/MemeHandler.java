@@ -1,10 +1,9 @@
-package bigmovie.subroutines;
+package bigmovie.gethandlers;
 
 import bigmovie.Bot;
 import bigmovie.BotUtils;
 import bigmovie.Tuple;
-import com.rivescript.RiveScript;
-import com.rivescript.macro.Subroutine;
+import bigmovie.subroutines.HttpGETSubroutine;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,19 +14,12 @@ import java.util.*;
  * Connects to imageflip meme api, to get 100 popular memes
  * Then on request, memes can be sent.
  */
-public class MemeSubroutine implements Subroutine {
-	
-	// where do we get memes from?
-	private static final String getAddr = "https://api.imgflip.com/get_memes";
+public final class MemeHandler extends GetHandler {
 	
 	// cache urls to memes
-	private static Map<String,String> memes = new HashMap<>();
-	
+	private static final Map<String,String> memes = new HashMap<>();
 	// cache needs update?
-	public static Boolean needsUpdate = true;
-	
-	// random object
-	private static final Random random = new Random();
+	public static Boolean memesNeedUpdate = true;
 	
 	// get random meme
 	private static Tuple<String,String> getRandMeme() {
@@ -38,18 +30,17 @@ public class MemeSubroutine implements Subroutine {
 	}
 	
 	@Override
-	public String call(RiveScript rs, String[] args) {
-		
+	public boolean handleRequest(HttpGETSubroutine.GetAddr getAddr) {
 		try {
 			// we dont know any memes, get the memes
-			if (needsUpdate || memes.isEmpty()) {
+			
+			if (memesNeedUpdate || memes.isEmpty()) {
 				memes.clear(); // reset cache
 				
 				// perform http GET request, get some memes.
-				JSONObject json = BotUtils.httpGetJsonResponse(getAddr, null);
+				JSONObject json = HttpGETSubroutine.GetAddr.asJSONObject(getAddr.get(null));
 				Boolean success = json.getBoolean("success");
 				if (success) {
-					
 					// get meme data
 					JSONArray data = json.getJSONObject("data").getJSONArray("memes");
 					
@@ -59,19 +50,19 @@ public class MemeSubroutine implements Subroutine {
 						memes.putIfAbsent(obj.getString("name"), obj.getString("url"));
 					}
 				}
-				
-				needsUpdate = false;
+				memesNeedUpdate = false;
 			}
 			
 			// we have memes, send a meme
 			if (!memes.isEmpty()) {
-				Tuple<String,String> url = getRandMeme();
-				BotUtils.trySendFileFromStream(url.y, url.x);
+				Tuple<String,String> meme = getRandMeme();
+				BotUtils.trySendFileFromStream(meme.y, meme.x);
+				return true;
 			}
 		} catch (Exception e) {
 			// something else went wrong
 			Bot.logger.error(e.toString());
 		}
-		return null;
+		return false;
 	}
 }
