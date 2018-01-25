@@ -64,6 +64,7 @@ public final class Bot extends ListenerAdapter {
 	public final static RandMessageSubroutine randMessageSubroutine = new RandMessageSubroutine();
 	public final static ImdbSubroutine imdbSubroutine = new ImdbSubroutine();
 	public final static MemeSubroutine memeSubroutine = new MemeSubroutine();
+	public final static YesOrNoSubroutine yesOrNoSubroutine = new YesOrNoSubroutine();
 	
 	public static void main(String[] args) {
 		
@@ -83,6 +84,8 @@ public final class Bot extends ListenerAdapter {
 		// Load subroutines
 		bot.loadDirectory("src/main/resources/rivescript");
 		bot.sortReplies();
+		
+		// @todo: this got quite big, handle globally?
 		bot.setSubroutine("actorinmovies", actorInMoviesSubroutine);
 		bot.setSubroutine("system", systemSubroutine);
 		bot.setSubroutine("rscript", rscriptSubroutine);
@@ -98,6 +101,7 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("randmessage", randMessageSubroutine);
 		bot.setSubroutine("imdb", imdbSubroutine);
 		bot.setSubroutine("meme", memeSubroutine);
+		bot.setSubroutine("yesorno", yesOrNoSubroutine);
 		
 		logger.info("Initiating JDA API and logging in...");
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account

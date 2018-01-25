@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    compile 'io.rest-assured:rest-assured:3.0.6'
     compile "net.dv8tion:JDA:3.5.0_327"
     compile 'org.apache.logging.log4j:log4j-core'
     compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.10.0'
@@ -33,6 +34,13 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.google.guava:guava:23.6-jre'
+    //compile 'org.apache.httpcomponents:httpclient:4.5.3'
+//    compile 'org.apache.httpcomponents:httpclient:4.3.6'
+//    compile 'org.apache.httpcomponents:httpasyncclient:4.0.2'
+//    compile 'org.apache.httpcomponents:httpmime:4.3.6'
+//    compile 'org.json:json:20140107'
+    // compile 'com.mashape.unirest:unirest-java:1.4.9'
+
 }
 
 compileJava.options.encoding = 'UTF-8'

@@ -5,7 +5,6 @@
 - <call>buildmessage Oh I know da wae.</call>
 ^ <call>buildmessage context:file resource:memes\wae.jpg</call>
 
-
 // usages: get me a meme, get a meme, send memes, get some memes, yo give me memes homie ... and so forth
 + [*] (tell|send|show|get|give) [*] (meme|memes) [*]
 - <call>meme</call>
@@ -13,3 +12,13 @@
 + [*] (tell|send|show|get|give) [*] nudes [*]
 - <call>buildmessage context:file resource:memes\okay.jpg</call>
 ^ <call>buildmessage Oh you like that?</call>
+
+//@TODO broken:
+//+ [*] (yes or no|yes/no|y/n|no/yes|no or yes)
+//- <call>yesorno</call>
+
+//+ (yes or no|yes/no|y/n|no/yes|no or yes) *
+//@ <star1> yes or no
+
++ [*] (say|speak|sya) my name
+- Nah, I won't.

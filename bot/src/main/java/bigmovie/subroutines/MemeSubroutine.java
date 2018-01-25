@@ -2,16 +2,13 @@ package bigmovie.subroutines;
 
 import bigmovie.Bot;
 import bigmovie.BotUtils;
+import bigmovie.Tuple;
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Daniel
@@ -24,7 +21,7 @@ public class MemeSubroutine implements Subroutine {
 	private static final String getAddr = "https://api.imgflip.com/get_memes";
 	
 	// cache urls to memes
-	private static ArrayList<String> memes = new ArrayList<>();
+	private static Map<String,String> memes = new HashMap<>();
 	
 	// cache needs update?
 	public static Boolean needsUpdate = true;
@@ -33,8 +30,11 @@ public class MemeSubroutine implements Subroutine {
 	private static final Random random = new Random();
 	
 	// get random meme
-	private static String getRandMeme() {
-		return memes.get(random.nextInt(memes.size()));
+	private static Tuple<String,String> getRandMeme() {
+		Random random = new Random();
+		List<String> keys = new ArrayList<>(memes.keySet());
+		String randomKey = keys.get(random.nextInt(keys.size()));
+		return new Tuple<>(randomKey, memes.get(randomKey));
 	}
 	
 	@Override
@@ -43,16 +43,20 @@ public class MemeSubroutine implements Subroutine {
 		try {
 			// we dont know any memes, get the memes
 			if (needsUpdate || memes.isEmpty()) {
-				memes = new ArrayList<>(); // reset cache
+				memes.clear(); // reset cache
 				
 				// perform http GET request, get some memes.
-				JSONObject json = BotUtils.httpGetJsonResponse(getAddr, new HashMap<>());
+				JSONObject json = BotUtils.httpGetJsonResponse(getAddr, null);
 				Boolean success = json.getBoolean("success");
 				if (success) {
+					
+					// get meme data
 					JSONArray data = json.getJSONObject("data").getJSONArray("memes");
 					
+					// loop memes, put in map
 					for (int i = 0; i < data.length(); ++i) {
-						memes.add(data.getJSONObject(i).getString("url"));
+						JSONObject obj = data.getJSONObject(i);
+						memes.putIfAbsent(obj.getString("name"), obj.getString("url"));
 					}
 				}
 				
@@ -61,34 +65,12 @@ public class MemeSubroutine implements Subroutine {
 			
 			// we have memes, send a meme
 			if (!memes.isEmpty()) {
-				String url = getRandMeme();
-				
-				// attempt sending as a file
-				try {
-					InputStream input = new URL(url).openStream();
-					
-					if (input != null) {
-						Bot.lastMessageReceivedEvent
-								.getChannel()
-								.sendFile(input, "thememe")
-								.queue();
-						
-						input.close();
-					}
-				} catch (Exception e) {
-					// we got denied, just send the url as a link
-					Bot.logger.error(e.getStackTrace());
-					
-					Bot.lastMessageReceivedEvent
-							.getChannel()
-							.sendMessage(url)
-							.queue();
-				}
-				
+				Tuple<String,String> url = getRandMeme();
+				BotUtils.trySendFileFromStream(url.y, url.x);
 			}
 		} catch (Exception e) {
 			// something else went wrong
-			Bot.logger.error(e.getStackTrace());
+			Bot.logger.error(e.toString());
 		}
 		return null;
 	}
