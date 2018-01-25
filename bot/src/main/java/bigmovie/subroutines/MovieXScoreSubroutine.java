@@ -21,16 +21,18 @@ public class MovieXScoreSubroutine implements Subroutine {
 
 				String result = BotUtils.execSqlQuery(args[0], new PrepArg[] {
 						new PrepArg<Double>(parsed)
+						// Voer de query uit
 				});
 
 				String msg = Bot.messageSubroutine.call(rs, String.format("context:embed fieldtitle:Movies %s", result).split(" "));
-
+				// Geef een discord message terug
 				BotUtils.embedErr(msg);
 			} catch (Exception e) {
 				Bot.lastMessageReceivedEvent
 						.getChannel()
 						.sendMessage("Please supply a number between 0 and 10!" + e.toString())
 						.queue();
+				// Controleer of er een gelig getal is meegegeven
 			}
 
 

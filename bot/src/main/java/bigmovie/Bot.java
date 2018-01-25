@@ -62,6 +62,7 @@ public final class Bot extends ListenerAdapter {
 	public final static WriteExecuteSendR writeExecuteSendR = new WriteExecuteSendR();
 	public final static YoutubeSubroutine youtubeSubroutine = new YoutubeSubroutine();
 	public final static RandMessageSubroutine randMessageSubroutine = new RandMessageSubroutine();
+	public final static ImdbSubroutine imdbSubroutine = new ImdbSubroutine();
 	
 	public static void main(String[] args) {
 		
@@ -94,6 +95,7 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("write", writeExecuteSendR);
 		bot.setSubroutine("youtube", youtubeSubroutine);
 		bot.setSubroutine("randmessage", randMessageSubroutine);
+		bot.setSubroutine("imdb", imdbSubroutine);
 		
 		logger.info("Initiating JDA API and logging in...");
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
@@ -144,11 +146,6 @@ public final class Bot extends ListenerAdapter {
 		
 		if (message.isMentioned(api.getSelfUser())) {
 			reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replace(api.getSelfUser().getAsMention(), ""));
-			if (!reply.isEmpty()) {
-				if (reply.startsWith("There it is!")) {
-					// @todo ??
-				}
-			}
 			
 			// Substring if too long
 			if (reply.length() > 2000)

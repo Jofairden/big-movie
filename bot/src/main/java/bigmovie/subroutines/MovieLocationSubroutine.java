@@ -18,9 +18,10 @@ public class MovieLocationSubroutine implements Subroutine{
         String result = BotUtils.execSqlQuery(args[0], new PrepArg[]{
                 new PrepArg<>(String.join("%", Arrays.stream(args).skip(1).collect(Collectors.toList())) + "%")
         });
-
+        // Voer de query uit
         String msg = Bot.messageSubroutine.call(rs, String.format("context:embed fieldtitle:Movies %s", result).split(" "));
         BotUtils.embedErr(msg);
+        // Geef een discord message terug
         return "";
     }
 }

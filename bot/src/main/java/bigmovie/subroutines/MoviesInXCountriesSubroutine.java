@@ -18,15 +18,16 @@ public class MoviesInXCountriesSubroutine implements Subroutine {
 				String result = BotUtils.execSqlQuery(args[0], new PrepArg[] {
 						new PrepArg<Integer>(parsed)
 				});
-				
+				// Voer de query uit
 				String msg = Bot.messageSubroutine.call(rs, String.format("context:embed fieldtitle:Movies %s", result).split(" "));
-				
+				// Geef een discord message terug
 				BotUtils.embedErr(msg);
 			} catch (NumberFormatException e) {
 				Bot.lastMessageReceivedEvent
 						.getChannel()
 						.sendMessage("Please supply a number!")
 						.queue();
+				// Kijk of er wel een nummer is meegegeven
 			}
 			
 			

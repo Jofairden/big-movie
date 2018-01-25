@@ -16,7 +16,7 @@ public class RscriptSubroutine implements Subroutine {
 	public String call(com.rivescript.RiveScript rs, String[] args) {
 		
 		String path;
-		
+		// Zoek de Rscript path op
 		if (args[0].startsWith("resource:")) {
 			// assume resource path
 			path = Objects.requireNonNull(BotUtils.getResourcePath(
