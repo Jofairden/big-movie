@@ -1,19 +1,54 @@
 // Rivescript
 // Made by the entire team: Jeroen, Jildert, Fadi & Daniel
 // Group 11
-
+// The rivescript understand english, and english only.
 ! version = 2.0
 
 // Substitutions
-!sub act = play
+! sub i'm     = i am
+! sub i'd     = i would
+! sub i've    = i have
+! sub i'll    = i will
+! sub don't   = do not
+! sub isn't   = is not
+! sub you'd   = you would
+! sub you're  = you are
+! sub you've  = you have
+! sub you'll  = you will
+! sub what's  = what is
+! sub whats   = what is
+! sub what're = what are
+! sub what've = what have
+! sub what'll = what will
+! sub who's   = who is
+! sub films   = movies
+! sub film    = movie
+! sub music   = soundtrack
+! sub act     = play
+! sub which   = what
+! sub than    = then
 
 + [*] hello [*]
 - Hello, human!
 
++ hello
+- Hi there!
+- Uhm, hi.
+- Greetings.
+- Beep, boop.
+
++ how are you
+- I'm fine.
+- Splendid!
+- Couldn't be better!
+
++ *
+- Not sure I got that.
+
 + my name is *
 - <set name=<formal>> Nice to meet you, <get name>.
 
-+ which films play in more than * (country|countries)
++ which films [play|were shot|were|were made] in more [than|then] * (country|countries)
 - <call>buildmessage Performing query...</call>
 ^ <call>moviesinxcountries moviesinxcountries.sql <star1></call>
 ^ <call>randmessage context:react</call>
@@ -69,17 +104,12 @@
 ^ <call>buildmessage context:file resource:test.png</call>
 ^ <call>randmessage context:react</call>
 
-
 + what [_] the amount of (movies|films) made in *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write build\resources\main\country.txt <star2></call>
 ^ <call>randmessage context:react</call>
 
-
 + how many (movies|films) [*] made in *
-@ what are the amount of <star1> made in <star2>
-
-+ hoeveel (films) zijn [*] gemaakt in *
 @ what are the amount of <star1> made in <star2>
 
 + what is the popularity [*] (genres|genre) *
@@ -98,11 +128,6 @@
 + show [*] trailer [of|] [movie|] *
 @ trailer <star1>
 
-+ laat de trailer zien van *
-@ trailer <star1>
-
-+ toon de populariteit van de (genres|genre) *
-@ what is the popularity [*] <star1> <star2>
 
 + show the popularity [*] (genres|genre) *
 @ what is the popularity [*] <star1> <star2>
@@ -115,9 +140,3 @@
 
 + * imdb *
 @ <star1> imdbinfo <star2>
-
-+ toon de imdb info van * die gemaakt is in *
-@ <star2> imdbinfo <star1>
-
-+ laat de imdb info zien van * die gemaakt is in *
-@ <star2> imdbinfo <star1>

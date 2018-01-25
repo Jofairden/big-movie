@@ -18,7 +18,9 @@
 - <call>httpget context:yesorno</call>
 
 + (yes or no|yes/no|y/n|no/yes|no or yes) *
-@ <star1> yes or no
+//@ <star1> yes or no
+- Yes.
+- No.
 
 + [*] (say|speak|sya) my name
 - Nah, I won't.
