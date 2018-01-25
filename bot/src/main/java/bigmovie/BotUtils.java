@@ -30,6 +30,7 @@ public class BotUtils {
 	 * to the given url, with optional parameters given (?q=a&b=c&c=d etc.)
 	 * parameters will be set from the given Map, in the format: key=value
 	 * The function assumes a JSON response, and return it as a JSONObject
+	 * @TODO for now, unused. but keep it, may need commented code later.
 	 */
 	public static JSONObject httpGetJsonResponse(String reqUrl, Map<String,String> args) throws Exception {
 		
@@ -79,7 +80,7 @@ public class BotUtils {
 //				Unirest.setHttpClient(httpclient);
 //
 //			} catch (Exception e) {
-//				e.printStackTrace();
+//				Bot.logger.error(e.toString());
 //			}
 //		}
 
@@ -160,7 +161,7 @@ public class BotUtils {
 	}
 	
 	/**
-	 * @Author daniel
+	 * @author daniel
 	 * Attempts to send a file from stream, with an optional message.
 	 */
 	public static void trySendFileFromStream(String url, String message) {
@@ -195,7 +196,7 @@ public class BotUtils {
 	
 	/**
 	 * @author Daniel
-	 * @important remark: https://stackoverflow.com/questions/6164448/convert-url-to-normal-windows-filename-java
+	 * @remark: https://stackoverflow.com/questions/6164448/convert-url-to-normal-windows-filename-java
 	 * Gets the resource's path as a Path
 	 */
 	public static Path getResourcePath(String resourceName) {
@@ -206,7 +207,7 @@ public class BotUtils {
 					.getResource(resourceName))
 					.toURI());
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			Bot.logger.error(e.toString());
 		}
 		return null;
 	}
@@ -235,7 +236,7 @@ public class BotUtils {
 		try {
 			sql = getResourceAsString(String.format("sql/%s", queryFileName));
 		} catch (IOException e) {
-			e.printStackTrace();
+			Bot.logger.error(e.toString());
 		}
 		
 		// setup vars
@@ -300,12 +301,14 @@ public class BotUtils {
 	 * using a ProcessBuilder
 	 * all of its outputs will be logged
 	 * using sout with this setup
+	 * Thansk to Jesse for example :)
 	 */
 	public static void execRSript(String pathToScript) {
 		ProcessBuilder pb = new ProcessBuilder(
 				Bot.getConfig().getRscript_PATH(),
 				pathToScript)
 				.inheritIO(); //java 7 or higher
+		// inherit IO to log errors
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -322,10 +325,14 @@ public class BotUtils {
 			if (!result.isEmpty())
 				System.out.println(builder.toString());
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
+			Bot.logger.error(e.toString());
 		}
 	}
 	
+	/**
+	 * @author Daniel
+	 * Handling of embed errors.
+	 */
 	public static void embedErr(String msg) {
 		if (msg.startsWith("embedErr:")) {
 			String[] split = msg.split(":");
@@ -342,12 +349,27 @@ public class BotUtils {
 		}
 	}
 	
+	/**
+	 * Writes file to given path, with given content
+	 *
+	 * @param path
+	 * @param content
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 * @author
+	 */
 	public static void writeFile(String path, String content) throws FileNotFoundException, UnsupportedEncodingException {
 		PrintWriter writer = new PrintWriter(path, "UTF-8");
 		writer.println(content);
 		writer.close();
 	}
 	
+	/**
+	 * Converts the first char to uppercase
+	 *
+	 * @param input
+	 * @return
+	 */
 	public static String firstToUpper(String input) {
 		return Character.toUpperCase(input.charAt(0)) + input.substring(1);
 	}

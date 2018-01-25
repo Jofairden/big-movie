@@ -36,23 +36,26 @@ public final class Bot extends ListenerAdapter {
 	// Logger instance named "Bot".
 	public static final Logger logger = LogManager.getLogger(Bot.class);
 	
-	private static JDA api;
-	private static BotConfig config;
+	private static JDA api; // JDA API
+	private static BotConfig config; // the bot's config
 	
+	// Get the JDA API
 	public static JDA getAPI() {
 		return api;
 	}
 	
+	// Get the bot confg
 	public static BotConfig getConfig() {
 		return config;
 	}
 	
-	public static RiveScript bot = new RiveScript(Config.utf8());
+	public static final RiveScript bot = new RiveScript(Config.utf8());
 	
 	// random object
 	public static final Random random = new Random();
 	
 	// subroutines
+	// make them public, so they are accessible within each other
 	public final static ActorInMoviesSubroutine actorInMoviesSubroutine = new ActorInMoviesSubroutine();
 	public final static SystemSubroutine systemSubroutine = new SystemSubroutine();
 	public final static RscriptSubroutine rscriptSubroutine = new RscriptSubroutine();
@@ -80,7 +83,7 @@ public final class Bot extends ListenerAdapter {
 			logger.info("Loading BotConfig...");
 			config = BotConfig.read();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.toString());
 		}
 		
 		logger.info("Setting up RiveScript subroutines...");
@@ -117,7 +120,7 @@ public final class Bot extends ListenerAdapter {
 			logger.info("Bot ready! API loaded!");
 		} catch (LoginException | InterruptedException e) {
 			//If anything goes wrong in terms of authentication, this is the exception that will represent it
-			e.printStackTrace();
+			logger.error(e.toString());
 		}
 		
 		logger.info("Initializing pacman...");
@@ -134,9 +137,13 @@ public final class Bot extends ListenerAdapter {
 	// stores last query result
 	public static String lastSqlResult;
 	
+	// handle messages received here
+	// pass the message through the rivescript calls
+	// the rivescript will handle it through subroutines
+	// calls may give back a response, or not.
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		lastMessageReceivedEvent = event;
+		lastMessageReceivedEvent = event; // temp store this event
 		
 		// We don't want to respond to other bot accounts, including ourselves
 		if (event.getAuthor().isBot())
@@ -155,18 +162,21 @@ public final class Bot extends ListenerAdapter {
 		if (message.isMentioned(api.getSelfUser())) {
 			reply = bot.reply(String.valueOf(chat_id), content.toLowerCase().replace(api.getSelfUser().getAsMention(), ""));
 			
-			// Substring if too long
-			if (reply.length() > 2000)
-				reply = reply.substring(0, 2000);
-			
-			if (reply.startsWith("There it is!RGenreFile:")) {
-				String path = reply.substring(reply.indexOf('&') + 1);
-				channel.sendFile(new File(path)).queue();
+			// if reply is null, do nto handle.
+			if (reply != null) {
+				// Substring if too long
+				if (reply.length() > 2000)
+					reply = reply.substring(0, 2000);
+				
+				if (reply.startsWith("There it is!RGenreFile:")) {
+					String path = reply.substring(reply.indexOf('&') + 1);
+					channel.sendFile(new File(path)).queue();
+				}
+				
+				// If not empty, attempt send.
+				if (!reply.isEmpty())
+					channel.sendMessage(reply).queue();
 			}
-			
-			// If not empty, attempt send.
-			if (!reply.isEmpty())
-				channel.sendMessage(reply).queue();
 		}
 	}
 }
