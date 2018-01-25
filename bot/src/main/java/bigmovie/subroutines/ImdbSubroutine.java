@@ -28,11 +28,13 @@ public class ImdbSubroutine implements Subroutine {
                 movieName = movieName + " " + args[i];
             }
             // Haal de movie naam op en maak er 1 geheel van
+            System.out.println(movieName);
 
             String imdbName = movieName.replace(' ', '+');
             String webPage = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + imdbName;
             String year = args[0];
             //Convert de input naar een imdb link
+            System.out.println(year);
 
             URL url = new URL(webPage);
             URLConnection urlConnection = url.openConnection();
@@ -98,7 +100,7 @@ public class ImdbSubroutine implements Subroutine {
                 }
                 else
                 {
-                    return ("Year not found");
+                    return ("Year/movie not found, did you mistype it?");
                 }
 
             }

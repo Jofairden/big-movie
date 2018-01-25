@@ -64,21 +64,45 @@
 ^ <call>buildmessage context:file resource:test.png</call>
 ^ Produced by R.
 
-+ how much (movies|films) are made in *
-@ what are the amount of <star1> made in <star2>
 
 + what [_] the amount of (movies|films) made in *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write build\resources\main\country.txt <star2></call>
+    + how many (movies|films) [*] made in *
+    @ what are the amount of <star1> made in <star2>
+
+    + hoeveel (films) zijn [*] gemaakt in *
+    @ what are the amount of <star1> made in <star2>
 
 + what is the popularity [*] (genres|genre) *
 - <call>buildmessage Please give me a moment...</call>
 ^ <call>write context:genres build\resources\main\genres.csv <star2></call>
+    + toon de populariteit van de (genres|genre) *
+    @ what is the popularity [*] <star1> <star2>
+
+    + show the popularity [*] (genres|genre) *
+    @ what is the popularity [*] <star1> <star2>
 
 + trailer *
 - <call>youtube youtube.sql <star1></call>
+    + show trailer *
+    @ trailer <star1>
+
+    + show the trailer of *
+    @ trailer <star1>
+
+    + laat de trailer zien van *
+    @ trailer <star1>
+
 
 + * imdbinfo *
 - <call>imdb <star1> <star2></call>
+    + [*] the imdb info of * made in *
+    @ <star2> imdbinfo <star1>
 
+    + toon de imdb info van * die gemaakt is in *
+    @ <star2> imdbinfo <star1>
+
+    + laat de imdb info zien van * die gemaakt is in *
+    @ <star2> imdbinfo <star1>
 
