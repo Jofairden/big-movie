@@ -45,8 +45,7 @@ public class YoutubeSubroutine implements Subroutine {
 					movieName = movieName.substring(1);
 				}
 				//Haal de eerste spatie weg
-
-				System.out.println(movieName);
+				
 
 				
 				String movieTrailer = movieName + " " + "movie trailer";
