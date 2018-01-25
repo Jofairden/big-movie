@@ -334,7 +334,7 @@ public class BotUtils {
 	 * Handling of embed errors.
 	 */
 	public static void embedErr(String msg) {
-		if (msg.startsWith("embedErr:")) {
+		if (msg != null && msg.startsWith("embedErr:")) {
 			String[] split = msg.split(":");
 			String total = split[2];
 			String sent = split[3];

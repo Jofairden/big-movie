@@ -21,15 +21,13 @@
 ! sub what've = what have
 ! sub what'll = what will
 ! sub who's   = who is
-! sub films   = movies
-! sub film    = movie
-! sub music   = soundtrack
+//! sub films   = movies
+//! sub film    = movie
+//! sub music   = soundtrack
 ! sub act     = play
-! sub which   = what
-! sub than    = then
-
-+ [*] hello [*]
-- Hello, human!
+//! sub which   = what
+//! sub than    = then
+//! sub than    = then
 
 + hello
 - Hi there!
@@ -41,9 +39,6 @@
 - I'm fine.
 - Splendid!
 - Couldn't be better!
-
-+ *
-- Not sure I got that.
 
 + my name is *
 - <set name=<formal>> Nice to meet you, <get name>.
@@ -117,17 +112,8 @@
 ^ <call>write context:genres build\resources\main\genres.csv <star2></call>
 ^ <call>randmessage context:react</call>
 
-+ trailer *
-- <call>youtube youtube.sql <star1></call>
-- It looks like I couldn't find anything. // this activates if it doesnt find shit
-
-// show trailer x, show me trailer x,
-+ [show|get|send|give] [me|] trailer *
-@ trailer <star1>
-
-+ show [*] trailer [of|] [movie|] *
-@ trailer <star1>
-
++ [show|get|send|give] [me|] [*] trailer [of|] [the|] [movie|] *
+- <call>httpget context:youtube youtube.sql <star1></call>
 
 + show the popularity [*] (genres|genre) *
 @ what is the popularity [*] <star1> <star2>
@@ -140,3 +126,6 @@
 
 + * imdb *
 @ <star1> imdbinfo <star2>
+
++ *
+- Not sure I got that.

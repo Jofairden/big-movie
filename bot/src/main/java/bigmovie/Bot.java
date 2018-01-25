@@ -67,13 +67,10 @@ public final class Bot extends ListenerAdapter {
 	public final static PopularLanguageSubroutine popularLanguageSubroutine = new PopularLanguageSubroutine();
 	public final static MovieLocationSubroutine movieLocationSubroutine = new MovieLocationSubroutine();
 	public final static WriteExecuteSendR writeExecuteSendR = new WriteExecuteSendR();
-	public final static YoutubeSubroutine youtubeSubroutine = new YoutubeSubroutine();
 	public final static RandMessageSubroutine randMessageSubroutine = new RandMessageSubroutine();
 	public final static HttpGETSubroutine httpGETSubroutine = new HttpGETSubroutine();
 	
 	public static void main(String[] args) {
-		
-		
 		if (logger.isDebugEnabled()) {
 			logger.debug("java logging level is DEBUG Enabled");
 		}
@@ -102,7 +99,6 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("language", popularLanguageSubroutine);
 		bot.setSubroutine("movielocation", movieLocationSubroutine);
 		bot.setSubroutine("write", writeExecuteSendR);
-		bot.setSubroutine("youtube", youtubeSubroutine);
 		bot.setSubroutine("randmessage", randMessageSubroutine);
 		bot.setSubroutine("httpget", httpGETSubroutine);
 		
