@@ -30,7 +30,7 @@ public class YoutubeSubroutine implements Subroutine {
 			float movieBool = Float.valueOf(sqlResult);
 			
 			if (movieBool == 1.0) {
-				// Controleer of de film in de database zit
+				// Controleer of de film in de database zit 1ste controle
 				
 				String movieName = "";
 
@@ -70,7 +70,7 @@ public class YoutubeSubroutine implements Subroutine {
 				System.out.println(movieName);
 				System.out.println("hitman");
 				//Zet de inhoud van de youtube link in een string
-				if(result.indexOf(movieName) != -1) {
+				if(result.indexOf(movieName) != -1) { // Zoek naar de movieName op youtube 2de controle
 					String search = "<a href=\"/watch?v=";
 					int indexFound = result.indexOf(search);
 					int indexStart = indexFound + search.length();
