@@ -13,10 +13,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/*
-	@author Daniel
-	The subroutine can queue a single message at a time
-	It is possible to supply an embed with title and description
+/**
+ * @author Daniel
+ * The subroutine can queue a single message at a time
+ * It is possible to supply an embed with title and description
+ * Examples:
+ * call: context:embed title:sometitle info:someinfo fieldtitle:somefieldtitle field data goes here
+ * call: context:file resource:resourcePathHere OR call: context:file pathToFileHere
+ * call: message data goes here
  */
 public class MessageSubroutine implements Subroutine {
 	

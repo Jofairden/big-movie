@@ -59,8 +59,9 @@ public final class Bot extends ListenerAdapter {
 	public final static MovieXScoreSubroutine moviesXScoreSubroutine = new MovieXScoreSubroutine();
 	public final static PopularLanguageSubroutine popularLanguageSubroutine = new PopularLanguageSubroutine();
 	public final static MovieLocationSubroutine movieLocationSubroutine = new MovieLocationSubroutine();
-	public final static WriteExecuteSendR WRITE_EXECUTE_SEND_R = new WriteExecuteSendR();
+	public final static WriteExecuteSendR writeExecuteSendR = new WriteExecuteSendR();
 	public final static YoutubeSubroutine youtubeSubroutine = new YoutubeSubroutine();
+	public final static RandMessageSubroutine randMessageSubroutine = new RandMessageSubroutine();
 	
 	public static void main(String[] args) {
 		
@@ -90,8 +91,9 @@ public final class Bot extends ListenerAdapter {
 		bot.setSubroutine("moviesxscore", moviesXScoreSubroutine);
 		bot.setSubroutine("language", popularLanguageSubroutine);
 		bot.setSubroutine("movielocation", movieLocationSubroutine);
-		bot.setSubroutine("write", WRITE_EXECUTE_SEND_R);
+		bot.setSubroutine("write", writeExecuteSendR);
 		bot.setSubroutine("youtube", youtubeSubroutine);
+		bot.setSubroutine("randmessage", randMessageSubroutine);
 		
 		logger.info("Initiating JDA API and logging in...");
 		//We construct a builder for a BOT account. If we wanted to use a CLIENT account
