@@ -5,8 +5,8 @@ import main.ImdbUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
-	Authors: Jildert, Fadi
+/**
+ * @author: Jildert, Fadi
  */
 // Will parse to the following: movie;year;location;occurrence
 public final class LocationParser extends Parser {

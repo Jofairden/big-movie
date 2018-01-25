@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
-	Authors: Daniel
+/**
+ * @author Daniel
  */
 // Will parse to the following: genre
 public class GenreNamesParser extends Parser {

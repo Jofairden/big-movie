@@ -3,8 +3,8 @@ package parsers;
 import java.util.HashSet;
 import java.util.Set;
 
-/*
-	Authors: Daniel
+/**
+ * @author Daniel
  */
 // Will parse to the following: country
 // introduced in late changes
