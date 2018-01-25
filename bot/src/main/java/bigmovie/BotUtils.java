@@ -323,7 +323,7 @@ public class BotUtils {
 			}
 			String result = builder.toString();
 			if (!result.isEmpty())
-				System.out.println(builder.toString());
+				Bot.logger.error(builder.toString());
 		} catch (IOException | InterruptedException e) {
 			Bot.logger.error(e.toString());
 		}

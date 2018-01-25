@@ -45,8 +45,8 @@ public class YoutubeHandler extends GetHandler {
 				movieName = new StringBuilder(movieName.substring(1));
 			}
 			//Haal de eerste spatie weg
-			
-			System.out.println(movieName);
+
+//			System.out.println(movieName);
 			
 			String movieTrailer = movieName + " " + "movie trailer";
 			String youtubeName = movieTrailer.replace(' ', '+');

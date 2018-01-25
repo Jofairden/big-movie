@@ -32,7 +32,7 @@ public class MoviesInXCountriesSubroutine implements Subroutine {
 			
 			
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			Bot.logger.error(e.toString());
 		}
 		
 		

@@ -25,13 +25,13 @@ public class ImdbHandler extends GetHandler {
 				movieName.append(" ").append(args[i]);
 			}
 			// Haal de movie naam op en maak er 1 geheel van
-			System.out.println(movieName);
+//			System.out.println(movieName);
 			
 			String imdbName = movieName.toString().replace(' ', '+');
 			String webPage = "http://www.imdb.com/find?ref_=nv_sr_fn&q=" + imdbName;
 			String year = args[0];
 			//Convert de input naar een imdb link
-			System.out.println(year);
+//			System.out.println(year);
 			
 			URL url = new URL(webPage);
 			URLConnection urlConnection = url.openConnection();
@@ -96,11 +96,11 @@ public class ImdbHandler extends GetHandler {
 			
 			String webAdress = "http://www.imdb.com" + result.substring(indexStart, indexEnd);
 			//Maak de link aan van de movie info op de imdb website
-			System.out.println(movieName);
-			System.out.println(webPage);
-			System.out.println(indexStart);
-			System.out.println(indexEnd);
-			System.out.println(webAdress);
+//			System.out.println(movieName);
+//			System.out.println(webPage);
+//			System.out.println(indexStart);
+//			System.out.println(indexEnd);
+//			System.out.println(webAdress);
 			
 			
 			Bot.messageSubroutine.call(null, new String[] {
