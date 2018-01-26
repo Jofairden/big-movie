@@ -11,47 +11,65 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Het project
-In Big-movie komen meerdere elementen samen, waarbij een bot is ontstaan die natuurlijke taal verstaat en daarop kan reageren. Onze bot Aiden is het resultaat. Aiden heeft toegang tot zijn eigen database voor films. Dat wil zeggen dat Aiden veel informatie weet over films, acteurs en actrices. Deze database is onstaan uit een subset van data van IMDB. De gegeven subset was vervuild waardoor een z.g.n 'parser' gemaakt moest worden. Deze parser heeft de vervuilde data gesorteerd en opnieuw geschreven. Met deze geordende data van de parser kon de database worden gemaakt middels z.g.n 'SQL'-scripts. Aiden verstaat nederlands en engels, in de voorbeelden is engels gebruikt. Omdat Aiden is gemaakt voor het Discord platform, is er wel één limitatie: een enkel bericht mag maar 2000 karakters bevatten. Om deze reden kan Aiden vaak maar een # aantal films tonen.
+
+In Big-movie komen meerdere elementen samen, waarbij een bot is ontstaan die natuurlijke taal verstaat en daarop kan reageren. Onze bot Aiden is het resultaat. Aiden heeft toegang tot zijn eigen database voor films. Dat wil zeggen dat Aiden veel informatie weet over films, acteurs en actrices. Deze database is onstaan uit een subset van data van IMDB. De gegeven subset was vervuild waardoor een z.g.n 'parser' gemaakt moest worden. Deze parser heeft de vervuilde data gesorteerd en opnieuw geschreven. Met deze geordende data van de parser kon de database worden gemaakt middels z.g.n 'SQL'-scripts. Aiden verstaat engels.. Omdat Aiden is gemaakt voor het Discord platform, is er wel één limitatie: een enkel bericht mag maar 2000 karakters bevatten. Om deze reden kan Aiden vaak maar een # aantal resultaten tonen.
 
 ## Goedendag!
+
 De bot is interactief en verstaat natuurlijke taal. De bot is aan te spreken op Discord door Aiden te 'taggen', dit doet men met het '@' teken vervolgt door de naam van Aiden.
 
 ![](https://i.imgur.com/wjKZpYV.png)
 
 ## Welke films spelen in meer dan # land(en)?
 De gebruiker kan vragen welke films in meer dan # landen spelen, waarbij de gebruiker zelf aangeeft om hoeveel landen het gaat.
+
 ![](https://i.imgur.com/Re1tsNl.png)
 
 ## Welke soundtrack is het meest gebruikt in films?
+
 Aiden weet ook veel over soundtracks die gebruikt zijn in films. Zo kan Aiden uitvogelen welke soundtracks het meest zijn gebruikt.
+
 ![](https://i.imgur.com/7ua4nAJ.png)
 
 ## Welke films hebben de hoogste score met de minste stemmen?
 Aiden houdt ook stemmen en scores bij van films. Zo weet Aiden een gemiddelde score voor heel veel films.
+
 ![](https://i.imgur.com/HB0vblO.png)
 
 ## Welke films zijn het kortst met een score van # of hoger?
+
 Aiden weet hoe lang films duren, hierdoor valt de lijst van films te sorteren op duur van de film.
+
 ![](https://i.imgur.com/9089rxj.png)
 
 ## Welke films zijn gemaakt in #?
 Aiden weet waar films zijn gemaakt/opgenomen. Soms is dit op meerdere locaties. Hierdoor kun je opvragen waar films zijn gemaakt.
+
 ![](https://i.imgur.com/qNw618z.png)
 
 ## Wat zijn de 10 populairste talen in films?
+
 Aiden weet welke talen zijn gebruikt in films, en kan zo beantwoorden welke talen het meest voorkomen.
+
 ![](https://i.imgur.com/Vu9ykcm.png)
 
 ## In welke films speelde #?
 Aiden kent bijna alle acteurs en actrices, en weet dan ook razendsnel te beantwoorden in welke films zij spelen.
+
 ![](https://i.imgur.com/MTpTF34.png)
 
 
+
 ## Violence (usa/france)
-TODO
+
+![](https://i.imgur.com/P5O2dBo.png)
+
+Aiden weet ook van crime rates.. ERR films af. Zo kun je vragen om een plot van aantal films in frankrijk en amerika die onder een geweldadig genre vallen
 
 ## Wat is de populariteit van genre #?
+
 De gebruiker geeft zelf het genre aan.
+
 ![](https://i.imgur.com/Hwlvxav.png)
 
 Uit te lezen is de volgende grafiek
@@ -63,3 +81,26 @@ Er zijn ook meerdere genres mogelijk, waarbij de bot alle genres bij elkaar zal 
 Uit te lezen is de volgende grafiek
 ![](https://media.discordapp.net/attachments/352598856707342337/405425524186415104/vraag9.png)
 
+
+
+## Youtube trailers
+
+Je kunt Aiden ook vragen een trailer te zoeken van een film
+
+![](https://i.imgur.com/aEQ1ENo.png)
+
+De bot zal middels de Youtube API de meeste relevante trailer proberen te vinden.
+
+## IMDB Links
+
+Je kunt Aiden ook vragen voor de imdb link van een film. Hierbij geeft de gebruiker de film en het jaartal aan.
+
+![](https://i.imgur.com/7iSxVd9.png)
+
+De bot zoekt netjes deze film op Imdb.
+
+## Memes, MOAR MEMES!
+
+Aiden weet ook veel van memes. 
+
+![](https://i.imgur.com/dn5mHWC.png)
