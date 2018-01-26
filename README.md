@@ -15,7 +15,7 @@ ___
  * A discord bot user
 
 ## Importing the database
-Open your database in your prefered client, we used `MariaDB`. Next, navigate to `Project` and run the `sqlschema.sql` within the zip. After that, run the `sqldump.sql` in the other zip. Please note that the import can take a long time! If the dump is not available here, you can get them from here: `http://52.202.215.126/bigmovie/sqlschema.zip` and `http://52.202.215.126/bigmovie/sqldump.zip` If you imported the database, you can skip the next steps to create the database.
+Open your database in your prefered client, we used `MariaDB`. Next, navigate to `Project` and run the `sqlschema.sql` within the zip. After that, run the `sqldump.sql` in the other zip. Please note that the import can take a long time! If the dump is not available here, you can get them from here: `hhttp://51.15.38.77/bigmovie/sqlschema.zip` and `http://51.15.38.77/bigmovie/sqldump.zip` If you imported the database, you can skip the next steps to create the database.
 
 ### Creating the database yourself
 If you want to make the database yourself, you need the data subsets from Imdb. Go to their [interfaces page](http://www.imdb.com/interfaces/) and learn to get their files from there. Note: you can not use the newer dumps! Once you have access to the files, you only need to grab these:
